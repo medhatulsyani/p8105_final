@@ -20,3 +20,5 @@ AED Accessibility and Traffic Congestion in New York City
 ## Motivation for the project
 
 ## Planned analyses/visualizations 
+
+## Planned Timeline 

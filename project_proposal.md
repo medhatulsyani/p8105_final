@@ -11,3 +11,7 @@ Juhi Mattekatt (jm5916) Maliha Safdar (ms7354)
 AED Accessibility and Traffic Congestion in New York City
 
 ## Motivation for the project
+
+## Planned analyses/visualizations
+
+## Planned Timeline
