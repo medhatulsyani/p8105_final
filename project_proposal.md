@@ -1,4 +1,8 @@
 Project Proposal
 ================
-2025-11-04
 
+## Group members and UNIs
+
+## Project Title
+
+## Motivation for the project

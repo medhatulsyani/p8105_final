@@ -1,9 +1,14 @@
 ---
 title: "Project Proposal"
-date: "2025-11-04"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Group members and UNIs
+
+## Project Title
+
+## Motivation for the project
