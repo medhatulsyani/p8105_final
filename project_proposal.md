@@ -17,8 +17,8 @@ CPR to create what the American Heart Association describes as the
 “Chain of Survival” in individuals undergoing sudden cardiac arrest
 (Page, 2011). Although AED accessibility is an integral part of
 increasing the chances of survival, the constant traffic congestion in
-New York City creates a disadvantage for residents with the time it
-takes healthcare workers to travel to the scene.
+New York City creates a disadvantage for residents through increasing
+the time it takes for healthcare workers to travel to the scene.
 
 ## Planned analyses/visualizations
 
