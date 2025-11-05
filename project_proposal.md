@@ -12,6 +12,8 @@ AED Accessibility and Traffic Congestion in New York City
 
 ## Motivation for the project
 
+\<\<\<\<\<\<\< HEAD
+
 ## The anticipated data sources (NYC Opendata)
 
 **1. NYC Automated External Defibrillator (AED) Inventory** Lists
@@ -21,4 +23,6 @@ registered AED locations in public facilities across NYC.(DOHMH)
 by intersection, year, and borough. (DOT)
 
 **3. NYC Leading Causes of Death (through 2021)** Annual cause-specific
-mortality data aggregated citywide.(DOHMH)
+mortality data aggregated citywide.(DOHMH) ======= \## Planned
+analyses/visualizations \>\>\>\>\>\>\>
+c632cf6590238e6aa4c0fc523f3c9e7f1b7966bb
