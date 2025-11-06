@@ -67,10 +67,9 @@ mortality data aggregated citywide (DOHMH)
   boroughs
 - Correlation to assess the relationship between AED density and mean
   traffic volume using Pearson’s correlation coefficient
-
-Derived Metric: Calculate the Traffic Burden Ratio (TBR) = total traffic
-volume ÷ total AED count per borough. Use TBR to highlight boroughs with
-high congestion and low AED coverage.
+- Derived Metric: Calculate the Traffic Burden Ratio (TBR) = total
+  traffic volume ÷ total AED count per borough. Use TBR to highlight
+  boroughs with high congestion and low AED coverage.
 
 ### 3. Dashboard
 
@@ -91,17 +90,21 @@ and traffic intersections can lead to lazy loading. We can also
 anticipate that ANOVA test will assume AED locations and traffic
 intersections are same across all five boroughs. Overall, we will
 prioritize efficient code and clear documentation to ensure
+reproducibility.
 
 ## Planned Timeline
 
-Nov 7: Submit Proposal Nov 10-14: Finalize with teaching team Nov 17-21:
-Start data cleaning, meet with team to delegate parts of data cleaning
-Nov 24-28: Create website. Delegate planned analysis/visualizations and
-3 final deliverables. Start working on them and aim to finalize first
-draft by end of week. Dec 1-5: Finalize visualizations, website,
-deliverables and report for submission. Record the screencast and upload
-on website Dec 6: Submit website, deliverables, screencast & report by
-Dec 6 at 11:59 pm. Finish peer assessment by Dec 6 at 11:59 pm.
+- Nov 7: Submit Proposal
+- Nov 10-14: Finalize with teaching team
+- Nov 17-21: Start data cleaning, meet with team to delegate parts of
+  data cleaning
+- Nov 24-28: Create website. Delegate planned analysis/visualizations
+  and 3 final deliverables. Start working on them and aim to finalize
+  first draft by end of week.
+- Dec 1-5: Finalize visualizations, website, deliverables and report for
+  submission. Record the screencast and upload on website
+- Dec 6: Submit website, deliverables, screencast & report by Dec 6 at
+  11:59 pm. Finish peer assessment by Dec 6 at 11:59 pm.
 
 ## References
 

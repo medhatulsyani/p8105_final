@@ -49,9 +49,7 @@ Annual cause-specific mortality data aggregated citywide (DOHMH)
 ### 2. Inferential Analysis
 * ANOVA to compare mean AED density and mean traffic volume across boroughs
 * Correlation to assess the relationship between AED density and mean traffic volume using Pearson’s correlation coefficient
-
-Derived Metric:
-Calculate the Traffic Burden Ratio (TBR) = total traffic volume ÷ total AED count per borough.
+* Derived Metric: Calculate the Traffic Burden Ratio (TBR) = total traffic volume ÷ total AED count per borough.
 Use TBR to highlight boroughs with high congestion and low AED coverage.
 
 ### 3. Dashboard 
@@ -67,13 +65,13 @@ We anticipate that some AED location data will be missing or have inaccurate coo
 
 ## Planned Timeline 
 
-Nov 7: Submit Proposal
-Nov 10-14: Finalize with teaching team
-Nov 17-21: Start data cleaning, meet with team to delegate parts of data cleaning
-Nov 24-28: Create website. Delegate planned analysis/visualizations and 3 final deliverables. 
+* Nov 7: Submit Proposal
+* Nov 10-14: Finalize with teaching team
+* Nov 17-21: Start data cleaning, meet with team to delegate parts of data cleaning
+* Nov 24-28: Create website. Delegate planned analysis/visualizations and 3 final deliverables. 
 Start working on them and aim to finalize first draft by end of week.
-Dec 1-5: Finalize visualizations, website, deliverables and report for submission. Record the screencast and upload on website
-Dec 6: Submit website, deliverables, screencast & report by Dec 6 at 11:59 pm. Finish peer assessment by Dec 6 at 11:59 pm.
+* Dec 1-5: Finalize visualizations, website, deliverables and report for submission. Record the screencast and upload on website
+* Dec 6: Submit website, deliverables, screencast & report by Dec 6 at 11:59 pm. Finish peer assessment by Dec 6 at 11:59 pm.
 
 ## References
 https://pmc.ncbi.nlm.nih.gov/articles/PMC3116356/
