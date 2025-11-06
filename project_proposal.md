@@ -55,7 +55,17 @@ mortality data aggregated citywide (DOHMH)
 ======= \## Planned analyses/visualizations \<\<\<\<\<\<\< HEAD
 \>\>\>\>\>\>\> c632cf6590238e6aa4c0fc523f3c9e7f1b7966bb =======
 
-## Planned Timeline
+## Coding Challenges
+
+We anticipate that some AED location data will be missing or have
+inaccurate coordinates. Furthermore, matching the specific point AED
+locations to traffic intersections which cover a larger area will be a
+challenge. When creating a dashboard with a large set of AED locations
+and traffic intersections can lead to lazy loading. We can also
+anticipate that ANOVA test will assume AED locations and traffic
+intersections are same across all five boroughs. Overall, we will
+prioritize efficient code and clear documentation to ensure
+reproducibility. \## Planned Timeline
 
 Nov 7: Submit Proposal Nov 10-14: Finalize with teaching team Nov 17-21:
 Start data cleaning, meet with team to delegate parts of data cleaning
