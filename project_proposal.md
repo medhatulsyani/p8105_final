@@ -32,7 +32,7 @@ how this corresponds with AED accessibility.
 
 ## The intended final products
 
-This project will include **three final deliverable**: EDA to summarize
+This project will include **three final deliverables**: EDA to summarize
 **AED distribution and traffic volume trends** across boroughs from 2019
 to 2024, **Inferential analysis** using ANOVA and correlation to compare
 AED and traffic measures across boroughs and over time, and
@@ -100,7 +100,7 @@ Nov 24-28: Create website. Delegate planned analysis/visualizations and
 3 final deliverables. Start working on them and aim to finalize first
 draft by end of week. Dec 1-5: Finalize visualizations, website,
 deliverables and report for submission. Record the screencast and upload
-on website Dec 6: Submit website, deliverables, screecast & report by
+on website Dec 6: Submit website, deliverables, screencast & report by
 Dec 6 at 11:59 pm. Finish peer assessment by Dec 6 at 11:59 pm.
 
 ## References

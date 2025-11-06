@@ -25,7 +25,7 @@ Our motivation for this project is to understand how AED accessibility correspon
 
 ## The intended final products
 	
-This project will include **three final deliverable**: EDA to summarize **AED distribution and traffic volume trends** across boroughs from 2019 to 2024, **Inferential analysis** using ANOVA and correlation to compare AED and traffic measures across boroughs and over time, and **Dashboard** displaying AED locations, borough-level summaries, and traffic trends
+This project will include **three final deliverables**: EDA to summarize **AED distribution and traffic volume trends** across boroughs from 2019 to 2024, **Inferential analysis** using ANOVA and correlation to compare AED and traffic measures across boroughs and over time, and **Dashboard** displaying AED locations, borough-level summaries, and traffic trends
 
 
 ## The anticipated data sources (NYC Opendata)
@@ -74,7 +74,7 @@ Nov 17-21: Start data cleaning, meet with team to delegate parts of data cleanin
 Nov 24-28: Create website. Delegate planned analysis/visualizations and 3 final deliverables. 
 Start working on them and aim to finalize first draft by end of week.
 Dec 1-5: Finalize visualizations, website, deliverables and report for submission. Record the screencast and upload on website
-Dec 6: Submit website, deliverables, screecast & report by Dec 6 at 11:59 pm. Finish peer assessment by Dec 6 at 11:59 pm.
+Dec 6: Submit website, deliverables, screencast & report by Dec 6 at 11:59 pm. Finish peer assessment by Dec 6 at 11:59 pm.
 
 ## References
 https://pmc.ncbi.nlm.nih.gov/articles/PMC3116356/
