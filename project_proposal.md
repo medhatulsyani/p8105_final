@@ -30,11 +30,9 @@ AED accessibility/EMS response, and to examine differences between
 traffic volume pre-pandemic, during the pandemic, and post-pandemic and
 how this corresponds with AED accessibility.
 
-\<\<\<\<\<\<\< HEAD
-
 ## The intended final products
 
-This project will include **three final deliverable**: EDA to summarize
+This project will include **three final deliverables**: EDA to summarize
 **AED distribution and traffic volume trends** across boroughs from 2019
 to 2024, **Inferential analysis** using ANOVA and correlation to compare
 AED and traffic measures across boroughs and over time, and
@@ -52,8 +50,36 @@ by intersection, year, and borough (DOT)
 **3. NYC Leading Causes of Death (through 2021)** Annual cause-specific
 mortality data aggregated citywide (DOHMH)
 
-======= \## Planned analyses/visualizations \<\<\<\<\<\<\< HEAD
-\>\>\>\>\>\>\> c632cf6590238e6aa4c0fc523f3c9e7f1b7966bb =======
+## Planned analyses/visualizations
+
+### 1. EDA
+
+- AED distribution and density across boroughs and years using
+  visualizations like histograms, scatter plots, and line plots
+  - Map AED distribution using leaflet and sf
+- Traffic volume trends across boroughs and years using visualizations
+  like boxplots and line plots
+  - Mean and median for traffic volume across borough and year
+
+### 2. Inferential Analysis
+
+- ANOVA to compare mean AED density and mean traffic volume across
+  boroughs
+- Correlation to assess the relationship between AED density and mean
+  traffic volume using Pearson’s correlation coefficient
+
+Derived Metric: Calculate the Traffic Burden Ratio (TBR) = total traffic
+volume ÷ total AED count per borough. Use TBR to highlight boroughs with
+high congestion and low AED coverage.
+
+### 3. Dashboard
+
+Further visualization where we will develop a flexdashboard that
+contains:
+
+- Borough-level AED map
+- Traffic trends and summary plots
+- AED–traffic comparison charts
 
 ## Coding Challenges
 
@@ -66,8 +92,6 @@ anticipate that ANOVA test will assume AED locations and traffic
 intersections are same across all five boroughs. Overall, we will
 prioritize efficient code and clear documentation to ensure
 
-> > > > > > > f3cecf1e36e0d15870905f912d569a77be15f031
-
 ## Planned Timeline
 
 Nov 7: Submit Proposal Nov 10-14: Finalize with teaching team Nov 17-21:
@@ -76,11 +100,9 @@ Nov 24-28: Create website. Delegate planned analysis/visualizations and
 3 final deliverables. Start working on them and aim to finalize first
 draft by end of week. Dec 1-5: Finalize visualizations, website,
 deliverables and report for submission. Record the screencast and upload
-on website Dec 6: Submit website, deliverables, screecast & report by
+on website Dec 6: Submit website, deliverables, screencast & report by
 Dec 6 at 11:59 pm. Finish peer assessment by Dec 6 at 11:59 pm.
 
 ## References
 
 <https://pmc.ncbi.nlm.nih.gov/articles/PMC3116356/>
-
-> > > > > > > 8d72aa5957960e286a3c42ebefa66dbf82a44c16
