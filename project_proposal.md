@@ -41,13 +41,13 @@ traffic trends
 
 ## The anticipated data sources (NYC Opendata)
 
-**1. NYC Automated External Defibrillator (AED) Inventory** Lists
+**1. NYC Automated External Defibrillator (AED) Inventory**: Lists
 registered AED locations in public facilities across NYC (DOHMH)
 
-**2. Automated Traffic Volume Counts (2019–2024)** Lists vehicle counts
+**2. Automated Traffic Volume Counts (2019–2024)**: Lists vehicle counts
 by intersection, year, and borough (DOT)
 
-**3. NYC Leading Causes of Death (through 2021)** Annual cause-specific
+**3. NYC Leading Causes of Death (through 2021)**: Annual cause-specific
 mortality data aggregated citywide (DOHMH)
 
 ## Planned analyses/visualizations
