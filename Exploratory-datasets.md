@@ -4,12 +4,6 @@ AED Accessibility and Traffic in NYC: Exploratory Data
 **Library**
 
 ``` r
-library(readr)
-```
-
-    ## Warning: package 'readr' was built under R version 4.5.2
-
-``` r
 library(tidyverse)
 library(janitor)
 library(stringr)

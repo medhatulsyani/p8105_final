@@ -3,8 +3,7 @@ title: "AED Accessibility and Traffic in NYC: Exploratory Data"
 output: github_document
 ---
 **Library**
-```{r setup, message=FALSE}
-library(readr)
+```{r setup, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(janitor)
 library(stringr)
