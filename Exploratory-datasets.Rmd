@@ -1,6 +1,6 @@
 ---
 title: "AED Accessibility and Traffic in NYC: Exploratory Data"
-output: github_document
+output: html_document
 ---
 **Library**
 ```{r setup, message=FALSE, warning=FALSE}
