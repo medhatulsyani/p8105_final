@@ -2,61 +2,61 @@
 title: "AED Accessibility and Traffic in NYC: Exploratory Data"
 output: html_document
 ---
-**Library**
-```{r setup, message=FALSE, warning=FALSE}
+
+```{r setup, include=FALSE}
+##Setup necessary libraries
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(janitor)
 library(stringr)
+library(kableExtra)
 ```
 
-
-**Import data**
-```{r import, message=FALSE, warning=FALSE}
+```{r import}
+##Import datasets
 zip_path = "./data/Automated_Traffic_Volume_Counts.zip"
 csv_filename_in_zip = "Automated_Traffic_Volume_Counts.csv"
 traffic_volume_df = read_csv(unz(description = zip_path, filename = csv_filename_in_zip))
 
-
 aed_inventory_df = read_csv("./data/NYC_Automated_External_Defibrillator_(AED)_Inventory.csv")
 leading_causes_df = read_csv("./data/NYC_Leading_Causes_of_Death.csv")
-
-traffic_volume_df |> glimpse()
-aed_inventory_df  |> glimpse()
-leading_causes_df |> glimpse()
 ```
 
-**Clean data**
-```{r clean, message=FALSE}
+```{r traffic_clean}
+##Traffic data (2019-2024)
 traffic_clean = traffic_volume_df |>
   clean_names() |>
   filter(yr >= 2019, yr <= 2024) |>
   mutate(boro = str_to_title(boro))
+```
 
+```{r aed_clean}
+##AED inventory
 aed_clean = aed_inventory_df |>
   clean_names() |>
   filter(!is.na(latitude), !is.na(longitude)) |>
   mutate(borough = str_to_title(borough))
+```
 
+```{r cause_clean}
+##Leading causes of death
 leading_clean = leading_causes_df |>
   clean_names() |>
   mutate(
-  deaths = as.numeric(deaths),
-  death_rate = as.numeric(death_rate),
-  age_adjusted_death_rate = as.numeric(age_adjusted_death_rate)
-  )
+    deaths = as.numeric(deaths),
+    death_rate = as.numeric(death_rate),
+    age_adjusted_death_rate = as.numeric(age_adjusted_death_rate)
+    )
 ```
 
-### Summarize table
+### 1) Leading causes of death in New York City in 2021
 
-**Leading Causes of Death Summary by year**
-```{r leading_sum, message=FALSE}
-# Create a clean disease name without ICD codes
+```{r leading_sum}
 leading_clean2 = leading_clean |>
   mutate(
     cause_name = str_replace(leading_cause, " \\(.*\\)$", "")
   )
 
-# Summarise total deaths by disease name for 2021
 death_baseline = leading_clean2 |>
   filter(year == 2021) |>
   group_by(cause_name) |>
@@ -66,58 +66,121 @@ death_baseline = leading_clean2 |>
   ) |>
   arrange(desc(total_deaths))
 
-knitr::kable(
-  death_baseline,
-  caption = "Table 1: Leading causes of death in NYC, 2021 (disease names only)"
-)
+death_baseline_display = death_baseline |>
+  mutate(
+    total_deaths = format(total_deaths, big.mark = ",", scientific = FALSE)
+  ) |>
+  rename(
+    `Cause of death`       = cause_name,
+    `Total deaths (2021)`  = total_deaths
+  )
+
+death_baseline_display |>
+  kable(
+    caption = "Table 1. Leading causes of death in NYC, 2021",
+    format = "html"
+  ) |>
+  kable_styling(
+    full_width = FALSE,
+    bootstrap_options = c("striped", "hover", "bordered")
+  )
+
 ```
 
-**Top 1: Diseases of Heart** ---> the importance of having AED
+**NOTE:** Diseases of heart appear at the top of this list, supporting the relevance of AED accessibility in NYC.
 
-### Main analysis summary
-**Traffic volume summary by borough**
-```{r traffic_volume_sum, message=FALSE}
+### 2) Traffic volume summary by borough (2019 - 2024)
+```{r traffic_sum}
+## Bar plot: Number of traffic measurements by borough (2019–2024)
 traffic_summary = traffic_clean |>
   group_by(boro) |>
   summarise(
     n_measurements = n(),
     unique_segments = n_distinct(segment_id),
     mean_volume = mean(vol, na.rm = TRUE),
-    median_volume = median(vol, na.rm = TRUE)
+    median_volume = median(vol, na.rm = TRUE),
+    .groups = "drop"
   ) |>
-rename(borough = boro)
+  rename(borough = boro)
 
-knitr::kable(
-  traffic_summary,
-  caption = "Table 2: Traffic volume summary by borough (2019–2024)"
-)
-```
+traffic_summary_display = traffic_summary |>
+  mutate(
+    n_measurements = format(n_measurements, big.mark = ",", scientific = FALSE)
+    ) |>
+  rename(
+    Borough = borough,
+    `Number of measurements` = n_measurements,
+    `Number of monitored segments` = unique_segments,
+    `Mean traffic volume` = mean_volume,
+    `Median traffic volume` = median_volume
+    )
 
-
-**AED inventory summary by borough**
-```{r AED_sum, message=FALSE}
-aed_summary = aed_clean |>
-  group_by(borough) |>
-  summarise(
-    aed_locations = n(),
-    mean_num_aeds = mean(aed_num_aeds, na.rm = TRUE),
-    mean_trained  = mean(aed_num_person_trained, na.rm = TRUE)
+traffic_summary_display |>
+  kable(
+    caption = "Table 2. Traffic volume summary by borough, 2019–2024",
+    format = "html"
+  ) |>
+kable_styling(
+  full_width = FALSE,
+  bootstrap_options = c("striped", "hover", "bordered")
   )
+```
 
-knitr::kable(
-  aed_summary,
-  caption = "Table 3: AED inventory summary by borough"
-)
+```{r traffic_hist}
+## Bar plot: Number of traffic measurements by borough (2019–2024)
+traffic_summary |>
+  mutate(
+    borough = forcats::fct_reorder(borough, n_measurements)
+    ) |>
+  ggplot(aes(x = borough, y = n_measurements, fill = borough)) +
+  geom_col() +
+  theme_minimal() +
+  labs(
+    title = "Figure 1: Number of traffic measurements by borough (2019–2024)",
+    x     = "Borough",
+    y     = "Number of measurements",
+    fill  = "Borough"
+    ) +
+  theme(
+    axis.text.x      = element_blank(),
+    legend.position  = "bottom"
+    )
 ```
 
 
-```{r baseline_table, message=FALSE}
-baseline_table = left_join(aed_summary, traffic_summary, by = "borough")
-
-knitr::kable(
-  baseline_table,
-  caption = "Table 4: Baseline summary of AED and traffic characteristics by borough"
-)
+```{r traffic_vol_hist}
+## Distribution of traffic volume (zoomed in)
+traffic_clean |>
+  ggplot(aes(x = vol)) +
+  geom_histogram(
+    bins  = 60,
+    fill  = "#3182bd",   # bar color
+    color = "white"      # bar border
+  ) +
+  coord_cartesian(xlim = c(0, 400)) +
+  theme_minimal() +
+  labs(
+    title = "Figure 2: Distribution of traffic volume (0–400, all boroughs, 2019–2024)",
+    x     = "Traffic volume",
+    y     = "Count"
+  )
 ```
 
+```{r trafficbox}
+## Boxplot of traffic volume by borough (zoomed in)
+traffic_clean |>
+  ggplot(aes(x = boro, y = vol, fill = boro)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.8) +
+  coord_cartesian(ylim = c(0, 400)) +
+  theme_minimal() +
+  labs(
+    title = "Figure 3: Traffic volume by borough, 2019–2024 (0–400)",
+    x     = "Borough",
+    y     = "Traffic volume",
+    fill  = "Borough"
+  ) +
+  theme(
+    legend.position = "bottom"
+  )
+```
 
