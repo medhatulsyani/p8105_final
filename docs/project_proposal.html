@@ -11,7 +11,7 @@
 
 
 
-<title>AED Accessibility and Traffic Congestion in New York City</title>
+<title>Project Proposal</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -236,16 +236,130 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">AED Accessibility and Traffic Congestion in
-New York City</h1>
+<h1 class="title toc-ignore">Project Proposal</h1>
 
 </div>
 
 
-<div id="this-is-awesome-website" class="section level1">
-<h1>This is awesome website</h1>
-<p><img
-src="https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif" /></p>
+<p><strong>Group members and UNIs</strong></p>
+<p>Nichcha Subdee (ns3923) Mukta Patwari (msp2210) Medha Tulsyani
+(mt3866) Juhi Mattekatt (jm5916) Maliha Safdar (ms7354)</p>
+<div id="project-title" class="section level2">
+<h2>Project Title</h2>
+<p>AED Accessibility and Traffic Congestion in New York City</p>
+</div>
+<div id="motivation-for-the-project" class="section level2">
+<h2>Motivation for the project</h2>
+<p>Automated External Defibrillators (AEDs) are commonly used in
+combination with CPR to create what the American Heart Association
+describes as the “Chain of Survival” in individuals undergoing sudden
+cardiac arrest (Page, 2011). Although AED accessibility is an integral
+part of increasing the chances of survival, the constant traffic
+congestion in New York City creates a disadvantage for residents with
+the time it takes healthcare workers to travel to the scene.</p>
+<p>Our motivation for this project is to understand how AED
+accessibility corresponds with traffic congestion in New York City.
+Through a combination of data on AED locations, traffic volume, and
+cardiovascular disease, we hope to identify potential gaps in AED
+coverage in high-traffic areas. Additionally, it may useful to analyze
+current data to understand how the recently introduced congestion
+pricing may affect AED accessibility/EMS response, and to examine
+differences between traffic volume pre-pandemic, during the pandemic,
+and post-pandemic and how this corresponds with AED accessibility.</p>
+</div>
+<div id="the-intended-final-products" class="section level2">
+<h2>The intended final products</h2>
+<p>This project will include <strong>three final deliverables</strong>:
+EDA to summarize <strong>AED distribution and traffic volume
+trends</strong> across boroughs from 2019 to 2024, <strong>Inferential
+analysis</strong> using ANOVA and correlation to compare AED and traffic
+measures across boroughs and over time, and <strong>Dashboard</strong>
+displaying AED locations, borough-level summaries, and traffic
+trends</p>
+</div>
+<div id="the-anticipated-data-sources-nyc-opendata"
+class="section level2">
+<h2>The anticipated data sources (NYC Opendata)</h2>
+<p><strong>1. NYC Automated External Defibrillator (AED)
+Inventory</strong>: Lists registered AED locations in public facilities
+across NYC (DOHMH)</p>
+<p><strong>2. Automated Traffic Volume Counts (2019–2024)</strong>:
+Lists vehicle counts by intersection, year, and borough (DOT)</p>
+<p><strong>3. NYC Leading Causes of Death (through 2021)</strong>:
+Annual cause-specific mortality data aggregated citywide (DOHMH)</p>
+</div>
+<div id="planned-analysesvisualizations" class="section level2">
+<h2>Planned analyses/visualizations</h2>
+<div id="eda" class="section level3">
+<h3>1. EDA</h3>
+<ul>
+<li>AED distribution and density across boroughs and years using
+visualizations like histograms, scatter plots, and line plots
+<ul>
+<li>Map AED distribution using leaflet and sf</li>
+</ul></li>
+<li>Traffic volume trends across boroughs and years using visualizations
+like boxplots and line plots
+<ul>
+<li>Mean and median for traffic volume across borough and year</li>
+</ul></li>
+</ul>
+</div>
+<div id="inferential-analysis" class="section level3">
+<h3>2. Inferential Analysis</h3>
+<ul>
+<li>ANOVA to compare mean AED density and mean traffic volume across
+boroughs</li>
+<li>Correlation to assess the relationship between AED density and mean
+traffic volume using Pearson’s correlation coefficient</li>
+<li>Derived Metric: Calculate the Traffic Burden Ratio (TBR) = total
+traffic volume ÷ total AED count per borough. Use TBR to highlight
+boroughs with high congestion and low AED coverage.</li>
+</ul>
+</div>
+<div id="dashboard" class="section level3">
+<h3>3. Dashboard</h3>
+<p>Further visualization where we will develop a flexdashboard that
+contains:</p>
+<ul>
+<li>Borough-level AED map</li>
+<li>Traffic trends and summary plots</li>
+<li>AED–traffic comparison charts</li>
+</ul>
+</div>
+</div>
+<div id="coding-challenges" class="section level2">
+<h2>Coding Challenges</h2>
+<p>We anticipate that some AED location data will be missing or have
+inaccurate coordinates. Furthermore, matching the specific point AED
+locations to traffic intersections which cover a larger area will be a
+challenge. When creating a dashboard with a large set of AED locations
+and traffic intersections can lead to lazy loading. We can also
+anticipate that ANOVA test will assume AED locations and traffic
+intersections are same across all five boroughs. Overall, we will
+prioritize efficient code and clear documentation to ensure
+reproducibility.</p>
+</div>
+<div id="planned-timeline" class="section level2">
+<h2>Planned Timeline</h2>
+<ul>
+<li>Nov 7: Submit Proposal</li>
+<li>Nov 10-14: Finalize with teaching team</li>
+<li>Nov 17-21: Start data cleaning, meet with team to delegate parts of
+data cleaning</li>
+<li>Nov 24-28: Create website. Delegate planned analysis/visualizations
+and 3 final deliverables. Start working on them and aim to finalize
+first draft by end of week.</li>
+<li>Dec 1-5: Finalize visualizations, website, deliverables and report
+for submission. Record the screencast and upload on website</li>
+<li>Dec 6: Submit website, deliverables, screencast &amp; report by Dec
+6 at 11:59 pm. Finish peer assessment by Dec 6 at 11:59 pm.</li>
+</ul>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3116356/"
+class="uri">https://pmc.ncbi.nlm.nih.gov/articles/PMC3116356/</a></p>
 </div>
 
 

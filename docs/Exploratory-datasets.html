@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>AED Accessibility and Traffic in NYC: Exploratory Data</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">AED Accessibility and Traffic in NYC:
+Exploratory Data</h1>
+
+</div>
+
+
+<p><strong>Library</strong></p>
+<pre class="r"><code>library(tidyverse)
+library(janitor)
+library(stringr)</code></pre>
+<p><strong>Import data</strong></p>
+<pre class="r"><code>zip_path = &quot;./data/Automated_Traffic_Volume_Counts.zip&quot;
+csv_filename_in_zip = &quot;Automated_Traffic_Volume_Counts.csv&quot;
+traffic_volume_df = read_csv(unz(description = zip_path, filename = csv_filename_in_zip))
+
+
+aed_inventory_df = read_csv(&quot;./data/NYC_Automated_External_Defibrillator_(AED)_Inventory.csv&quot;)
+leading_causes_df = read_csv(&quot;./data/NYC_Leading_Causes_of_Death.csv&quot;)
+
+traffic_volume_df |&gt; glimpse()</code></pre>
+<pre><code>## Rows: 1,838,386
+## Columns: 14
+## $ RequestID &lt;dbl&gt; 22562, 22562, 22562, 22562, 22562, 22562, 22562, 22562, 2256…
+## $ Boro      &lt;chr&gt; &quot;Queens&quot;, &quot;Queens&quot;, &quot;Queens&quot;, &quot;Queens&quot;, &quot;Queens&quot;, &quot;Queens&quot;, …
+## $ Yr        &lt;dbl&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, …
+## $ M         &lt;dbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, …
+## $ D         &lt;dbl&gt; 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, …
+## $ HH        &lt;dbl&gt; 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 1…
+## $ MM        &lt;dbl&gt; 45, 0, 15, 30, 45, 0, 15, 30, 45, 0, 15, 30, 45, 0, 15, 30, …
+## $ Vol       &lt;dbl&gt; 260, 243, 245, 304, 312, 331, 331, 344, 397, 356, 394, 399, …
+## $ SegmentID &lt;dbl&gt; 155613, 155613, 155613, 155613, 155613, 155613, 155613, 1556…
+## $ WktGeom   &lt;chr&gt; &quot;POINT (1059678.8154876027 198480.09766927382)&quot;, &quot;POINT (105…
+## $ street    &lt;chr&gt; &quot;HEMPSTEAD AVENUE&quot;, &quot;HEMPSTEAD AVENUE&quot;, &quot;HEMPSTEAD AVENUE&quot;, …
+## $ fromSt    &lt;chr&gt; &quot;Cross Island Parkway&quot;, &quot;Cross Island Parkway&quot;, &quot;Cross Islan…
+## $ toSt      &lt;chr&gt; &quot;Cross Is Pkwy Nb En Hempstead Wb&quot;, &quot;Cross Is Pkwy Nb En Hem…
+## $ Direction &lt;chr&gt; &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, …</code></pre>
+<pre class="r"><code>aed_inventory_df  |&gt; glimpse()</code></pre>
+<pre><code>## Rows: 7,642
+## Columns: 17
+## $ Entity_Name          &lt;chr&gt; &quot;CFN DAP&quot;, &quot;Olmstead Condominium&quot;, &quot;Citywide&quot;, &quot;M…
+## $ Address              &lt;chr&gt; &quot;1 FORDHAM PLAZA&quot;, &quot;382 CENTRAL PARK WEST&quot;, &quot;63 F…
+## $ Floor                &lt;chr&gt; &quot;7th Floor&quot;, &quot;Gym&quot;, NA, &quot;-&quot;, &quot;Ground&quot;, NA, &quot;331&quot;,…
+## $ Borough              &lt;chr&gt; &quot;Bronx&quot;, &quot;Manhattan&quot;, &quot;Brooklyn&quot;, &quot;Manhattan&quot;, &quot;M…
+## $ State                &lt;chr&gt; &quot;New York&quot;, &quot;New York&quot;, &quot;New York&quot;, &quot;New York&quot;, &quot;…
+## $ Zip                  &lt;chr&gt; &quot;10458&quot;, &quot;10001&quot;, &quot;11205&quot;, &quot;10001&quot;, &quot;10065&quot;, &quot;100…
+## $ AED_NumPersonTrained &lt;dbl&gt; 4, 17, 0, 38, 12, 19, 20, 3, 7, 4, 1, 12, 2, 9, 2…
+## $ AED_NumAeds          &lt;dbl&gt; 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ Latitude             &lt;dbl&gt; 40.86073, 40.79347, 40.69801, 40.74773, 40.76459,…
+## $ Longitude            &lt;dbl&gt; -73.88958, -73.96567, -73.97499, -73.99672, -73.9…
+## $ Community_District   &lt;dbl&gt; 206, 107, 302, 104, 108, 107, 204, 105, 108, 105,…
+## $ Council_District     &lt;dbl&gt; 15, 7, 33, 3, 4, 6, 16, 6, 4, 4, 3, 34, 13, 42, 1…
+## $ Census_Tract_2010    &lt;dbl&gt; 38700, 18500, 54300, 9700, 11402, 14500, 18900, 1…
+## $ NTA_Code             &lt;chr&gt; &quot;BX06&quot;, &quot;MN12&quot;, &quot;BK99&quot;, &quot;MN13&quot;, &quot;MN40&quot;, &quot;MN14&quot;, &quot;…
+## $ BBL                  &lt;dbl&gt; 2030330053, 1018337501, 3020230001, 1007510001, 1…
+## $ BIN                  &lt;dbl&gt; 2088325, 1074358, 3000000, 1082793, 1042055, 1076…
+## $ `Location Point`     &lt;chr&gt; &quot;POINT (-73.88958427 40.86073227)&quot;, &quot;POINT (-73.9…</code></pre>
+<pre class="r"><code>leading_causes_df |&gt; glimpse()</code></pre>
+<pre><code>## Rows: 2,102
+## Columns: 7
+## $ Year                      &lt;dbl&gt; 2021, 2021, 2021, 2021, 2021, 2021, 2021, 20…
+## $ `Leading Cause`           &lt;chr&gt; &quot;Diseases of Heart (I00-I09, I11, I13, I20-I…
+## $ Sex                       &lt;chr&gt; &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, …
+## $ `Race Ethnicity`          &lt;chr&gt; &quot;Not Stated/Unknown&quot;, &quot;Not Stated/Unknown&quot;, …
+## $ Deaths                    &lt;chr&gt; &quot;190&quot;, &quot;7&quot;, &quot;113&quot;, &quot;84&quot;, &quot;11&quot;, &quot;14&quot;, &quot;66&quot;, &quot;…
+## $ `Death Rate`              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ `Age Adjusted Death Rate` &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
+<p><strong>Clean data</strong></p>
+<pre class="r"><code>traffic_clean = traffic_volume_df |&gt;
+  clean_names() |&gt;
+  filter(yr &gt;= 2019, yr &lt;= 2024) |&gt;
+  mutate(boro = str_to_title(boro))
+
+aed_clean = aed_inventory_df |&gt;
+  clean_names() |&gt;
+  filter(!is.na(latitude), !is.na(longitude)) |&gt;
+  mutate(borough = str_to_title(borough))
+
+leading_clean = leading_causes_df |&gt;
+  clean_names() |&gt;
+  mutate(
+  deaths = as.numeric(deaths),
+  death_rate = as.numeric(death_rate),
+  age_adjusted_death_rate = as.numeric(age_adjusted_death_rate)
+  )</code></pre>
+<pre><code>## Warning: There were 3 warnings in `mutate()`.
+## The first warning was:
+## ℹ In argument: `deaths = as.numeric(deaths)`.
+## Caused by warning:
+## ! NAs introduced by coercion
+## ℹ Run `dplyr::last_dplyr_warnings()` to see the 2 remaining warnings.</code></pre>
+<div id="summarize-table" class="section level3">
+<h3>Summarize table</h3>
+<p><strong>Leading Causes of Death Summary by year</strong></p>
+<pre class="r"><code># Create a clean disease name without ICD codes
+leading_clean2 = leading_clean |&gt;
+  mutate(
+    cause_name = str_replace(leading_cause, &quot; \\(.*\\)$&quot;, &quot;&quot;)
+  )
+
+# Summarise total deaths by disease name for 2021
+death_baseline = leading_clean2 |&gt;
+  filter(year == 2021) |&gt;
+  group_by(cause_name) |&gt;
+  summarise(
+    total_deaths = sum(deaths, na.rm = TRUE),
+    .groups = &quot;drop&quot;
+  ) |&gt;
+  arrange(desc(total_deaths))
+
+knitr::kable(
+  death_baseline,
+  caption = &quot;Table 1: Leading causes of death in NYC, 2021 (disease names only)&quot;
+)</code></pre>
+<table>
+<caption>Table 1: Leading causes of death in NYC, 2021 (disease names
+only)</caption>
+<colgroup>
+<col width="88%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">cause_name</th>
+<th align="right">total_deaths</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Diseases of Heart</td>
+<td align="right">16568</td>
+</tr>
+<tr class="even">
+<td align="left">All Other Causes</td>
+<td align="right">14240</td>
+</tr>
+<tr class="odd">
+<td align="left">Malignant Neoplasms</td>
+<td align="right">11578</td>
+</tr>
+<tr class="even">
+<td align="left">Covid-19</td>
+<td align="right">8229</td>
+</tr>
+<tr class="odd">
+<td align="left">Mental and Behavioral Disorders due to Accidental
+Poisoning and Other Psychoactive Substance Use</td>
+<td align="right">2692</td>
+</tr>
+<tr class="even">
+<td align="left">Cerebrovascular Disease</td>
+<td align="right">2149</td>
+</tr>
+<tr class="odd">
+<td align="left">Influenza</td>
+<td align="right">1628</td>
+</tr>
+<tr class="even">
+<td align="left">Diabetes Mellitus</td>
+<td align="right">1535</td>
+</tr>
+<tr class="odd">
+<td align="left">Chronic Lower Respiratory Diseases</td>
+<td align="right">1212</td>
+</tr>
+<tr class="even">
+<td align="left">Essential Hypertension and Renal Diseases</td>
+<td align="right">1150</td>
+</tr>
+<tr class="odd">
+<td align="left">Accidents Except Drug Poisoning</td>
+<td align="right">1112</td>
+</tr>
+<tr class="even">
+<td align="left">Alzheimer’s Disease</td>
+<td align="right">822</td>
+</tr>
+<tr class="odd">
+<td align="left">Assault</td>
+<td align="right">291</td>
+</tr>
+<tr class="even">
+<td align="left">Chronic Liver Disease and Cirrhosis</td>
+<td align="right">188</td>
+</tr>
+<tr class="odd">
+<td align="left">Intentional Self-Harm</td>
+<td align="right">79</td>
+</tr>
+<tr class="even">
+<td align="left">Chronic Liver Diseases and Cirrhosis</td>
+<td align="right">25</td>
+</tr>
+<tr class="odd">
+<td align="left">Septicemia</td>
+<td align="right">24</td>
+</tr>
+<tr class="even">
+<td align="left">Mental and Behavioral Disorders due to Use of
+Alcohol</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">Certain Conditions Originating in the Perinatal
+Period</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">Human Immunodeficiency Viruses Diseases</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Top 1: Diseases of Heart</strong> —&gt; the importance of
+having AED</p>
+</div>
+<div id="main-analysis-summary" class="section level3">
+<h3>Main analysis summary</h3>
+<p><strong>Traffic volume summary by borough</strong></p>
+<pre class="r"><code>traffic_summary = traffic_clean |&gt;
+  group_by(boro) |&gt;
+  summarise(
+    n_measurements = n(),
+    unique_segments = n_distinct(segment_id),
+    mean_volume = mean(vol, na.rm = TRUE),
+    median_volume = median(vol, na.rm = TRUE)
+  ) |&gt;
+rename(borough = boro)
+
+knitr::kable(
+  traffic_summary,
+  caption = &quot;Table 2: Traffic volume summary by borough (2019–2024)&quot;
+)</code></pre>
+<table>
+<caption>Table 2: Traffic volume summary by borough
+(2019–2024)</caption>
+<colgroup>
+<col width="19%" />
+<col width="21%" />
+<col width="22%" />
+<col width="16%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">borough</th>
+<th align="right">n_measurements</th>
+<th align="right">unique_segments</th>
+<th align="right">mean_volume</th>
+<th align="right">median_volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Bronx</td>
+<td align="right">64572</td>
+<td align="right">88</td>
+<td align="right">86.53117</td>
+<td align="right">55</td>
+</tr>
+<tr class="even">
+<td align="left">Brooklyn</td>
+<td align="right">160661</td>
+<td align="right">221</td>
+<td align="right">122.67490</td>
+<td align="right">61</td>
+</tr>
+<tr class="odd">
+<td align="left">Manhattan</td>
+<td align="right">88011</td>
+<td align="right">115</td>
+<td align="right">147.59724</td>
+<td align="right">93</td>
+</tr>
+<tr class="even">
+<td align="left">Queens</td>
+<td align="right">162987</td>
+<td align="right">186</td>
+<td align="right">117.74871</td>
+<td align="right">57</td>
+</tr>
+<tr class="odd">
+<td align="left">Staten Island</td>
+<td align="right">24494</td>
+<td align="right">33</td>
+<td align="right">108.96228</td>
+<td align="right">67</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AED inventory summary by borough</strong></p>
+<pre class="r"><code>aed_summary = aed_clean |&gt;
+  group_by(borough) |&gt;
+  summarise(
+    aed_locations = n(),
+    mean_num_aeds = mean(aed_num_aeds, na.rm = TRUE),
+    mean_trained  = mean(aed_num_person_trained, na.rm = TRUE)
+  )
+
+knitr::kable(
+  aed_summary,
+  caption = &quot;Table 3: AED inventory summary by borough&quot;
+)</code></pre>
+<table>
+<caption>Table 3: AED inventory summary by borough</caption>
+<thead>
+<tr class="header">
+<th align="left">borough</th>
+<th align="right">aed_locations</th>
+<th align="right">mean_num_aeds</th>
+<th align="right">mean_trained</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Bronx</td>
+<td align="right">988</td>
+<td align="right">1.042510</td>
+<td align="right">9.966599</td>
+</tr>
+<tr class="even">
+<td align="left">Brooklyn</td>
+<td align="right">1411</td>
+<td align="right">1.102764</td>
+<td align="right">10.819149</td>
+</tr>
+<tr class="odd">
+<td align="left">Manhattan</td>
+<td align="right">3667</td>
+<td align="right">1.795200</td>
+<td align="right">17.464773</td>
+</tr>
+<tr class="even">
+<td align="left">Queens</td>
+<td align="right">1228</td>
+<td align="right">1.478013</td>
+<td align="right">17.363115</td>
+</tr>
+<tr class="odd">
+<td align="left">Staten Island</td>
+<td align="right">345</td>
+<td align="right">1.228986</td>
+<td align="right">16.597101</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>baseline_table = left_join(aed_summary, traffic_summary, by = &quot;borough&quot;)
+
+knitr::kable(
+  baseline_table,
+  caption = &quot;Table 4: Baseline summary of AED and traffic characteristics by borough&quot;
+)</code></pre>
+<table style="width:100%;">
+<caption>Table 4: Baseline summary of AED and traffic characteristics by
+borough</caption>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="11%" />
+<col width="13%" />
+<col width="14%" />
+<col width="10%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">borough</th>
+<th align="right">aed_locations</th>
+<th align="right">mean_num_aeds</th>
+<th align="right">mean_trained</th>
+<th align="right">n_measurements</th>
+<th align="right">unique_segments</th>
+<th align="right">mean_volume</th>
+<th align="right">median_volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Bronx</td>
+<td align="right">988</td>
+<td align="right">1.042510</td>
+<td align="right">9.966599</td>
+<td align="right">64572</td>
+<td align="right">88</td>
+<td align="right">86.53117</td>
+<td align="right">55</td>
+</tr>
+<tr class="even">
+<td align="left">Brooklyn</td>
+<td align="right">1411</td>
+<td align="right">1.102764</td>
+<td align="right">10.819149</td>
+<td align="right">160661</td>
+<td align="right">221</td>
+<td align="right">122.67490</td>
+<td align="right">61</td>
+</tr>
+<tr class="odd">
+<td align="left">Manhattan</td>
+<td align="right">3667</td>
+<td align="right">1.795200</td>
+<td align="right">17.464773</td>
+<td align="right">88011</td>
+<td align="right">115</td>
+<td align="right">147.59724</td>
+<td align="right">93</td>
+</tr>
+<tr class="even">
+<td align="left">Queens</td>
+<td align="right">1228</td>
+<td align="right">1.478013</td>
+<td align="right">17.363115</td>
+<td align="right">162987</td>
+<td align="right">186</td>
+<td align="right">117.74871</td>
+<td align="right">57</td>
+</tr>
+<tr class="odd">
+<td align="left">Staten Island</td>
+<td align="right">345</td>
+<td align="right">1.228986</td>
+<td align="right">16.597101</td>
+<td align="right">24494</td>
+<td align="right">33</td>
+<td align="right">108.96228</td>
+<td align="right">67</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
