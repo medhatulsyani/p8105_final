@@ -7,10 +7,10 @@ navbar:
       href: index.html
     - text: "Proposal"
       href: project_proposal.html   
-    - text: "Data analysis"
+    - text: "Data exploratory & analysis"
       menu:
         - text: "Exploratory overview"
-          href: exploratory-datasets.html    
+          href: exploratory-datasets.html 
   right:
     - text: "GitHub"
       href: "https://github.com/medhatulsyani/p8105_final"

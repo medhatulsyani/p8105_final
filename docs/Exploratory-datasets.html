@@ -35,6 +35,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -326,7 +328,7 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Data analysis
+    Data exploratory &amp; analysis
      
     <span class="caret"></span>
   </a>
@@ -356,429 +358,307 @@ Exploratory Data</h1>
 </div>
 
 
-<p><strong>Library</strong></p>
-<pre class="r"><code>library(tidyverse)
-library(janitor)
-library(stringr)</code></pre>
-<p><strong>Import data</strong></p>
-<pre class="r"><code>zip_path = &quot;./data/Automated_Traffic_Volume_Counts.zip&quot;
-csv_filename_in_zip = &quot;Automated_Traffic_Volume_Counts.csv&quot;
-traffic_volume_df = read_csv(unz(description = zip_path, filename = csv_filename_in_zip))
-
-
-aed_inventory_df = read_csv(&quot;./data/NYC_Automated_External_Defibrillator_(AED)_Inventory.csv&quot;)
-leading_causes_df = read_csv(&quot;./data/NYC_Leading_Causes_of_Death.csv&quot;)
-
-traffic_volume_df |&gt; glimpse()</code></pre>
-<pre><code>## Rows: 1,838,386
-## Columns: 14
-## $ RequestID &lt;dbl&gt; 22562, 22562, 22562, 22562, 22562, 22562, 22562, 22562, 2256…
-## $ Boro      &lt;chr&gt; &quot;Queens&quot;, &quot;Queens&quot;, &quot;Queens&quot;, &quot;Queens&quot;, &quot;Queens&quot;, &quot;Queens&quot;, …
-## $ Yr        &lt;dbl&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, …
-## $ M         &lt;dbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, …
-## $ D         &lt;dbl&gt; 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, …
-## $ HH        &lt;dbl&gt; 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 1…
-## $ MM        &lt;dbl&gt; 45, 0, 15, 30, 45, 0, 15, 30, 45, 0, 15, 30, 45, 0, 15, 30, …
-## $ Vol       &lt;dbl&gt; 260, 243, 245, 304, 312, 331, 331, 344, 397, 356, 394, 399, …
-## $ SegmentID &lt;dbl&gt; 155613, 155613, 155613, 155613, 155613, 155613, 155613, 1556…
-## $ WktGeom   &lt;chr&gt; &quot;POINT (1059678.8154876027 198480.09766927382)&quot;, &quot;POINT (105…
-## $ street    &lt;chr&gt; &quot;HEMPSTEAD AVENUE&quot;, &quot;HEMPSTEAD AVENUE&quot;, &quot;HEMPSTEAD AVENUE&quot;, …
-## $ fromSt    &lt;chr&gt; &quot;Cross Island Parkway&quot;, &quot;Cross Island Parkway&quot;, &quot;Cross Islan…
-## $ toSt      &lt;chr&gt; &quot;Cross Is Pkwy Nb En Hempstead Wb&quot;, &quot;Cross Is Pkwy Nb En Hem…
-## $ Direction &lt;chr&gt; &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, &quot;WB&quot;, …</code></pre>
-<pre class="r"><code>aed_inventory_df  |&gt; glimpse()</code></pre>
-<pre><code>## Rows: 7,642
-## Columns: 17
-## $ Entity_Name          &lt;chr&gt; &quot;CFN DAP&quot;, &quot;Olmstead Condominium&quot;, &quot;Citywide&quot;, &quot;M…
-## $ Address              &lt;chr&gt; &quot;1 FORDHAM PLAZA&quot;, &quot;382 CENTRAL PARK WEST&quot;, &quot;63 F…
-## $ Floor                &lt;chr&gt; &quot;7th Floor&quot;, &quot;Gym&quot;, NA, &quot;-&quot;, &quot;Ground&quot;, NA, &quot;331&quot;,…
-## $ Borough              &lt;chr&gt; &quot;Bronx&quot;, &quot;Manhattan&quot;, &quot;Brooklyn&quot;, &quot;Manhattan&quot;, &quot;M…
-## $ State                &lt;chr&gt; &quot;New York&quot;, &quot;New York&quot;, &quot;New York&quot;, &quot;New York&quot;, &quot;…
-## $ Zip                  &lt;chr&gt; &quot;10458&quot;, &quot;10001&quot;, &quot;11205&quot;, &quot;10001&quot;, &quot;10065&quot;, &quot;100…
-## $ AED_NumPersonTrained &lt;dbl&gt; 4, 17, 0, 38, 12, 19, 20, 3, 7, 4, 1, 12, 2, 9, 2…
-## $ AED_NumAeds          &lt;dbl&gt; 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-## $ Latitude             &lt;dbl&gt; 40.86073, 40.79347, 40.69801, 40.74773, 40.76459,…
-## $ Longitude            &lt;dbl&gt; -73.88958, -73.96567, -73.97499, -73.99672, -73.9…
-## $ Community_District   &lt;dbl&gt; 206, 107, 302, 104, 108, 107, 204, 105, 108, 105,…
-## $ Council_District     &lt;dbl&gt; 15, 7, 33, 3, 4, 6, 16, 6, 4, 4, 3, 34, 13, 42, 1…
-## $ Census_Tract_2010    &lt;dbl&gt; 38700, 18500, 54300, 9700, 11402, 14500, 18900, 1…
-## $ NTA_Code             &lt;chr&gt; &quot;BX06&quot;, &quot;MN12&quot;, &quot;BK99&quot;, &quot;MN13&quot;, &quot;MN40&quot;, &quot;MN14&quot;, &quot;…
-## $ BBL                  &lt;dbl&gt; 2030330053, 1018337501, 3020230001, 1007510001, 1…
-## $ BIN                  &lt;dbl&gt; 2088325, 1074358, 3000000, 1082793, 1042055, 1076…
-## $ `Location Point`     &lt;chr&gt; &quot;POINT (-73.88958427 40.86073227)&quot;, &quot;POINT (-73.9…</code></pre>
-<pre class="r"><code>leading_causes_df |&gt; glimpse()</code></pre>
-<pre><code>## Rows: 2,102
-## Columns: 7
-## $ Year                      &lt;dbl&gt; 2021, 2021, 2021, 2021, 2021, 2021, 2021, 20…
-## $ `Leading Cause`           &lt;chr&gt; &quot;Diseases of Heart (I00-I09, I11, I13, I20-I…
-## $ Sex                       &lt;chr&gt; &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, …
-## $ `Race Ethnicity`          &lt;chr&gt; &quot;Not Stated/Unknown&quot;, &quot;Not Stated/Unknown&quot;, …
-## $ Deaths                    &lt;chr&gt; &quot;190&quot;, &quot;7&quot;, &quot;113&quot;, &quot;84&quot;, &quot;11&quot;, &quot;14&quot;, &quot;66&quot;, &quot;…
-## $ `Death Rate`              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-## $ `Age Adjusted Death Rate` &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
-<p><strong>Clean data</strong></p>
-<pre class="r"><code>traffic_clean = traffic_volume_df |&gt;
-  clean_names() |&gt;
-  filter(yr &gt;= 2019, yr &lt;= 2024) |&gt;
-  mutate(boro = str_to_title(boro))
-
-aed_clean = aed_inventory_df |&gt;
-  clean_names() |&gt;
-  filter(!is.na(latitude), !is.na(longitude)) |&gt;
-  mutate(borough = str_to_title(borough))
-
-leading_clean = leading_causes_df |&gt;
-  clean_names() |&gt;
-  mutate(
-  deaths = as.numeric(deaths),
-  death_rate = as.numeric(death_rate),
-  age_adjusted_death_rate = as.numeric(age_adjusted_death_rate)
-  )</code></pre>
-<pre><code>## Warning: There were 3 warnings in `mutate()`.
-## The first warning was:
-## ℹ In argument: `deaths = as.numeric(deaths)`.
-## Caused by warning:
-## ! NAs introduced by coercion
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 2 remaining warnings.</code></pre>
-<div id="summarize-table" class="section level3">
-<h3>Summarize table</h3>
-<p><strong>Leading Causes of Death Summary by year</strong></p>
-<pre class="r"><code># Create a clean disease name without ICD codes
-leading_clean2 = leading_clean |&gt;
-  mutate(
-    cause_name = str_replace(leading_cause, &quot; \\(.*\\)$&quot;, &quot;&quot;)
-  )
-
-# Summarise total deaths by disease name for 2021
-death_baseline = leading_clean2 |&gt;
-  filter(year == 2021) |&gt;
-  group_by(cause_name) |&gt;
-  summarise(
-    total_deaths = sum(deaths, na.rm = TRUE),
-    .groups = &quot;drop&quot;
-  ) |&gt;
-  arrange(desc(total_deaths))
-
-knitr::kable(
-  death_baseline,
-  caption = &quot;Table 1: Leading causes of death in NYC, 2021 (disease names only)&quot;
-)</code></pre>
-<table>
-<caption>Table 1: Leading causes of death in NYC, 2021 (disease names
-only)</caption>
-<colgroup>
-<col width="88%" />
-<col width="11%" />
-</colgroup>
+<div id="leading-causes-of-death-in-new-york-city-in-2021"
+class="section level3">
+<h3>1) Leading causes of death in New York City in 2021</h3>
+<table class="table table-striped table-hover table-bordered" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Table 1. Leading causes of death in NYC, 2021
+</caption>
 <thead>
-<tr class="header">
-<th align="left">cause_name</th>
-<th align="right">total_deaths</th>
+<tr>
+<th style="text-align:left;">
+Cause of death
+</th>
+<th style="text-align:left;">
+Total deaths (2021)
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Diseases of Heart</td>
-<td align="right">16568</td>
+<tr>
+<td style="text-align:left;">
+Diseases of Heart
+</td>
+<td style="text-align:left;">
+16,568
+</td>
 </tr>
-<tr class="even">
-<td align="left">All Other Causes</td>
-<td align="right">14240</td>
+<tr>
+<td style="text-align:left;">
+All Other Causes
+</td>
+<td style="text-align:left;">
+14,240
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Malignant Neoplasms</td>
-<td align="right">11578</td>
+<tr>
+<td style="text-align:left;">
+Malignant Neoplasms
+</td>
+<td style="text-align:left;">
+11,578
+</td>
 </tr>
-<tr class="even">
-<td align="left">Covid-19</td>
-<td align="right">8229</td>
+<tr>
+<td style="text-align:left;">
+Covid-19
+</td>
+<td style="text-align:left;">
+8,229
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Mental and Behavioral Disorders due to Accidental
-Poisoning and Other Psychoactive Substance Use</td>
-<td align="right">2692</td>
+<tr>
+<td style="text-align:left;">
+Mental and Behavioral Disorders due to Accidental Poisoning and Other
+Psychoactive Substance Use
+</td>
+<td style="text-align:left;">
+2,692
+</td>
 </tr>
-<tr class="even">
-<td align="left">Cerebrovascular Disease</td>
-<td align="right">2149</td>
+<tr>
+<td style="text-align:left;">
+Cerebrovascular Disease
+</td>
+<td style="text-align:left;">
+2,149
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Influenza</td>
-<td align="right">1628</td>
+<tr>
+<td style="text-align:left;">
+Influenza
+</td>
+<td style="text-align:left;">
+1,628
+</td>
 </tr>
-<tr class="even">
-<td align="left">Diabetes Mellitus</td>
-<td align="right">1535</td>
+<tr>
+<td style="text-align:left;">
+Diabetes Mellitus
+</td>
+<td style="text-align:left;">
+1,535
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Chronic Lower Respiratory Diseases</td>
-<td align="right">1212</td>
+<tr>
+<td style="text-align:left;">
+Chronic Lower Respiratory Diseases
+</td>
+<td style="text-align:left;">
+1,212
+</td>
 </tr>
-<tr class="even">
-<td align="left">Essential Hypertension and Renal Diseases</td>
-<td align="right">1150</td>
+<tr>
+<td style="text-align:left;">
+Essential Hypertension and Renal Diseases
+</td>
+<td style="text-align:left;">
+1,150
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Accidents Except Drug Poisoning</td>
-<td align="right">1112</td>
+<tr>
+<td style="text-align:left;">
+Accidents Except Drug Poisoning
+</td>
+<td style="text-align:left;">
+1,112
+</td>
 </tr>
-<tr class="even">
-<td align="left">Alzheimer’s Disease</td>
-<td align="right">822</td>
+<tr>
+<td style="text-align:left;">
+Alzheimer’s Disease
+</td>
+<td style="text-align:left;">
+822
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Assault</td>
-<td align="right">291</td>
+<tr>
+<td style="text-align:left;">
+Assault
+</td>
+<td style="text-align:left;">
+291
+</td>
 </tr>
-<tr class="even">
-<td align="left">Chronic Liver Disease and Cirrhosis</td>
-<td align="right">188</td>
+<tr>
+<td style="text-align:left;">
+Chronic Liver Disease and Cirrhosis
+</td>
+<td style="text-align:left;">
+188
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Intentional Self-Harm</td>
-<td align="right">79</td>
+<tr>
+<td style="text-align:left;">
+Intentional Self-Harm
+</td>
+<td style="text-align:left;">
+79
+</td>
 </tr>
-<tr class="even">
-<td align="left">Chronic Liver Diseases and Cirrhosis</td>
-<td align="right">25</td>
+<tr>
+<td style="text-align:left;">
+Chronic Liver Diseases and Cirrhosis
+</td>
+<td style="text-align:left;">
+25
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Septicemia</td>
-<td align="right">24</td>
+<tr>
+<td style="text-align:left;">
+Septicemia
+</td>
+<td style="text-align:left;">
+24
+</td>
 </tr>
-<tr class="even">
-<td align="left">Mental and Behavioral Disorders due to Use of
-Alcohol</td>
-<td align="right">16</td>
+<tr>
+<td style="text-align:left;">
+Mental and Behavioral Disorders due to Use of Alcohol
+</td>
+<td style="text-align:left;">
+16
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Certain Conditions Originating in the Perinatal
-Period</td>
-<td align="right">15</td>
+<tr>
+<td style="text-align:left;">
+Certain Conditions Originating in the Perinatal Period
+</td>
+<td style="text-align:left;">
+15
+</td>
 </tr>
-<tr class="even">
-<td align="left">Human Immunodeficiency Viruses Diseases</td>
-<td align="right">7</td>
+<tr>
+<td style="text-align:left;">
+Human Immunodeficiency Viruses Diseases
+</td>
+<td style="text-align:left;">
+7
+</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Top 1: Diseases of Heart</strong> —&gt; the importance of
-having AED</p>
+<p><strong>NOTE:</strong> Diseases of heart appear at the top of this
+list, supporting the relevance of AED accessibility in NYC.</p>
 </div>
-<div id="main-analysis-summary" class="section level3">
-<h3>Main analysis summary</h3>
-<p><strong>Traffic volume summary by borough</strong></p>
-<pre class="r"><code>traffic_summary = traffic_clean |&gt;
-  group_by(boro) |&gt;
-  summarise(
-    n_measurements = n(),
-    unique_segments = n_distinct(segment_id),
-    mean_volume = mean(vol, na.rm = TRUE),
-    median_volume = median(vol, na.rm = TRUE)
-  ) |&gt;
-rename(borough = boro)
-
-knitr::kable(
-  traffic_summary,
-  caption = &quot;Table 2: Traffic volume summary by borough (2019–2024)&quot;
-)</code></pre>
-<table>
-<caption>Table 2: Traffic volume summary by borough
-(2019–2024)</caption>
-<colgroup>
-<col width="19%" />
-<col width="21%" />
-<col width="22%" />
-<col width="16%" />
-<col width="19%" />
-</colgroup>
+<div id="traffic-volume-summary-by-borough-2019---2024"
+class="section level3">
+<h3>2) Traffic volume summary by borough (2019 - 2024)</h3>
+<table class="table table-striped table-hover table-bordered" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Table 2. Traffic volume summary by borough, 2019–2024
+</caption>
 <thead>
-<tr class="header">
-<th align="left">borough</th>
-<th align="right">n_measurements</th>
-<th align="right">unique_segments</th>
-<th align="right">mean_volume</th>
-<th align="right">median_volume</th>
+<tr>
+<th style="text-align:left;">
+Borough
+</th>
+<th style="text-align:left;">
+Number of measurements
+</th>
+<th style="text-align:right;">
+Number of monitored segments
+</th>
+<th style="text-align:right;">
+Mean traffic volume
+</th>
+<th style="text-align:right;">
+Median traffic volume
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Bronx</td>
-<td align="right">64572</td>
-<td align="right">88</td>
-<td align="right">86.53117</td>
-<td align="right">55</td>
+<tr>
+<td style="text-align:left;">
+Bronx
+</td>
+<td style="text-align:left;">
+64,572
+</td>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:right;">
+86.53117
+</td>
+<td style="text-align:right;">
+55
+</td>
 </tr>
-<tr class="even">
-<td align="left">Brooklyn</td>
-<td align="right">160661</td>
-<td align="right">221</td>
-<td align="right">122.67490</td>
-<td align="right">61</td>
+<tr>
+<td style="text-align:left;">
+Brooklyn
+</td>
+<td style="text-align:left;">
+160,661
+</td>
+<td style="text-align:right;">
+221
+</td>
+<td style="text-align:right;">
+122.67490
+</td>
+<td style="text-align:right;">
+61
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Manhattan</td>
-<td align="right">88011</td>
-<td align="right">115</td>
-<td align="right">147.59724</td>
-<td align="right">93</td>
+<tr>
+<td style="text-align:left;">
+Manhattan
+</td>
+<td style="text-align:left;">
+88,011
+</td>
+<td style="text-align:right;">
+115
+</td>
+<td style="text-align:right;">
+147.59724
+</td>
+<td style="text-align:right;">
+93
+</td>
 </tr>
-<tr class="even">
-<td align="left">Queens</td>
-<td align="right">162987</td>
-<td align="right">186</td>
-<td align="right">117.74871</td>
-<td align="right">57</td>
+<tr>
+<td style="text-align:left;">
+Queens
+</td>
+<td style="text-align:left;">
+162,987
+</td>
+<td style="text-align:right;">
+186
+</td>
+<td style="text-align:right;">
+117.74871
+</td>
+<td style="text-align:right;">
+57
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Staten Island</td>
-<td align="right">24494</td>
-<td align="right">33</td>
-<td align="right">108.96228</td>
-<td align="right">67</td>
-</tr>
-</tbody>
-</table>
-<p><strong>AED inventory summary by borough</strong></p>
-<pre class="r"><code>aed_summary = aed_clean |&gt;
-  group_by(borough) |&gt;
-  summarise(
-    aed_locations = n(),
-    mean_num_aeds = mean(aed_num_aeds, na.rm = TRUE),
-    mean_trained  = mean(aed_num_person_trained, na.rm = TRUE)
-  )
-
-knitr::kable(
-  aed_summary,
-  caption = &quot;Table 3: AED inventory summary by borough&quot;
-)</code></pre>
-<table>
-<caption>Table 3: AED inventory summary by borough</caption>
-<thead>
-<tr class="header">
-<th align="left">borough</th>
-<th align="right">aed_locations</th>
-<th align="right">mean_num_aeds</th>
-<th align="right">mean_trained</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Bronx</td>
-<td align="right">988</td>
-<td align="right">1.042510</td>
-<td align="right">9.966599</td>
-</tr>
-<tr class="even">
-<td align="left">Brooklyn</td>
-<td align="right">1411</td>
-<td align="right">1.102764</td>
-<td align="right">10.819149</td>
-</tr>
-<tr class="odd">
-<td align="left">Manhattan</td>
-<td align="right">3667</td>
-<td align="right">1.795200</td>
-<td align="right">17.464773</td>
-</tr>
-<tr class="even">
-<td align="left">Queens</td>
-<td align="right">1228</td>
-<td align="right">1.478013</td>
-<td align="right">17.363115</td>
-</tr>
-<tr class="odd">
-<td align="left">Staten Island</td>
-<td align="right">345</td>
-<td align="right">1.228986</td>
-<td align="right">16.597101</td>
+<tr>
+<td style="text-align:left;">
+Staten Island
+</td>
+<td style="text-align:left;">
+24,494
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+108.96228
+</td>
+<td style="text-align:right;">
+67
+</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>baseline_table = left_join(aed_summary, traffic_summary, by = &quot;borough&quot;)
-
-knitr::kable(
-  baseline_table,
-  caption = &quot;Table 4: Baseline summary of AED and traffic characteristics by borough&quot;
-)</code></pre>
-<table style="width:100%;">
-<caption>Table 4: Baseline summary of AED and traffic characteristics by
-borough</caption>
-<colgroup>
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="11%" />
-<col width="13%" />
-<col width="14%" />
-<col width="10%" />
-<col width="12%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">borough</th>
-<th align="right">aed_locations</th>
-<th align="right">mean_num_aeds</th>
-<th align="right">mean_trained</th>
-<th align="right">n_measurements</th>
-<th align="right">unique_segments</th>
-<th align="right">mean_volume</th>
-<th align="right">median_volume</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Bronx</td>
-<td align="right">988</td>
-<td align="right">1.042510</td>
-<td align="right">9.966599</td>
-<td align="right">64572</td>
-<td align="right">88</td>
-<td align="right">86.53117</td>
-<td align="right">55</td>
-</tr>
-<tr class="even">
-<td align="left">Brooklyn</td>
-<td align="right">1411</td>
-<td align="right">1.102764</td>
-<td align="right">10.819149</td>
-<td align="right">160661</td>
-<td align="right">221</td>
-<td align="right">122.67490</td>
-<td align="right">61</td>
-</tr>
-<tr class="odd">
-<td align="left">Manhattan</td>
-<td align="right">3667</td>
-<td align="right">1.795200</td>
-<td align="right">17.464773</td>
-<td align="right">88011</td>
-<td align="right">115</td>
-<td align="right">147.59724</td>
-<td align="right">93</td>
-</tr>
-<tr class="even">
-<td align="left">Queens</td>
-<td align="right">1228</td>
-<td align="right">1.478013</td>
-<td align="right">17.363115</td>
-<td align="right">162987</td>
-<td align="right">186</td>
-<td align="right">117.74871</td>
-<td align="right">57</td>
-</tr>
-<tr class="odd">
-<td align="left">Staten Island</td>
-<td align="right">345</td>
-<td align="right">1.228986</td>
-<td align="right">16.597101</td>
-<td align="right">24494</td>
-<td align="right">33</td>
-<td align="right">108.96228</td>
-<td align="right">67</td>
-</tr>
-</tbody>
-</table>
+<p><img src="Exploratory-datasets_files/figure-html/traffic_hist-1.png" width="672" /></p>
+<p><img src="Exploratory-datasets_files/figure-html/traffic_vol_hist-1.png" width="672" /></p>
+<p><img src="Exploratory-datasets_files/figure-html/trafficbox-1.png" width="672" /></p>
 </div>
 
 
