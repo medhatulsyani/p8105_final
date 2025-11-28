@@ -1,7 +1,0 @@
----
-title: "p8105_final"
-output: github_document
-date: "2025-11-04"
----
-
-
