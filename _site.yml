@@ -14,7 +14,7 @@ navbar:
   right:
     - text: "GitHub"
       href: "https://github.com/medhatulsyani/p8105_final"
-
+      
 output:
   html_document:
     theme: flatly

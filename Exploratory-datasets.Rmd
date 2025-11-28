@@ -1,9 +1,17 @@
 ---
-title: "AED Accessibility and Traffic in NYC: Exploratory Data"
+title: "**Exploratory Overview**"
 output: 
   html_document:
     code_folding: hide
 ---
+
+This page provides an exploratory summary of three datasets used in this project:
+
+(1) NYC Leading Causes of Death in 2021
+(2) Automated Traffic Volume Counts (2019–2024)
+(3) NYC Automated External Defibrillator (AED) Inventory
+
+These summaries help us understand patterns of mortality burden, congestion levels, and AED accessibility across boroughs, and they motivate our later analysis linking traffic conditions to emergency response readiness.
 
 ```{r setup, include=FALSE}
 ##Setup necessary libraries
@@ -12,6 +20,7 @@ library(tidyverse)
 library(janitor)
 library(stringr)
 library(kableExtra)
+library(plotly)
 ```
 
 ```{r import, include=FALSE}
@@ -51,7 +60,10 @@ leading_clean = leading_causes_df |>
     )
 ```
 
-### **1) Leading causes of death in New York City in 2021**
+
+### <img src="icons/heart-disease.png" width="40" style="vertical-align:-10px;"> **Leading causes of death**
+
+In 2021, diseases of the heart were the leading cause of death in New York City, with more than 16,500 deaths—far exceeding all other causes. Malignant neoplasms and Covid-19 also accounted for substantial mortality. These patterns highlight the large burden of cardiovascular disease and reinforce the public health significance of rapid intervention during cardiac emergencies. Because survival during cardiac arrest depends strongly on timely defibrillation, these data support our focus on evaluating AED accessibility across boroughs.
 
 ```{r leading_sum}
 leading_clean2 = leading_clean |>
@@ -89,11 +101,29 @@ death_baseline_display |>
 
 ```
 
-**NOTE:** Diseases of heart appear at the top of this list, supporting the relevance of AED accessibility in NYC.
+```{r leading_bar}
+death_baseline |>
+  slice_max(order_by = total_deaths, n = 10) |>
+  ggplot(aes(
+    x    = reorder(cause_name, total_deaths),
+    y    = total_deaths,
+    fill = total_deaths          # map fill to deaths
+  )) +
+  geom_col() +
+  coord_flip() +
+  theme_minimal() +
+  scale_x_discrete(labels = ~ str_wrap(., width = 35)) +  # wrap labels
+  scale_fill_gradient(low = "#fee0d2", high = "#de2d26") +
+  guides(fill = "none") +
+  labs(
+    title = "Figure 1: Top 10 causes of death in NYC, 2021",
+    x     = "Cause of death",
+    y     = "Total deaths"
+  )
+```
 
-### **2) Traffic volume summary by borough (2019 - 2024)**
+### <img src="icons/warning.png" width="40" style="vertical-align:-10px;"> **Traffic volume summary**
 ```{r traffic_sum}
-## Bar plot: Number of traffic measurements by borough (2019–2024)
 traffic_summary = traffic_clean |>
   group_by(boro) |>
   summarise(
@@ -106,52 +136,28 @@ traffic_summary = traffic_clean |>
   rename(borough = boro)
 
 traffic_summary_display = traffic_summary |>
-  mutate(
-    n_measurements = format(n_measurements, big.mark = ",", scientific = FALSE)
-    ) |>
   rename(
     Borough = borough,
-    `Number of measurements` = n_measurements,
+    `Number of measurements`     = n_measurements,
     `Number of monitored segments` = unique_segments,
-    `Mean traffic volume` = mean_volume,
-    `Median traffic volume` = median_volume
-    )
+    `Mean traffic volume`        = mean_volume,
+    `Median traffic volume`      = median_volume
+  )
 
 traffic_summary_display |>
   kable(
-    caption = "Table 2. Traffic volume summary by borough, 2019–2024",
-    format = "html"
+    caption     = "Table 2: Traffic volume summary by borough, 2019–2024",
+    format      = "html",
+    digits      = 2,
+    format.args = list(big.mark = ",")   # add commas to all numeric cols
   ) |>
-kable_styling(
-  full_width = FALSE,
-  bootstrap_options = c("striped", "hover", "bordered")
+  kable_styling(
+    full_width = FALSE,
+    bootstrap_options = c("striped", "hover", "bordered")
   )
 ```
 
-```{r traffic_hist}
-## Bar plot: Number of traffic measurements by borough (2019–2024)
-traffic_summary |>
-  mutate(
-    borough = forcats::fct_reorder(borough, n_measurements)
-    ) |>
-  ggplot(aes(x = borough, y = n_measurements, fill = borough)) +
-  geom_col() +
-  theme_minimal() +
-  labs(
-    title = "Figure 1: Number of traffic measurements by borough (2019–2024)",
-    x     = "Borough",
-    y     = "Number of measurements",
-    fill  = "Borough"
-    ) +
-  theme(
-    axis.text.x      = element_blank(),
-    legend.position  = "bottom"
-    )
-```
-
-
 ```{r traffic_vol_hist}
-## Distribution of traffic volume (zoomed in)
 traffic_clean |>
   ggplot(aes(x = vol)) +
   geom_histogram(
@@ -162,21 +168,25 @@ traffic_clean |>
   coord_cartesian(xlim = c(0, 400)) +
   theme_minimal() +
   labs(
-    title = "Figure 2: Distribution of traffic volume (0–400, all boroughs, 2019–2024)",
+    title = "Figure 3: Distribution of traffic volume (0–400, all boroughs, 2019–2024)",
     x     = "Traffic volume",
     y     = "Count"
   )
 ```
 
+Traffic volume follows a right-skewed distribution: most roadway observations
+fall below 100 vehicles, but a long tail extends toward very high-volume
+locations. This indicates that while many intersections experience moderate
+traffic, a smaller subset carries extremely heavy congestion. These high-volume areas could pose challenges for rapid emergency response during peak hours.
+
 ```{r trafficbox}
-## Boxplot of traffic volume by borough (zoomed in)
 traffic_clean |>
   ggplot(aes(x = boro, y = vol, fill = boro)) +
   geom_boxplot(outlier.shape = NA, alpha = 0.8) +
   coord_cartesian(ylim = c(0, 400)) +
   theme_minimal() +
   labs(
-    title = "Figure 3: Traffic volume by borough, 2019–2024 (0–400)",
+    title = "Figure 4: Traffic volume by borough, 2019–2024 (0–400)",
     x     = "Borough",
     y     = "Traffic volume",
     fill  = "Borough"
@@ -186,7 +196,12 @@ traffic_clean |>
   )
 ```
 
-### **3) AED summary by borough**
+Traffic volume varies meaningfully by borough. Manhattan shows the highest
+median traffic volume and the widest spread, consistent with its mix of dense
+roadways, business districts, and tourism. Queens and Brooklyn display moderate traffic variability, while the Bronx and Staten Island have lower medians and narrower ranges. These differences highlight borough-specific traffic patterns that may affect travel times for emergency services.
+
+
+### <img src="icons/aed.png" width="40" style="vertical-align:-10px;"> **AED summary**
 ```{r aedsum}
 aed_summary = aed_clean |>
   group_by(borough) |>
@@ -216,3 +231,25 @@ aed_summary_display |>
   )
 ```
 
+```{r aed_pie, echo = FALSE}
+aed_summary |>
+  plot_ly(
+    labels = ~borough,
+    values = ~n_facilities,
+    type   = "pie",
+    textinfo  = "label+percent",
+    hoverinfo = "label+value+percent"
+  ) |>
+  layout(
+    title = "Figure 5: Distribution of AED-equipped sites by borough",
+    legend = list(orientation = "h",
+                  x = 0.5, xanchor = "center",
+                  y = -0.1)
+  )
+```
+
+AED-equipped facilities are unevenly distributed across NYC. Manhattan has by
+far the highest number of AED sites and the highest average number of trained
+responders per facility. Queens and Brooklyn also show substantial AED coverage, while the Bronx and Staten Island have the lowest counts. These disparities may translate into unequal access to life-saving defibrillation, with some boroughs potentially facing delayed response during cardiac emergencies.
+
+Across data sources, a consistent pattern emerges. Cardiovascular disease is the leading cause of death in NYC, yet access to AEDs and trained responders is not evenly distributed. Manhattan has the strongest AED coverage but also the highest traffic congestion, while low-traffic boroughs like Staten Island have fewer AED resources. These findings underscore the importance of examining how AED availability aligns with traffic conditions and population needs.
