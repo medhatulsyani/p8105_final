@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -29,11 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
@@ -230,73 +226,7 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
 
 
 
@@ -306,16 +236,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -364,14 +284,6 @@ div.tocify {
 </div><!--/.navbar -->
 
 <div id="header">
-
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
 
@@ -801,11 +713,10 @@ boroughs from 2019 to 2024. The shape of the distribution is
 right-skewed. Most traffic counts are below 100 vehicles, which we can
 consider low or medium traffic. Fewer observations fall between 100 and
 200 vehicles, and only a small number go above 200, which we consider
-very high traffic.</p>
-<p>This means that while many streets are not very busy, some specific
-areas experience heavy congestion. These high-traffic areas are more
-likely to delay emergency vehicles, such as ambulances, from reaching
-patients on time.</p>
+very high traffic. This means that while many streets are not very busy,
+some specific areas experience heavy congestion. These high-traffic
+areas are more likely to delay emergency vehicles, such as ambulances,
+from reaching patients on time.</p>
 <pre class="r"><code>traffic_clean |&gt;
   ggplot(aes(x = boro, y = vol, fill = boro)) +
   geom_boxplot(outlier.shape = NA, alpha = 0.8) +
@@ -847,18 +758,14 @@ ggplot(traffic_trend, aes(x = yr, y = mean_volume, color = boro, group = boro)) 
 <p><img src="Exploratory-datasets_files/figure-html/traffictrend_covid-1.png" width="672" /></p>
 <p><em>Figure 5</em> shows how traffic changed from 2019 to 2024. All
 boroughs show a drop in 2020 because of the COVID-19 shutdown. After
-that, traffic increases again but follows different patterns:</p>
-<ul>
-<li>Manhattan always has the highest levels and the biggest changes from
-year to year.</li>
-<li>Queens and Brooklyn increase in some years, especially around
-2023.</li>
-<li>The Bronx remains more stable with lower overall traffic.</li>
-<li>Staten Island saw a substantial increase in 2022, followed by a
-significant drop, which could be due to fewer monitored locations.</li>
-</ul>
-<p>These trends help us understand how changes in traffic over time
-might affect AED use or emergency response.</p>
+that, traffic increases again but follows different patterns: *
+Manhattan always has the highest levels and the biggest changes from
+year to year. * Queens and Brooklyn increase in some years, especially
+around 2023. * The Bronx remains more stable with lower overall traffic.
+* Staten Island saw a substantial increase in 2022, followed by a
+significant drop, which could be due to fewer monitored locations. These
+trends help us understand how changes in traffic over time might affect
+AED use or emergency response.</p>
 </div>
 <div id="aed-summary" class="section level3">
 <h3><img src="icons/aed.png" width="40" style="vertical-align:-10px;">
@@ -866,7 +773,7 @@ might affect AED use or emergency response.</p>
 <pre class="r"><code>aed_summary = aed_clean |&gt;
   group_by(borough) |&gt;
   summarise(
-    n_facilities        = n(),                               # number of AED-equipped locations
+    n_facilities        = n(),  
     mean_aeds_per_site  = mean(aed_num_aeds, na.rm = TRUE),
     mean_trained_people = mean(aed_num_person_trained, na.rm = TRUE),
     .groups = &quot;drop&quot;
@@ -982,32 +889,280 @@ Staten Island
 </tr>
 </tbody>
 </table>
-<div class="plotly html-widget html-fill-item" id="htmlwidget-5329edcd767160002ddc" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-5329edcd767160002ddc">{"x":{"visdat":{"4488bcb6719":["function () ","plotlyVisDat"]},"cur_data":"4488bcb6719","attrs":{"4488bcb6719":{"labels":{},"values":{},"textinfo":"label+percent","hoverinfo":"label+value+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Figure 6: Distribution of AED-equipped sites by borough","legend":{"orientation":"h","x":0.5,"xanchor":"center","y":-0.10000000000000001},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"values":[988,1411,3667,1228,345],"textinfo":"label+percent","hoverinfo":["label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent"],"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-f5b2da008317ae718ca6" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f5b2da008317ae718ca6">{"x":{"visdat":{"76e4229d15c2":["function () ","plotlyVisDat"]},"cur_data":"76e4229d15c2","attrs":{"76e4229d15c2":{"labels":{},"values":{},"textinfo":"label+percent","hoverinfo":"label+value+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Figure 6: Distribution of AED-equipped sites by borough","legend":{"orientation":"h","x":0.5,"xanchor":"center","y":-0.10000000000000001},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"values":[988,1411,3667,1228,345],"textinfo":"label+percent","hoverinfo":["label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent"],"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <p><em>Table 3</em> shows that AED availability is not equal across
 boroughs. Manhattan has the most AED sites (more than 3,600 locations).
 Queens and Brooklyn have moderate coverage, but the Bronx and Staten
 Island have the fewest AED sites. <em>Figure 6</em>, the pie chart,
 makes these differences easy to see. Manhattan takes up the largest
-share of AED locations.</p>
-<p>These differences suggest that some boroughs may have better access
-to life-saving devices than others. This matters because quick access to
-an AED is critical during a cardiac emergency, where every minute
-affects survival.</p>
-<p>When we compare all data sources together, a consistent pattern
-appears. Cardiovascular disease is the leading cause of death in NYC,
-yet AED access and trained responders are not evenly distributed.
-Manhattan has the strongest AED coverage but also the highest traffic
-congestion, while boroughs with lower traffic—such as Staten Island—have
-fewer AED resources. These findings highlight the need to examine how
-AED availability and traffic conditions interact to meet population
-needs.</p>
+share of AED locations. These differences suggest that some boroughs may
+have better access to life-saving devices than others. This matters
+because quick access to an AED is critical during a cardiac emergency,
+where every minute affects survival.</p>
+</div>
+<div id="aed-traffic-summary" class="section level3">
+<h3><img src="icons/ambulance.png" width="40" style="vertical-align:-10px;">
+<strong>AED &amp; Traffic summary</strong></h3>
+<pre class="r"><code>traffic_summary = traffic_clean |&gt;
+  group_by(boro) |&gt;
+  summarise(
+    n_measurements   = n(),
+    unique_segments  = n_distinct(segment_id),
+    mean_volume      = mean(vol, na.rm = TRUE),
+    median_volume    = median(vol, na.rm = TRUE),
+    total_volume     = sum(vol, na.rm = TRUE),   
+    .groups = &quot;drop&quot;
+  ) |&gt;
+  rename(borough = boro)
+
+aed_summary = aed_clean |&gt;
+  group_by(borough) |&gt;
+  summarise(
+    n_facilities        = n(),
+    mean_aeds_per_site  = mean(aed_num_aeds, na.rm = TRUE),
+    mean_trained_people = mean(aed_num_person_trained, na.rm = TRUE),
+    .groups = &quot;drop&quot;
+  )
+
+
+borough_summary = traffic_summary |&gt;
+  full_join(aed_summary, by = &quot;borough&quot;)
+
+borough_summary_display = borough_summary |&gt;
+  transmute(
+    Borough                            = borough,
+    `Number of traffic measurements`   = n_measurements,
+    `Number of monitored segments`     = unique_segments,
+    `Total traffic volume (2019–2024)` = total_volume,
+    `Number of AED-equipped sites`     = n_facilities,
+    `Mean AEDs per site`               = mean_aeds_per_site,
+    `Mean trained people per site`     = mean_trained_people
+  )
+
+borough_summary_display |&gt;
+  kable(
+    caption     = &quot;Table 4: Combined traffic and AED summary by borough&quot;,
+    format      = &quot;html&quot;,
+    digits      = c(0, 0, 0, 0, 2, 2),
+    format.args = list(big.mark = &quot;,&quot;)
+  ) |&gt;
+  kable_styling(
+    full_width        = FALSE,
+    bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;bordered&quot;)
+  )</code></pre>
+<table class="table table-striped table-hover table-bordered" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Table 4: Combined traffic and AED summary by borough
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Borough
+</th>
+<th style="text-align:right;">
+Number of traffic measurements
+</th>
+<th style="text-align:right;">
+Number of monitored segments
+</th>
+<th style="text-align:right;">
+Total traffic volume (2019–2024)
+</th>
+<th style="text-align:right;">
+Number of AED-equipped sites
+</th>
+<th style="text-align:right;">
+Mean AEDs per site
+</th>
+<th style="text-align:right;">
+Mean trained people per site
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Bronx
+</td>
+<td style="text-align:right;">
+64,572
+</td>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:right;">
+5,587,491
+</td>
+<td style="text-align:right;">
+988
+</td>
+<td style="text-align:right;">
+1.04
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brooklyn
+</td>
+<td style="text-align:right;">
+160,661
+</td>
+<td style="text-align:right;">
+221
+</td>
+<td style="text-align:right;">
+19,709,072
+</td>
+<td style="text-align:right;">
+1,411
+</td>
+<td style="text-align:right;">
+1.10
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Manhattan
+</td>
+<td style="text-align:right;">
+88,011
+</td>
+<td style="text-align:right;">
+115
+</td>
+<td style="text-align:right;">
+12,990,181
+</td>
+<td style="text-align:right;">
+3,667
+</td>
+<td style="text-align:right;">
+1.80
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Queens
+</td>
+<td style="text-align:right;">
+162,987
+</td>
+<td style="text-align:right;">
+186
+</td>
+<td style="text-align:right;">
+19,191,509
+</td>
+<td style="text-align:right;">
+1,228
+</td>
+<td style="text-align:right;">
+1.48
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Staten Island
+</td>
+<td style="text-align:right;">
+24,494
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+2,668,922
+</td>
+<td style="text-align:right;">
+345
+</td>
+<td style="text-align:right;">
+1.23
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>borough_summary_long = borough_summary |&gt;
+  select(borough, total_volume, n_facilities) |&gt;
+  pivot_longer(
+    cols      = c(total_volume, n_facilities),
+    names_to  = &quot;metric&quot;,
+    values_to = &quot;value&quot;
+  ) |&gt;
+  mutate(
+    metric = recode(
+      metric,
+      total_volume = &quot;Total traffic volume (2019–2024)&quot;,
+      n_facilities = &quot;Number of AED-equipped sites&quot;
+    )
+  )
+
+# Scale each metric to 0–1 so both are visible
+borough_summary_long_scaled = borough_summary_long |&gt;
+  group_by(metric) |&gt;
+  mutate(value_scaled = value / max(value, na.rm = TRUE)) |&gt;
+  ungroup()
+
+plot_ly(
+  data  = borough_summary_long_scaled,
+  x     = ~borough,
+  y     = ~value_scaled,
+  color = ~metric,
+  colors = c(&quot;forestgreen&quot;, &quot;lightcoral&quot;),  # green + purple
+  type  = &quot;bar&quot;,
+  text  = ~paste0(
+    metric, &quot;&lt;br&gt;&quot;,
+    &quot;Borough: &quot;, borough, &quot;&lt;br&gt;&quot;,
+    &quot;Raw value: &quot;, scales::comma(value)
+  ),
+  hoverinfo = &quot;text&quot;
+) |&gt;
+  layout(
+    barmode = &quot;group&quot;,
+    title   = &quot;Figure 7: Relative traffic volume and AED sites by borough&quot;,
+    xaxis   = list(title = &quot;Borough&quot;),
+    yaxis   = list(title = &quot;Relative value (scaled 0–1)&quot;)
+  )</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-4f151a6cc9cdd545dd46" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-4f151a6cc9cdd545dd46">{"x":{"visdat":{"76e47096564":["function () ","plotlyVisDat"]},"cur_data":"76e47096564","attrs":{"76e47096564":{"x":{},"y":{},"text":{},"hoverinfo":"text","color":{},"colors":["forestgreen","lightcoral"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"barmode":"group","title":"Figure 7: Relative traffic volume and AED sites by borough","xaxis":{"domain":[0,1],"automargin":true,"title":"Borough","type":"category","categoryorder":"array","categoryarray":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Relative value (scaled 0–1)"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"y":[0.26943005181347152,0.38478320152713391,1,0.33487864739569129,0.094082356149440965],"text":["Number of AED-equipped sites<br>Borough: Bronx<br>Raw value: 988","Number of AED-equipped sites<br>Borough: Brooklyn<br>Raw value: 1,411","Number of AED-equipped sites<br>Borough: Manhattan<br>Raw value: 3,667","Number of AED-equipped sites<br>Borough: Queens<br>Raw value: 1,228","Number of AED-equipped sites<br>Borough: Staten Island<br>Raw value: 345"],"hoverinfo":["text","text","text","text","text"],"type":"bar","name":"Number of AED-equipped sites","marker":{"color":"rgba(34,139,34,1)","line":{"color":"rgba(34,139,34,1)"}},"textfont":{"color":"rgba(34,139,34,1)"},"error_y":{"color":"rgba(34,139,34,1)"},"error_x":{"color":"rgba(34,139,34,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"y":[0.2834984315852111,1,0.65909653179003047,0.97373985949211617,0.13541591405216846],"text":["Total traffic volume (2019–2024)<br>Borough: Bronx<br>Raw value: 5,587,491","Total traffic volume (2019–2024)<br>Borough: Brooklyn<br>Raw value: 19,709,072","Total traffic volume (2019–2024)<br>Borough: Manhattan<br>Raw value: 12,990,181","Total traffic volume (2019–2024)<br>Borough: Queens<br>Raw value: 19,191,509","Total traffic volume (2019–2024)<br>Borough: Staten Island<br>Raw value: 2,668,922"],"hoverinfo":["text","text","text","text","text"],"type":"bar","name":"Total traffic volume (2019–2024)","marker":{"color":"rgba(240,128,128,1)","line":{"color":"rgba(240,128,128,1)"}},"textfont":{"color":"rgba(240,128,128,1)"},"error_y":{"color":"rgba(240,128,128,1)"},"error_x":{"color":"rgba(240,128,128,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p><em>Table 4</em> shows information from both the traffic and AED
+datasets. Brooklyn and Queens have very high traffic and many monitored
+street segments, but they do not have as many AED-equipped sites.
+Manhattan is different because it has both high traffic and the highest
+number of AED locations. Staten Island has low traffic and also the
+fewest AED sites.</p>
+<p><em>Figure 7</em> scales both traffic and AED counts to a 0–1 range.
+This allows us to compare the two measures on the same scale. Manhattan
+scores the highest on both. Brooklyn and Queens stand out because they
+have high traffic but lower AED coverage. This means that AED
+availability does not increase in the same way as traffic
+congestion.</p>
+<p>Looking across all datasets, a clear pattern appears. Heart disease
+is the leading cause of death in NYC, but AEDs and trained responders
+are not spread evenly across boroughs. Areas with heavy traffic but
+fewer AED sites may face delays during emergencies. These findings
+suggest that further analysis is needed to understand whether AED
+placement matches the areas that need them the most.</p>
 </div>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -1039,41 +1194,7 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

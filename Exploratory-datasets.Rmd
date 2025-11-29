@@ -1,15 +1,15 @@
----
-title: "**Exploratory Overview**"
+--- 
+title: "**Exploratory Overview**" 
 output: 
-  html_document:
-    code_folding: hide
----
+  html_document: 
+  code_folding: hide 
+--- 
 
-This page provides an exploratory summary of three datasets used in this project:
+This page provides an exploratory summary of three datasets used in this project: 
 
-(1) NYC Leading Causes of Death in 2021
-(2) Automated Traffic Volume Counts (2019–2024)
-(3) NYC Automated External Defibrillator (AED) Inventory
+(1) NYC Leading Causes of Death in 2021 
+(2) Automated Traffic Volume Counts (2019–2024) 
+(3) NYC Automated External Defibrillator (AED) Inventory 
 
 These summaries help us understand patterns of mortality burden, congestion levels, and AED accessibility across boroughs, and they motivate our later analysis linking traffic conditions to emergency response readiness.
 
@@ -60,8 +60,7 @@ leading_clean = leading_causes_df |>
     )
 ```
 
-
-### <img src="icons/heart-disease.png" width="40" style="vertical-align:-10px;"> **Leading causes of death**
+### <img src="icons/heart-disease.png" width="40" style="vertical-align:-10px;"> **Leading causes of death** 
 
 _Table 1_ shows that in 2021, diseases of the heart caused the highest number of deaths in NYC (more than 16,500). This is much higher than any other cause. _Figure 1_ shows this visually: the bar for heart disease is the longest. Because heart problems can lead to sudden cardiac arrest, this information supports why studying AED access is important. Quick defibrillation can save lives, so understanding AED availability in each borough matters.
 
@@ -98,7 +97,6 @@ death_baseline_display |>
     full_width = FALSE,
     bootstrap_options = c("striped", "hover", "bordered")
   )
-
 ```
 
 ```{r leading_bar}
@@ -122,7 +120,7 @@ death_baseline |>
   )
 ```
 
-### <img src="icons/warning.png" width="40" style="vertical-align:-10px;"> **Traffic volume summary**
+### <img src="icons/warning.png" width="40" style="vertical-align:-10px;"> **Traffic volume summary** 
 
 _Table 2_ summarizes traffic measurements for each borough. Queens and Brooklyn have the most measurements and the most monitored street segments. Manhattan has the highest mean and median traffic volume, which matches what we expect for a busy business and tourist area.
 
@@ -177,9 +175,7 @@ traffic_clean |>
   )
 ```
 
-_Figure 3_ shows the distribution of traffic volume for all boroughs from 2019 to 2024. The shape of the distribution is right-skewed. Most traffic counts are below 100 vehicles, which we can consider low or medium traffic. Fewer observations fall between 100 and 200 vehicles, and only a small number go above 200, which we consider very high traffic.
-
-This means that while many streets are not very busy, some specific areas experience heavy congestion. These high-traffic areas are more likely to delay emergency vehicles, such as ambulances, from reaching patients on time.
+_Figure 3_ shows the distribution of traffic volume for all boroughs from 2019 to 2024. The shape of the distribution is right-skewed. Most traffic counts are below 100 vehicles, which we can consider low or medium traffic. Fewer observations fall between 100 and 200 vehicles, and only a small number go above 200, which we consider very high traffic. This means that while many streets are not very busy, some specific areas experience heavy congestion. These high-traffic areas are more likely to delay emergency vehicles, such as ambulances, from reaching patients on time.
 
 ```{r trafficbox}
 traffic_clean |>
@@ -218,24 +214,17 @@ ggplot(traffic_trend, aes(x = yr, y = mean_volume, color = boro, group = boro)) 
     y     = "Mean traffic volume",
     color = "Borough"
   )
-
 ```
 
-_Figure 5_ shows how traffic changed from 2019 to 2024. All boroughs show a drop in 2020 because of the COVID-19 shutdown. After that, traffic increases again but follows different patterns:
-
-* Manhattan always has the highest levels and the biggest changes from year to year.
-* Queens and Brooklyn increase in some years, especially around 2023.
-* The Bronx remains more stable with lower overall traffic.
-* Staten Island saw a substantial increase in 2022, followed by a significant drop, which could be due to fewer monitored locations.
-
-These trends help us understand how changes in traffic over time might affect AED use or emergency response.
+_Figure 5_ shows how traffic changed from 2019 to 2024. All boroughs show a drop in 2020 because of the COVID-19 shutdown. After that, traffic increases again but follows different patterns: * Manhattan always has the highest levels and the biggest changes from year to year. * Queens and Brooklyn increase in some years, especially around 2023. * The Bronx remains more stable with lower overall traffic. * Staten Island saw a substantial increase in 2022, followed by a significant drop, which could be due to fewer monitored locations. These trends help us understand how changes in traffic over time might affect AED use or emergency response. 
 
 ### <img src="icons/aed.png" width="40" style="vertical-align:-10px;"> **AED summary**
+
 ```{r aedsum}
 aed_summary = aed_clean |>
   group_by(borough) |>
   summarise(
-    n_facilities        = n(),                               # number of AED-equipped locations
+    n_facilities        = n(),  
     mean_aeds_per_site  = mean(aed_num_aeds, na.rm = TRUE),
     mean_trained_people = mean(aed_num_person_trained, na.rm = TRUE),
     .groups = "drop"
@@ -277,10 +266,104 @@ aed_summary |>
   )
 ```
 
-_Table 3_ shows that AED availability is not equal across boroughs. Manhattan has the most AED sites (more than 3,600 locations). Queens and Brooklyn have moderate coverage, but the Bronx and Staten Island have the fewest AED sites.
-_Figure 6_, the pie chart, makes these differences easy to see. Manhattan takes up the largest share of AED locations.
+_Table 3_ shows that AED availability is not equal across boroughs. Manhattan has the most AED sites (more than 3,600 locations). Queens and Brooklyn have moderate coverage, but the Bronx and Staten Island have the fewest AED sites. _Figure 6_, the pie chart, makes these differences easy to see. Manhattan takes up the largest share of AED locations. These differences suggest that some boroughs may have better access to life-saving devices than others. This matters because quick access to an AED is critical during a cardiac emergency, where every minute affects survival. 
 
-These differences suggest that some boroughs may have better access to life-saving devices than others. This matters because quick access to an AED is critical during a cardiac emergency, where every minute affects survival.
+### <img src="icons/ambulance.png" width="40" style="vertical-align:-10px;"> **AED & Traffic summary**
 
-When we compare all data sources together, a consistent pattern appears. Cardiovascular disease is the leading cause of death in NYC, yet AED access and trained responders are not evenly distributed. Manhattan has the strongest AED coverage but also the highest traffic congestion, while boroughs with lower traffic—such as Staten Island—have fewer AED resources.
-These findings highlight the need to examine how AED availability and traffic conditions interact to meet population needs.
+```{r aed_traffic}
+traffic_summary = traffic_clean |>
+  group_by(boro) |>
+  summarise(
+    n_measurements   = n(),
+    unique_segments  = n_distinct(segment_id),
+    mean_volume      = mean(vol, na.rm = TRUE),
+    median_volume    = median(vol, na.rm = TRUE),
+    total_volume     = sum(vol, na.rm = TRUE),   
+    .groups = "drop"
+  ) |>
+  rename(borough = boro)
+
+aed_summary = aed_clean |>
+  group_by(borough) |>
+  summarise(
+    n_facilities        = n(),
+    mean_aeds_per_site  = mean(aed_num_aeds, na.rm = TRUE),
+    mean_trained_people = mean(aed_num_person_trained, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+
+borough_summary = traffic_summary |>
+  full_join(aed_summary, by = "borough")
+
+borough_summary_display = borough_summary |>
+  transmute(
+    Borough                            = borough,
+    `Number of traffic measurements`   = n_measurements,
+    `Number of monitored segments`     = unique_segments,
+    `Total traffic volume (2019–2024)` = total_volume,
+    `Number of AED-equipped sites`     = n_facilities,
+    `Mean AEDs per site`               = mean_aeds_per_site,
+    `Mean trained people per site`     = mean_trained_people
+  )
+
+borough_summary_display |>
+  kable(
+    caption     = "Table 4: Combined traffic and AED summary by borough",
+    format      = "html",
+    digits      = c(0, 0, 0, 0, 2, 2),
+    format.args = list(big.mark = ",")
+  ) |>
+  kable_styling(
+    full_width        = FALSE,
+    bootstrap_options = c("striped", "hover", "bordered")
+  )
+
+borough_summary_long = borough_summary |>
+  select(borough, total_volume, n_facilities) |>
+  pivot_longer(
+    cols      = c(total_volume, n_facilities),
+    names_to  = "metric",
+    values_to = "value"
+  ) |>
+  mutate(
+    metric = recode(
+      metric,
+      total_volume = "Total traffic volume (2019–2024)",
+      n_facilities = "Number of AED-equipped sites"
+    )
+  )
+
+# Scale each metric to 0–1 so both are visible
+borough_summary_long_scaled = borough_summary_long |>
+  group_by(metric) |>
+  mutate(value_scaled = value / max(value, na.rm = TRUE)) |>
+  ungroup()
+
+plot_ly(
+  data  = borough_summary_long_scaled,
+  x     = ~borough,
+  y     = ~value_scaled,
+  color = ~metric,
+  colors = c("forestgreen", "lightcoral"),  # green + purple
+  type  = "bar",
+  text  = ~paste0(
+    metric, "<br>",
+    "Borough: ", borough, "<br>",
+    "Raw value: ", scales::comma(value)
+  ),
+  hoverinfo = "text"
+) |>
+  layout(
+    barmode = "group",
+    title   = "Figure 7: Relative traffic volume and AED sites by borough",
+    xaxis   = list(title = "Borough"),
+    yaxis   = list(title = "Relative value (scaled 0–1)")
+  )
+```
+
+_Table 4_ shows information from both the traffic and AED datasets. Brooklyn and Queens have very high traffic and many monitored street segments, but they do not have as many AED-equipped sites. Manhattan is different because it has both high traffic and the highest number of AED locations. Staten Island has low traffic and also the fewest AED sites. 
+
+_Figure 7_ scales both traffic and AED counts to a 0–1 range. This allows us to compare the two measures on the same scale. Manhattan scores the highest on both. Brooklyn and Queens stand out because they have high traffic but lower AED coverage. This means that AED availability does not increase in the same way as traffic congestion. 
+
+Looking across all datasets, a clear pattern appears. Heart disease is the leading cause of death in NYC, but AEDs and trained responders are not spread evenly across boroughs. Areas with heavy traffic but fewer AED sites may face delays during emergencies. These findings suggest that further analysis is needed to understand whether AED placement matches the areas that need them the most.
