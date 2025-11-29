@@ -982,8 +982,8 @@ Staten Island
 </tr>
 </tbody>
 </table>
-<div class="plotly html-widget html-fill-item" id="htmlwidget-9ae63c1690c369370d5e" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-9ae63c1690c369370d5e">{"x":{"visdat":{"6be022b422c":["function () ","plotlyVisDat"]},"cur_data":"6be022b422c","attrs":{"6be022b422c":{"labels":{},"values":{},"textinfo":"label+percent","hoverinfo":"label+value+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Figure 6: Distribution of AED-equipped sites by borough","legend":{"orientation":"h","x":0.5,"xanchor":"center","y":-0.10000000000000001},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"values":[988,1411,3667,1228,345],"textinfo":"label+percent","hoverinfo":["label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent"],"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-399fa6ec3dd775e317d1" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-399fa6ec3dd775e317d1">{"x":{"visdat":{"13fc6c7a457":["function () ","plotlyVisDat"]},"cur_data":"13fc6c7a457","attrs":{"13fc6c7a457":{"labels":{},"values":{},"textinfo":"label+percent","hoverinfo":"label+value+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Figure 6: Distribution of AED-equipped sites by borough","legend":{"orientation":"h","x":0.5,"xanchor":"center","y":-0.10000000000000001},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"values":[988,1411,3667,1228,345],"textinfo":"label+percent","hoverinfo":["label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent"],"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <p><em>Table 3</em> shows that AED availability is not equal across
 boroughs. Manhattan has the most AED sites (more than 3,600 locations).
 Queens and Brooklyn have moderate coverage, but the Bronx and Staten
@@ -994,6 +994,10 @@ share of AED locations.</p>
 to life-saving devices than others. This matters because quick access to
 an AED is critical during a cardiac emergency, where every minute
 affects survival.</p>
+</div>
+<div id="aed-traffic-summary" class="section level3">
+<h3><img src="icons/ambulance.png" width="40" style="vertical-align:-10px;">
+<strong>AED &amp; Traffic summary</strong></h3>
 <pre class="r"><code>## Borough-level traffic summary
 traffic_summary = traffic_clean |&gt;
   group_by(boro) |&gt;
@@ -1035,7 +1039,7 @@ borough_summary_display = borough_summary |&gt;
 
 borough_summary_display |&gt;
   kable(
-    caption     = &quot;Table X. Combined traffic and AED summary by borough&quot;,
+    caption     = &quot;Table 4: Combined traffic and AED summary by borough&quot;,
     format      = &quot;html&quot;,
     digits      = c(0, 0, 0, 0, 2, 2),
     format.args = list(big.mark = &quot;,&quot;)
@@ -1046,7 +1050,7 @@ borough_summary_display |&gt;
   )</code></pre>
 <table class="table table-striped table-hover table-bordered" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-Table X. Combined traffic and AED summary by borough
+Table 4: Combined traffic and AED summary by borough
 </caption>
 <thead>
 <tr>
@@ -1229,20 +1233,30 @@ plot_ly(
 ) |&gt;
   layout(
     barmode = &quot;group&quot;,
-    title   = &quot;Relative traffic volume and AED sites by borough&quot;,
+    title   = &quot;Figure 7: Relative traffic volume and AED sites by borough&quot;,
     xaxis   = list(title = &quot;Borough&quot;),
     yaxis   = list(title = &quot;Relative value (scaled 0–1)&quot;)
   )</code></pre>
-<div class="plotly html-widget html-fill-item" id="htmlwidget-d17900a775a224173f87" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-d17900a775a224173f87">{"x":{"visdat":{"6be0166f64b2":["function () ","plotlyVisDat"]},"cur_data":"6be0166f64b2","attrs":{"6be0166f64b2":{"x":{},"y":{},"text":{},"hoverinfo":"text","color":{},"colors":["forestgreen","lightcoral"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"barmode":"group","title":"Relative traffic volume and AED sites by borough","xaxis":{"domain":[0,1],"automargin":true,"title":"Borough","type":"category","categoryorder":"array","categoryarray":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Relative value (scaled 0–1)"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"y":[0.26943005181347152,0.38478320152713391,1,0.33487864739569129,0.094082356149440965],"text":["Number of AED-equipped sites<br>Borough: Bronx<br>Raw value: 988","Number of AED-equipped sites<br>Borough: Brooklyn<br>Raw value: 1,411","Number of AED-equipped sites<br>Borough: Manhattan<br>Raw value: 3,667","Number of AED-equipped sites<br>Borough: Queens<br>Raw value: 1,228","Number of AED-equipped sites<br>Borough: Staten Island<br>Raw value: 345"],"hoverinfo":["text","text","text","text","text"],"type":"bar","name":"Number of AED-equipped sites","marker":{"color":"rgba(34,139,34,1)","line":{"color":"rgba(34,139,34,1)"}},"textfont":{"color":"rgba(34,139,34,1)"},"error_y":{"color":"rgba(34,139,34,1)"},"error_x":{"color":"rgba(34,139,34,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"y":[0.2834984315852111,1,0.65909653179003047,0.97373985949211617,0.13541591405216846],"text":["Total traffic volume (2019–2024)<br>Borough: Bronx<br>Raw value: 5,587,491","Total traffic volume (2019–2024)<br>Borough: Brooklyn<br>Raw value: 19,709,072","Total traffic volume (2019–2024)<br>Borough: Manhattan<br>Raw value: 12,990,181","Total traffic volume (2019–2024)<br>Borough: Queens<br>Raw value: 19,191,509","Total traffic volume (2019–2024)<br>Borough: Staten Island<br>Raw value: 2,668,922"],"hoverinfo":["text","text","text","text","text"],"type":"bar","name":"Total traffic volume (2019–2024)","marker":{"color":"rgba(240,128,128,1)","line":{"color":"rgba(240,128,128,1)"}},"textfont":{"color":"rgba(240,128,128,1)"},"error_y":{"color":"rgba(240,128,128,1)"},"error_x":{"color":"rgba(240,128,128,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-<p>When we compare all data sources together, a consistent pattern
-appears. Cardiovascular disease is the leading cause of death in NYC,
-yet AED access and trained responders are not evenly distributed.
-Manhattan has the strongest AED coverage but also the highest traffic
-congestion, while boroughs with lower traffic—such as Staten Island—have
-fewer AED resources. These findings highlight the need to examine how
-AED availability and traffic conditions interact to meet population
-needs.</p>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-1cb4ffee2756a5f73311" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1cb4ffee2756a5f73311">{"x":{"visdat":{"13fc71896a37":["function () ","plotlyVisDat"]},"cur_data":"13fc71896a37","attrs":{"13fc71896a37":{"x":{},"y":{},"text":{},"hoverinfo":"text","color":{},"colors":["forestgreen","lightcoral"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"barmode":"group","title":"Figure 7: Relative traffic volume and AED sites by borough","xaxis":{"domain":[0,1],"automargin":true,"title":"Borough","type":"category","categoryorder":"array","categoryarray":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Relative value (scaled 0–1)"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"y":[0.26943005181347152,0.38478320152713391,1,0.33487864739569129,0.094082356149440965],"text":["Number of AED-equipped sites<br>Borough: Bronx<br>Raw value: 988","Number of AED-equipped sites<br>Borough: Brooklyn<br>Raw value: 1,411","Number of AED-equipped sites<br>Borough: Manhattan<br>Raw value: 3,667","Number of AED-equipped sites<br>Borough: Queens<br>Raw value: 1,228","Number of AED-equipped sites<br>Borough: Staten Island<br>Raw value: 345"],"hoverinfo":["text","text","text","text","text"],"type":"bar","name":"Number of AED-equipped sites","marker":{"color":"rgba(34,139,34,1)","line":{"color":"rgba(34,139,34,1)"}},"textfont":{"color":"rgba(34,139,34,1)"},"error_y":{"color":"rgba(34,139,34,1)"},"error_x":{"color":"rgba(34,139,34,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Bronx","Brooklyn","Manhattan","Queens","Staten Island"],"y":[0.2834984315852111,1,0.65909653179003047,0.97373985949211617,0.13541591405216846],"text":["Total traffic volume (2019–2024)<br>Borough: Bronx<br>Raw value: 5,587,491","Total traffic volume (2019–2024)<br>Borough: Brooklyn<br>Raw value: 19,709,072","Total traffic volume (2019–2024)<br>Borough: Manhattan<br>Raw value: 12,990,181","Total traffic volume (2019–2024)<br>Borough: Queens<br>Raw value: 19,191,509","Total traffic volume (2019–2024)<br>Borough: Staten Island<br>Raw value: 2,668,922"],"hoverinfo":["text","text","text","text","text"],"type":"bar","name":"Total traffic volume (2019–2024)","marker":{"color":"rgba(240,128,128,1)","line":{"color":"rgba(240,128,128,1)"}},"textfont":{"color":"rgba(240,128,128,1)"},"error_y":{"color":"rgba(240,128,128,1)"},"error_x":{"color":"rgba(240,128,128,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p><em>Table 4</em> shows information from both the traffic and AED
+datasets. Brooklyn and Queens have very high traffic and many monitored
+street segments, but they do not have as many AED-equipped sites.
+Manhattan is different because it has both high traffic and the highest
+number of AED locations. Staten Island has low traffic and also the
+fewest AED sites.</p>
+<p><em>Figure 7</em> scales both traffic and AED counts to a 0–1 range.
+This allows us to compare the two measures on the same scale. Manhattan
+scores the highest on both. Brooklyn and Queens stand out because they
+have high traffic but lower AED coverage. This means that AED
+availability does not increase in the same way as traffic
+congestion.</p>
+<p>Looking across all datasets, a clear pattern appears. Heart disease
+is the leading cause of death in NYC, but AEDs and trained responders
+are not spread evenly across boroughs. Areas with heavy traffic but
+fewer AED sites may face delays during emergencies. These findings
+suggest that further analysis is needed to understand whether AED
+placement matches the areas that need them the most.</p>
 </div>
 
 

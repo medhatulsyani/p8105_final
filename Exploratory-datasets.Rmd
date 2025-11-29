@@ -282,6 +282,9 @@ _Figure 6_, the pie chart, makes these differences easy to see. Manhattan takes 
 
 These differences suggest that some boroughs may have better access to life-saving devices than others. This matters because quick access to an AED is critical during a cardiac emergency, where every minute affects survival.
 
+
+### <img src="icons/ambulance.png" width="40" style="vertical-align:-10px;"> **AED & Traffic summary**
+
 ```{r aed_traffic}
 ## Borough-level traffic summary
 traffic_summary = traffic_clean |>
@@ -324,7 +327,7 @@ borough_summary_display = borough_summary |>
 
 borough_summary_display |>
   kable(
-    caption     = "Table X. Combined traffic and AED summary by borough",
+    caption     = "Table 4: Combined traffic and AED summary by borough",
     format      = "html",
     digits      = c(0, 0, 0, 0, 2, 2),
     format.args = list(big.mark = ",")
@@ -372,15 +375,14 @@ plot_ly(
 ) |>
   layout(
     barmode = "group",
-    title   = "Relative traffic volume and AED sites by borough",
+    title   = "Figure 7: Relative traffic volume and AED sites by borough",
     xaxis   = list(title = "Borough"),
     yaxis   = list(title = "Relative value (scaled 0–1)")
   )
 ```
 
+_Table 4_ shows information from both the traffic and AED datasets. Brooklyn and Queens have very high traffic and many monitored street segments, but they do not have as many AED-equipped sites. Manhattan is different because it has both high traffic and the highest number of AED locations. Staten Island has low traffic and also the fewest AED sites.
 
+_Figure 7_ scales both traffic and AED counts to a 0–1 range. This allows us to compare the two measures on the same scale. Manhattan scores the highest on both. Brooklyn and Queens stand out because they have high traffic but lower AED coverage. This means that AED availability does not increase in the same way as traffic congestion.
 
-
-
-When we compare all data sources together, a consistent pattern appears. Cardiovascular disease is the leading cause of death in NYC, yet AED access and trained responders are not evenly distributed. Manhattan has the strongest AED coverage but also the highest traffic congestion, while boroughs with lower traffic—such as Staten Island—have fewer AED resources.
-These findings highlight the need to examine how AED availability and traffic conditions interact to meet population needs.
+Looking across all datasets, a clear pattern appears. Heart disease is the leading cause of death in NYC, but AEDs and trained responders are not spread evenly across boroughs. Areas with heavy traffic but fewer AED sites may face delays during emergencies. These findings suggest that further analysis is needed to understand whether AED placement matches the areas that need them the most.
