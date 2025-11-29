@@ -3,7 +3,7 @@ title: "AED Accessibility and Traffic Congestion in NYC"
 output: html_document
 ---
 
-<img src="icons/NYC_AED.png" width="800" />
+
 
 
 ### **Overview**
