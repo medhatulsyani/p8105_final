@@ -1,0 +1,12 @@
+---
+title: "**Descriptive and Inferential Analyses**" 
+output: 
+  html_document: 
+    code_folding: hide 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Descriptive Analyses
