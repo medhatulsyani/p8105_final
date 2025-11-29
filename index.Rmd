@@ -35,7 +35,9 @@ Did You Know Cardiac Arrest Survival Increases by 38% when AED use and CPR are c
 
 This project explores how the placement of **Automated External Defibrillators (AEDs)** aligns with the traffic trends of one of the world’s busiest cities.Through a combination of data on AED locations, traffic volume, and cardiovascular disease, we will identify potential gaps in AED coverage in high-risk and high-traffic areas.
 
+### Screencast
 
+Take a tour of our website
 
 
 https://www.youtube.com/watch?v=in8j2Q2z3HE
