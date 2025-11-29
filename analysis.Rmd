@@ -7,6 +7,38 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(janitor)
+library(kableExtra)
+library(plotly)
+```
+
+```{r}
+## Importing the clean datasets
+
+aed_clean =
+  read_csv("clean_data/aed_clean.csv")
+
+leading_causes_clean =
+  read_csv("clean_data/leading_causes_clean.csv")
+
+traffic_clean =
+  read_csv("clean_data/traffic_clean.csv")
 ```
 
 ## Descriptive Analyses
+
+**AED counts and density by borough**
+
+**Mean and median traffic volume by borough and year**
+
+**Visualizations**
+
+## Inferential Analyses
+
+**ANOVA**
+
+**Pearson correlation**
+
+**Derived metric**

@@ -371,8 +371,50 @@ Analyses</strong></h1>
 </div>
 
 
+<pre class="r"><code>## Importing the clean datasets
+
+aed_clean =
+  read_csv(&quot;clean_data/aed_clean.csv&quot;)</code></pre>
+<pre><code>## Rows: 7639 Columns: 17
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (8): entity_name, address, floor, borough, state, zip, nta_code, locatio...
+## dbl (9): aed_num_person_trained, aed_num_aeds, latitude, longitude, communit...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>leading_causes_clean =
+  read_csv(&quot;clean_data/leading_causes_clean.csv&quot;)</code></pre>
+<pre><code>## Rows: 2102 Columns: 7
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): leading_cause, sex, race_ethnicity
+## dbl (4): year, deaths, death_rate, age_adjusted_death_rate
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>traffic_clean =
+  read_csv(&quot;clean_data/traffic_clean.csv&quot;)</code></pre>
+<pre><code>## Rows: 500725 Columns: 14
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (6): boro, wkt_geom, street, from_st, to_st, direction
+## dbl (8): request_id, yr, m, d, hh, mm, vol, segment_id
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div id="descriptive-analyses" class="section level2">
 <h2>Descriptive Analyses</h2>
+<p><strong>AED counts and density by borough</strong></p>
+<p><strong>Mean and median traffic volume by borough and
+year</strong></p>
+<p><strong>Visualizations</strong></p>
+</div>
+<div id="inferential-analyses" class="section level2">
+<h2>Inferential Analyses</h2>
+<p><strong>ANOVA</strong></p>
+<p><strong>Pearson correlation</strong></p>
+<p><strong>Derived metric</strong></p>
 </div>
 
 
