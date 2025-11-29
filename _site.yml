@@ -10,7 +10,7 @@ navbar:
     - text: "Data exploratory & analysis"
       menu:
         - text: "Exploratory overview"
-          href: exploratory-datasets.html 
+          href: exploratory-datasets.html
   right:
     - text: "Report"
       href: report.html
