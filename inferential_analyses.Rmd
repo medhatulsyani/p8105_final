@@ -1,0 +1,34 @@
+---
+title: "inferential_analyses"
+author: "Medha Tulsyani and Mukta Patwari"
+output: html_document
+date: "2025-11-29"
+---
+
+Load Libraries
+```{r}
+library(tidyverse)
+```
+
+
+
+Import Data
+```{r}
+traffic_volume_df = read.csv("clean_data/traffic_clean.csv")
+
+aed_inventory_df = read.csv("clean_data/aed_clean.csv")
+```
+
+
+ANOVA for mean traffic volume across boroughs
+```{r}
+traffic_anova_model = lm(vol ~ boro, data = traffic_volume_df)
+summary(traffic_anova_model)
+```
+
+ANOVA for mean AED across boroughs
+```{r}
+aed_anova_model = lm(aed_num_aeds ~ borough, data = aed_inventory_df)
+summary(aed_anova_model)
+```
+
