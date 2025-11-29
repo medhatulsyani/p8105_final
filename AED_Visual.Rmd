@@ -1,0 +1,29 @@
+---
+title: "AED_Visual"
+author: "Maliha Safdar"
+date: "2025-11-29"
+output: html_document
+---
+
+```{r setup}
+##Setup necessary libraries
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(stringr)
+library(leaflet)
+library(tigris)
+library(sf)
+library(RColorBrewer)
+```
+
+
+```{r}
+# Importing dataset
+
+traffic_volume_df = read.csv("clean_data/traffic_clean.csv")
+
+aed_inventory_df = read.csv("clean_data/aed_clean.csv")
+
+```
+
+
