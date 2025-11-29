@@ -5,9 +5,7 @@ date: "2025-11-29"
 output: html_document
 ---
 
-```{r setup}
-##Setup necessary libraries
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```{r,setup, include=FALSE}
 library(tidyverse)
 library(stringr)
 library(leaflet)
@@ -17,13 +15,89 @@ library(RColorBrewer)
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 # Importing dataset
 
 traffic_volume_df = read.csv("clean_data/traffic_clean.csv")
 
 aed_inventory_df = read.csv("clean_data/aed_clean.csv")
 
+```
+
+
+```{r adding location variable, echo=FALSE}
+aed_clean = aed_inventory_df |>
+  mutate(location = str_replace(location_point,"^POINT\\s*", "")
+         )
+```
+
+
+```{r, setup of NYC Boroughs, echo=FALSE}
+
+boroughs = counties(state = "NY", cb = TRUE) |>
+  filter(NAME %in% c("Bronx", "Kings", "New York", "Queens", "Richmond")) |>
+  st_transform(4326) |>
+  mutate(
+    borough = case_when(
+      NAME == "Bronx" ~ "Bronx",
+      NAME == "Kings" ~ "Brooklyn",
+      NAME == "New York" ~ "Manhattan",
+      NAME == "Queens" ~ "Queens",
+      NAME == "Richmond" ~ "Staten Island"
+    )
+  )
+
+boro_pal <- colorFactor(
+  palette = "Set1",
+  domain = boroughs$borough
+)
+```
+
+
+```{r, AED and borough mapping}
+
+aed_map_icon <- makeIcon(
+  iconUrl = "icons/map_logo.png",
+  iconWidth = 15,             
+  iconHeight = 15
+)
+
+leaflet() |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+   addPolygons(
+    data = boroughs,
+    fillColor = ~boro_pal(borough),
+    fillOpacity = 0.3,
+    weight = 2,
+    color = ~boro_pal(borough),
+    popup = ~borough,
+    group = "Boroughs"
+  ) |>
+   addLegend(
+  "bottomright",
+  pal = boro_pal,
+  values = boroughs$borough,
+  title = "Borough"
+) |>
+  addMarkers(
+    data = aed_clean,
+    lng = ~longitude,
+    lat = ~latitude,
+    icon = aed_map_icon,
+    popup = ~paste0(
+      "<b>Location Name: </b>", entity_name, "<br>",
+      "<b>Number of AEDs: </b>", aed_num_aeds, "<br>",
+      "<b>Location: </b>", location, "<br>",
+      "<b>Borough: </b>", borough, "<br>",
+      "<b>Trained Personnel: </b>", aed_num_person_trained
+    ),
+    group = "AED Locations"
+  ) |>
+
+  addLayersControl(
+    overlayGroups = c("AED Locations"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
 ```
 
 
