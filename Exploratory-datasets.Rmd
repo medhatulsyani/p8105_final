@@ -282,5 +282,105 @@ _Figure 6_, the pie chart, makes these differences easy to see. Manhattan takes 
 
 These differences suggest that some boroughs may have better access to life-saving devices than others. This matters because quick access to an AED is critical during a cardiac emergency, where every minute affects survival.
 
+```{r aed_traffic}
+## Borough-level traffic summary
+traffic_summary = traffic_clean |>
+  group_by(boro) |>
+  summarise(
+    n_measurements   = n(),
+    unique_segments  = n_distinct(segment_id),
+    mean_volume      = mean(vol, na.rm = TRUE),
+    median_volume    = median(vol, na.rm = TRUE),
+    total_volume     = sum(vol, na.rm = TRUE),   # fine to keep for descriptive
+    .groups = "drop"
+  ) |>
+  rename(borough = boro)
+
+## Borough-level AED summary
+aed_summary = aed_clean |>
+  group_by(borough) |>
+  summarise(
+    n_facilities        = n(),
+    mean_aeds_per_site  = mean(aed_num_aeds, na.rm = TRUE),
+    mean_trained_people = mean(aed_num_person_trained, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+## 🔗 Merge traffic + AED summaries (descriptive only)
+borough_summary = traffic_summary |>
+  full_join(aed_summary, by = "borough")
+
+## Table: combined summary (raw counts)
+borough_summary_display = borough_summary |>
+  transmute(
+    Borough                            = borough,
+    `Number of traffic measurements`   = n_measurements,
+    `Number of monitored segments`     = unique_segments,
+    `Total traffic volume (2019–2024)` = total_volume,
+    `Number of AED-equipped sites`     = n_facilities,
+    `Mean AEDs per site`               = mean_aeds_per_site,
+    `Mean trained people per site`     = mean_trained_people
+  )
+
+borough_summary_display |>
+  kable(
+    caption     = "Table X. Combined traffic and AED summary by borough",
+    format      = "html",
+    digits      = c(0, 0, 0, 0, 2, 2),
+    format.args = list(big.mark = ",")
+  ) |>
+  kable_styling(
+    full_width        = FALSE,
+    bootstrap_options = c("striped", "hover", "bordered")
+  )
+
+## Plotly: traffic volume and AED sites by borough (scaled for visibility)
+borough_summary_long = borough_summary |>
+  select(borough, total_volume, n_facilities) |>
+  pivot_longer(
+    cols      = c(total_volume, n_facilities),
+    names_to  = "metric",
+    values_to = "value"
+  ) |>
+  mutate(
+    metric = recode(
+      metric,
+      total_volume = "Total traffic volume (2019–2024)",
+      n_facilities = "Number of AED-equipped sites"
+    )
+  )
+
+# Scale each metric to 0–1 so both are visible
+borough_summary_long_scaled = borough_summary_long |>
+  group_by(metric) |>
+  mutate(value_scaled = value / max(value, na.rm = TRUE)) |>
+  ungroup()
+
+plot_ly(
+  data  = borough_summary_long_scaled,
+  x     = ~borough,
+  y     = ~value_scaled,
+  color = ~metric,
+  colors = c("forestgreen", "lightcoral"),  # green + purple
+  type  = "bar",
+  text  = ~paste0(
+    metric, "<br>",
+    "Borough: ", borough, "<br>",
+    "Raw value: ", scales::comma(value)
+  ),
+  hoverinfo = "text"
+) |>
+  layout(
+    barmode = "group",
+    title   = "Relative traffic volume and AED sites by borough",
+    xaxis   = list(title = "Borough"),
+    yaxis   = list(title = "Relative value (scaled 0–1)")
+  )
+```
+
+
+
+
+
 When we compare all data sources together, a consistent pattern appears. Cardiovascular disease is the leading cause of death in NYC, yet AED access and trained responders are not evenly distributed. Manhattan has the strongest AED coverage but also the highest traffic congestion, while boroughs with lower traffic—such as Staten Island—have fewer AED resources.
 These findings highlight the need to examine how AED availability and traffic conditions interact to meet population needs.
