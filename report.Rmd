@@ -7,15 +7,6 @@ The written report produced by your team is central to this project. This will d
 
 Your report should include the following topics. Depending on your project type the amount of discussion you devote to each of them will vary:
 
----
-title: "Report"
-output: html_document
----
-
-The written report produced by your team is central to this project. This will detail how you completed your project, and should cover data collection and cleaning, exploratory analyses, alternative strategies, descriptions of approaches, and a discussion of results. We anticipate that your project will change somewhat over time; these changes and the reasons for them should be documented! You will write one report document per group, and be sure to include all group member names in the document.
-
-Your report should include the following topics. Depending on your project type the amount of discussion you devote to each of them will vary:
-
 ### Motivation
 
 Our project focuses on understanding AED accessibility and traffic congestion in New York City. Cardiovascular disease is not only the leading cause of death in the United States, but also the leading cause of death worldwide. Because NYC is a dense and highly populated city with heavy traffic, delays in emergency response are a real concern. Quick access to an AED can make a major difference during a sudden cardiac arrest, especially when ambulances may be slowed down by congestion. By exploring AED locations, traffic patterns, and leading causes of death, we wanted to see whether AEDs are placed in areas where fast response is especially important.
