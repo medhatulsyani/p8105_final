@@ -4,6 +4,36 @@ output: html_document
 ---
 
 
+<style>
+@keyframes heartbeat {
+  0%   { transform: scale(1); }
+  20%  { transform: scale(1.15); }
+  40%  { transform: scale(1); }
+  60%  { transform: scale(1.15); }
+  80%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+.beating-heart {
+  color: red;
+  font-weight: bold;
+  display: inline-block;
+  animation: heartbeat 4.0s infinite;
+}
+</style>
+
+
+<span class="beating-heart">
+Did You Know Cardiac Arrest Survival Increases by 38% when AED use and CPR are combined?
+</span>
+
+
+<img src="icons/welcome_page.gif" width="400" style="display:block; margin:auto;">
+<div style="text-align:center; font-size:12px; color:gray;">
+*Source: RadianQBio (2018). “First Aid Training and AED Animation” YouTube.*</em>
+</div>
+
+This project explores how the placement of **Automated External Defibrillators (AEDs)** aligns with the traffic trends of one of the world’s busiest cities.Through a combination of data on AED locations, traffic volume, and cardiovascular disease, we will identify potential gaps in AED coverage in high-risk and high-traffic areas.
 
 
 
