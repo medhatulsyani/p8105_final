@@ -2,7 +2,7 @@
 title: "**Exploratory Overview**" 
 output: 
   html_document: 
-  code_folding: hide 
+    code_folding: hide 
 --- 
 
 This page provides an exploratory summary of three datasets used in this project: 
