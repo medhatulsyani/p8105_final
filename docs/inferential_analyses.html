@@ -378,8 +378,29 @@ div.tocify {
 <pre class="r"><code>traffic_volume_df = read.csv(&quot;clean_data/traffic_clean.csv&quot;)
 
 aed_inventory_df = read.csv(&quot;clean_data/aed_clean.csv&quot;)</code></pre>
-<p>ANOVA for mean traffic volume across boroughs, set Manhattan as
-reference</p>
+<p>ANOVA for mean traffic volume across boroughs</p>
+<pre class="r"><code>traffic_anova_model = aov(vol ~ boro, data = traffic_volume_df)
+summary(traffic_anova_model)</code></pre>
+<pre><code>##                 Df    Sum Sq  Mean Sq F value Pr(&gt;F)    
+## boro             4 1.443e+08 36078376    1094 &lt;2e-16 ***
+## Residuals   500720 1.651e+10    32977                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>At least one borough’s mean traffic volume differs from the others.
+This is significant and there is extremely strong evidence since the F
+value is 1,094.</p>
+<p>ANOVA for mean AED across boroughs</p>
+<pre class="r"><code>aed_anova_model = aov(aed_num_aeds ~ borough, data = aed_inventory_df)
+summary(aed_anova_model)</code></pre>
+<pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## borough        4    775  193.65   24.09 &lt;2e-16 ***
+## Residuals   7634  61365    8.04                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>At least one borough’s mean AED differs from the others. This is
+significant with an F value of 24.09.</p>
+<p>Linear model for mean traffic volume across boroughs, set Manhattan
+as reference</p>
 <pre class="r"><code>traffic_volume_df$boro = as.factor(traffic_volume_df$boro)
 traffic_volume_df$boro = relevel(traffic_volume_df$boro, ref = &quot;Manhattan&quot;)
 traffic_anova_model = lm(vol ~ boro, data = traffic_volume_df)
@@ -405,7 +426,10 @@ summary(traffic_anova_model)</code></pre>
 ## Residual standard error: 181.6 on 500720 degrees of freedom
 ## Multiple R-squared:  0.008664,   Adjusted R-squared:  0.008656 
 ## F-statistic:  1094 on 4 and 500720 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>ANOVA for mean AED across boroughs, set Manhattan as reference</p>
+<p>On average, every borough has less traffic volume when compared to
+that of Manhattan.</p>
+<p>Linear model for mean AED across boroughs, set Manhattan as
+reference</p>
 <pre class="r"><code>aed_inventory_df$borough = as.factor(aed_inventory_df$borough)
 aed_inventory_df$borough = relevel(aed_inventory_df$borough, ref = &quot;Manhattan&quot;)
 aed_anova_model = lm(aed_num_aeds ~ borough, data = aed_inventory_df)
@@ -431,10 +455,8 @@ summary(aed_anova_model)</code></pre>
 ## Residual standard error: 2.835 on 7634 degrees of freedom
 ## Multiple R-squared:  0.01247,    Adjusted R-squared:  0.01195 
 ## F-statistic: 24.09 on 4 and 7634 DF,  p-value: &lt; 2.2e-16</code></pre>
-<pre class="r"><code>table(aed_inventory_df$borough)</code></pre>
-<pre><code>## 
-##     Manhattan         Bronx      Brooklyn        Queens Staten Island 
-##          3667           988          1411          1228           345</code></pre>
+<p>On average, every borough has less AED density when compared to that
+of Manhattan.</p>
 
 
 
