@@ -75,4 +75,4 @@ tbr_df = tbr_df %>%
 
 tbr_df
 ```
-The Traffic Burden Ratio seems to be highest in Brooklyn and lowest in Manhattan.
+The Traffic Burden Ratio seems to be highest in Brooklyn and lowest in Manhattan. Although traffic is high in Manhattan, there is increased AED availability which mitigates the potential for a high TBR.
