@@ -9,7 +9,7 @@ Your report should include the following topics. Depending on your project type 
 
 ### Motivation
 
-Our project focuses on understanding AED accessibility and traffic congestion in New York City. Cardiovascular disease is not only the leading cause of death in the United States, but also the leading cause of death worldwide. Because NYC is a dense and highly populated city with heavy traffic, delays in emergency response are a real concern. Quick access to an AED can make a major difference during a sudden cardiac arrest, especially when ambulances may be slowed down by congestion. By exploring AED locations, traffic patterns, and leading causes of death, we wanted to see whether AEDs are placed in areas where fast response is especially important.
+Our project focuses on understanding AED accessibility and traffic congestion in New York City. Sudden cardiac arrest is one of the leading causes of death in the United States, accounting for approximately 250,000 deaths each year. Survival can increase by 29% through bystander CPR and use of an AED, before emergency medical services (EMS) arrive at the scene. In comparison, survival with CPR alone is about 9%, while CPR combined with AED use and shock delivery increases survival to 38%. Because NYC is a dense and highly populated city with heavy traffic, delays in emergency response are a real concern. Quick access to an AED can make a major difference during a sudden cardiac arrest, especially when ambulances may be slowed down by congestion. By exploring AED locations, traffic patterns, and leading causes of death, we wanted to see whether AEDs are placed in areas where fast response is especially important.
 
 ### Inspired source
 
