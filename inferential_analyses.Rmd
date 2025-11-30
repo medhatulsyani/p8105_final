@@ -8,8 +8,8 @@ date: "2025-11-29"
 Load Libraries
 ```{r}
 library(tidyverse)
+library(dplyr)
 ```
-
 
 
 Import Data
@@ -20,7 +20,7 @@ aed_inventory_df = read.csv("clean_data/aed_clean.csv")
 ```
 
 
-ANOVA for mean traffic volume across boroughs
+### ANOVA for mean traffic volume across boroughs
 ```{r}
 traffic_anova_model = aov(vol ~ boro, data = traffic_volume_df)
 summary(traffic_anova_model)
@@ -28,7 +28,7 @@ summary(traffic_anova_model)
 
 At least one borough's mean traffic volume differs from the others. This is significant and there is extremely strong evidence since the F value is 1,094.
 
-ANOVA for mean AED across boroughs
+### ANOVA for mean AED across boroughs
 ```{r}
 aed_anova_model = aov(aed_num_aeds ~ borough, data = aed_inventory_df)
 summary(aed_anova_model)
@@ -36,7 +36,7 @@ summary(aed_anova_model)
 
 At least one borough's mean AED differs from the others. This is significant with an F value of 24.09.
 
-Linear model for mean traffic volume across boroughs, set Manhattan as reference
+### Linear model for mean traffic volume across boroughs, set Manhattan as reference
 ```{r}
 traffic_volume_df$boro = as.factor(traffic_volume_df$boro)
 traffic_volume_df$boro = relevel(traffic_volume_df$boro, ref = "Manhattan")
@@ -46,7 +46,7 @@ summary(traffic_anova_model)
 
 On average, every borough has less traffic volume when compared to that of Manhattan.
 
-Linear model for mean AED across boroughs, set Manhattan as reference
+### Linear model for mean AED across boroughs, set Manhattan as reference
 ```{r}
 aed_inventory_df$borough = as.factor(aed_inventory_df$borough)
 aed_inventory_df$borough = relevel(aed_inventory_df$borough, ref = "Manhattan")
@@ -55,3 +55,24 @@ summary(aed_anova_model)
 ```
 
 On average, every borough has less AED density when compared to that of Manhattan.
+
+### Derived metric
+```{r}
+traffic_summary = traffic_volume_df %>%
+  group_by(boro) %>%
+  summarize(total_vehicles = sum(vol, na.rm = TRUE))
+
+aed_summary = aed_inventory_df %>%
+  group_by(borough) %>%
+  summarize(total_aeds = sum(aed_num_aeds, na.rm = TRUE))
+
+tbr_df = traffic_summary %>%
+  full_join(aed_summary, by = c("boro" = "borough"))
+
+tbr_df = tbr_df %>%
+  mutate(TBR = total_vehicles / total_aeds) %>%
+  arrange(desc(TBR))
+
+tbr_df
+```
+The Traffic Burden Ratio seems to be highest in Brooklyn and lowest in Manhattan.
