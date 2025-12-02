@@ -7,11 +7,11 @@ navbar:
       href: index.html
     - text: "Proposal"
       href: project_proposal.html   
-    - text: "Data exploratory & analysis"
+    - text: "Exploratory Data Analysis"
       menu:
-        - text: "Exploratory overview"
+        - text: "Overview and Descriptive Statistic"
           href: exploratory-datasets.html
-        - text: "Inferential analyses"
+        - text: "Statistical Analyses"
           href: analysis.html
     - text: "Maps"
       menu:
