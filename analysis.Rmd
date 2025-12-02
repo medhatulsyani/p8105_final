@@ -1,9 +1,18 @@
 ---
-title: "Descriptive Analyses & Inferential Analyses"
-author: ""
-output: html_document
-date: "2025-11-29"
+title: "**Statistical Analyses**"
+author: "Medha Tulsyani and Mukta Patwari"
+output: 
+  html_document: 
+    code_folding: hide 
 ---
+
+This page includes the statistical analyses performed into infer the relationship between AED density and traffic volume. The analyses performed were:
+
+(1) Linear regression for mean traffic across boroughs,
+(2) Linear regression for mean AEDs across boroughs,
+(3) Correlation between AED density and mean traffic volume.
+
+Additionally, a derived metric was created for the Traffic Burden Ratio to highlight the boroughs with the highest traffic congestion and lowest AED coverage.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -26,15 +35,7 @@ traffic_volume_df =
   read_csv("clean_data/traffic_clean.csv")
 ```
 
-## Descriptive Analyses
 
-### AED counts and density by borough
-
-### Mean and median traffic volume by borough and year
-
-### Visualizations
-
-## Inferential Analyses
 
 ### ANOVA for mean traffic volume across boroughs
 ```{r}

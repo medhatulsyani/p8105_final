@@ -9,11 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="" />
+<meta name="author" content="Medha Tulsyani and Mukta Patwari" />
 
-<meta name="date" content="2025-11-29" />
 
-<title>Descriptive Analyses &amp; Inferential Analyses</title>
+<title>Statistical Analyses</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -35,6 +34,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -221,6 +221,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -374,30 +377,39 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">Descriptive Analyses &amp; Inferential
-Analyses</h1>
-<h4 class="author"></h4>
-<h4 class="date">2025-11-29</h4>
+
+<h1 class="title toc-ignore"><strong>Statistical Analyses</strong></h1>
+<h4 class="author">Medha Tulsyani and Mukta Patwari</h4>
 
 </div>
 
 
+<p>This page includes the statistical analyses performed into infer the
+relationship between AED density and traffic volume. The analyses
+performed were:</p>
+<ol style="list-style-type: decimal">
+<li>Linear regression for mean traffic across boroughs,</li>
+<li>Linear regression for mean AEDs across boroughs,</li>
+<li>Correlation between AED density and mean traffic volume.</li>
+</ol>
+<p>Additionally, a derived metric was created for the Traffic Burden
+Ratio to highlight the boroughs with the highest traffic congestion and
+lowest AED coverage.</p>
 <pre class="r"><code>## Importing the clean datasets
 
 aed_inventory_df =
   read_csv(&quot;clean_data/aed_clean.csv&quot;)</code></pre>
 <pre><code>## Rows: 7639 Columns: 17
-<<<<<<< HEAD
-<<<<<<< HEAD
-## ── Column specification ────────────────────────────────────────────────
-=======
-## ── Column specification ──────────────────────────────────────────────────
->>>>>>> acf3ce5388ee7abb67355301cc6cee404af7a049
-=======
-## ── Column specification ───────────────────────────────────
->>>>>>> 8bac805b5666787f7cfa1e747605e9d5555ca9b9
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (8): entity_name, address, floor, borough, state, zip, nta_code, locatio...
 ## dbl (9): aed_num_person_trained, aed_num_aeds, latitude, longitude, communit...
@@ -407,15 +419,7 @@ aed_inventory_df =
 <pre class="r"><code>leading_causes_clean =
   read_csv(&quot;clean_data/leading_causes_clean.csv&quot;)</code></pre>
 <pre><code>## Rows: 2102 Columns: 7
-<<<<<<< HEAD
-<<<<<<< HEAD
-## ── Column specification ────────────────────────────────────────────────
-=======
-## ── Column specification ──────────────────────────────────────────────────
->>>>>>> acf3ce5388ee7abb67355301cc6cee404af7a049
-=======
-## ── Column specification ───────────────────────────────────
->>>>>>> 8bac805b5666787f7cfa1e747605e9d5555ca9b9
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (3): leading_cause, sex, race_ethnicity
 ## dbl (4): year, deaths, death_rate, age_adjusted_death_rate
@@ -425,36 +429,13 @@ aed_inventory_df =
 <pre class="r"><code>traffic_volume_df =
   read_csv(&quot;clean_data/traffic_clean.csv&quot;)</code></pre>
 <pre><code>## Rows: 500725 Columns: 14
-<<<<<<< HEAD
-<<<<<<< HEAD
-## ── Column specification ────────────────────────────────────────────────
-=======
-## ── Column specification ──────────────────────────────────────────────────
->>>>>>> acf3ce5388ee7abb67355301cc6cee404af7a049
-=======
-## ── Column specification ───────────────────────────────────
->>>>>>> 8bac805b5666787f7cfa1e747605e9d5555ca9b9
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (6): boro, wkt_geom, street, from_st, to_st, direction
 ## dbl (8): request_id, yr, m, d, hh, mm, vol, segment_id
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div id="descriptive-analyses" class="section level2">
-<h2>Descriptive Analyses</h2>
-<div id="aed-counts-and-density-by-borough" class="section level3">
-<h3>AED counts and density by borough</h3>
-</div>
-<div id="mean-and-median-traffic-volume-by-borough-and-year"
-class="section level3">
-<h3>Mean and median traffic volume by borough and year</h3>
-</div>
-<div id="visualizations" class="section level3">
-<h3>Visualizations</h3>
-</div>
-</div>
-<div id="inferential-analyses" class="section level2">
-<h2>Inferential Analyses</h2>
 <div id="anova-for-mean-traffic-volume-across-boroughs"
 class="section level3">
 <h3>ANOVA for mean traffic volume across boroughs</h3>
@@ -630,7 +611,6 @@ tbr_df</code></pre>
 in Manhattan. Although traffic is high in Manhattan, there is increased
 AED availability which mitigates the potential for a high TBR.</p>
 </div>
-</div>
 
 
 
@@ -667,6 +647,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

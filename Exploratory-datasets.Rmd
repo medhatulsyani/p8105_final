@@ -1,11 +1,11 @@
 --- 
-title: "**Exploratory Overview**" 
+title: "**Data Exploration**" 
 output: 
   html_document: 
     code_folding: hide 
 --- 
 
-This page provides an exploratory summary of three datasets used in this project: 
+This page provides an exploratory summary of the three datasets used in this project: 
 
 (1) NYC Leading Causes of Death in 2021 
 (2) Automated Traffic Volume Counts (2019–2024) 
