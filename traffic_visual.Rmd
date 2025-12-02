@@ -1,5 +1,5 @@
 ---
-title: "traffic_visual"
+title: "Traffic Volume"
 author: "Juhi Mattekatt"
 date: "2025-11-30"
 output: html_document
@@ -9,11 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(sf)
-
 library(leaflet)
-library(tigris)
-library(sf)
-library(RColorBrewer)
 ```
 
 ```{r import_prepare, echo=FALSE}
@@ -37,7 +33,7 @@ traffic = traffic_points %>%
 ```
 
 
-```{r, mapping}
+```{r, mapping, echo = FALSE}
 leaflet(traffic) %>%
   addProviderTiles("CartoDB.Positron") %>% #simple background 
   addCircleMarkers(
