@@ -22,7 +22,7 @@ library(janitor)
 library(plotly)
 ```
 
-```{r}
+```{r import, include=FALSE}
 ## Importing the clean datasets
 
 aed_inventory_df =

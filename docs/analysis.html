@@ -404,38 +404,6 @@ performed were:</p>
 <p>Additionally, a derived metric was created for the Traffic Burden
 Ratio to highlight the boroughs with the highest traffic congestion and
 lowest AED coverage.</p>
-<pre class="r"><code>## Importing the clean datasets
-
-aed_inventory_df =
-  read_csv(&quot;clean_data/aed_clean.csv&quot;)</code></pre>
-<pre><code>## Rows: 7639 Columns: 17
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (8): entity_name, address, floor, borough, state, zip, nta_code, locatio...
-## dbl (9): aed_num_person_trained, aed_num_aeds, latitude, longitude, communit...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>leading_causes_clean =
-  read_csv(&quot;clean_data/leading_causes_clean.csv&quot;)</code></pre>
-<pre><code>## Rows: 2102 Columns: 7
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (3): leading_cause, sex, race_ethnicity
-## dbl (4): year, deaths, death_rate, age_adjusted_death_rate
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>traffic_volume_df =
-  read_csv(&quot;clean_data/traffic_clean.csv&quot;)</code></pre>
-<pre><code>## Rows: 500725 Columns: 14
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (6): boro, wkt_geom, street, from_st, to_st, direction
-## dbl (8): request_id, yr, m, d, hh, mm, vol, segment_id
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div id="anova-for-mean-traffic-volume-across-boroughs"
 class="section level3">
 <h3>ANOVA for mean traffic volume across boroughs</h3>
