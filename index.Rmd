@@ -42,11 +42,44 @@ Our project explores how the placement of **Automated External Defibrillators (A
 
 <span style="font-size: 25px; font-weight: bold;">
   <img src="icons/map_logo.png" width="65" style="vertical-align:-1px;">
-  The Heartbeat of NYC: Mapping AED Locations
+  NYC AED Coverage & Traffic Flow Insights
 </span>
 
-On the map below, you'll see 
+The maps below display AED locations (left-hand side) and average traffic volumes (right-hand side) captured between years 2019 to 2024 across NYC boroughs. Click on the AED icons to explore:
 
+* AED locations
+* AED counts
+* AED trained personnel.
+
+Interact with the traffic circles to explore: 
+
+* traffic density
+* average traffic volume
+* street names.
+
+
+```{r, include=FALSE}
+aed_map <- readRDS("aed_map.rds")
+traffic_map <- readRDS("traffic_map.rds")
+```
+
+<div style = "display:flex; gap:20px;">
+
+<div style = "flex:1;">
+```{r, echo=FALSE}
+aed_map
+```
+
+</div>
+
+<div style = "flex:1;">
+```{r, echo=FALSE}
+traffic_map
+```
+
+</div>
+
+</div>
 
 ### **Data Source** 
 

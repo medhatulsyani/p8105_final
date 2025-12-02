@@ -63,7 +63,8 @@ aed_map_icon <- makeIcon(
   iconHeight = 15
 )
 
-leaflet() |>
+aed_map = aed_clean |>
+  leaflet() |>
   addProviderTiles(providers$CartoDB.Positron) |>
    addPolygons(
     data = boroughs,
@@ -99,6 +100,8 @@ leaflet() |>
     overlayGroups = c("Boroughs"),
     options = layersControlOptions(collapsed = FALSE)
   )
+
+aed_map
 ```
 
 
@@ -135,7 +138,7 @@ traffic_summary = st_as_sf(traffic_summary,
 
 #mapping overall traffic volume in the dataset
 
-traffic_summary |>
+traffic_map = traffic_summary |>
   leaflet() |>
   addProviderTiles(providers$OpenStreetMap) |>
    addPolygons(
@@ -166,11 +169,11 @@ traffic_summary |>
     stroke = FALSE,
     fillOpacity = 0.7,
     popup = ~paste0(
-      "<b>Street: </b>", street, "<b>",
-      "<b>From: </b>", from_st, "<b>",
-      "<b>To: </b>", to_st, "<b>",
-      "<b>Avg Volume: </b>", round(mean_vol), "<b>",
-      "<b>Observations: </b>", n_obs
+      "<b>Street: </b>", street, "<br>",
+      "<b>From: </b>", from_st, "<br>",
+      "<b>To: </b>", to_st, "<br>",
+      "<b>Avg Volume: </b>", round(mean_vol), "<br>",
+      "<b>Observations: </br>", n_obs
     ),
     group = "Traffic Volume"
   ) |>
@@ -184,4 +187,12 @@ traffic_summary |>
     labels = c("Low", "Medium", "High"),
     title = "Mean Traffic Volume"
   )
+
+traffic_map
+```
+
+
+```{r}
+saveRDS(aed_map, "aed_map.rds")
+saveRDS(traffic_map, "traffic_map.rds")
 ```
