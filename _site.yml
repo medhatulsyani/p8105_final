@@ -17,6 +17,8 @@ navbar:
           href: AED_Visual.html
         - text: "Traffic Volume"
           href: traffic_visual.html
+        - text: "Alternative"
+          href: sync_maps.html
   right:
     - text: "Report"
       href: report.html
