@@ -111,12 +111,12 @@ traffic_summary = traffic_volume_df %>%
   group_by(boro) %>%
   summarize(total_vehicles = sum(vol, na.rm = TRUE))
 
-aed_summary = aed_inventory_df %>%
+aed_density = aed_inventory_df %>%
   group_by(borough) %>%
   summarize(total_aeds = sum(aed_num_aeds, na.rm = TRUE))
 
 tbr_df = traffic_summary %>%
-  full_join(aed_summary, by = c("boro" = "borough"))
+  full_join(aed_density, by = c("boro" = "borough"))
 
 tbr_df = tbr_df %>%
   mutate(TBR = total_vehicles / total_aeds) %>%
