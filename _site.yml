@@ -11,6 +11,8 @@ navbar:
       menu:
         - text: "Exploratory overview"
           href: exploratory-datasets.html
+        - text: "Inferential analyses"
+          href: analysis.html
     - text: "Maps"
       menu:
         - text: "AED Distribution"
