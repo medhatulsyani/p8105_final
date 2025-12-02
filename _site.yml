@@ -11,12 +11,16 @@ navbar:
       menu:
         - text: "Exploratory overview"
           href: exploratory-datasets.html
+        - text: "Inferential analyses"
+          href: analysis.html
     - text: "Maps"
       menu:
         - text: "AED Distribution"
           href: AED_Visual.html
         - text: "Traffic Volume"
           href: traffic_visual.html
+        - text: "Alternative"
+          href: sync_maps.html
   right:
     - text: "Report"
       href: report.html
