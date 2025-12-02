@@ -723,7 +723,7 @@ year,leading_cause,sex,race_ethnicity,deaths,death_rate,age_adjusted_death_rate
 2017,"Essential Hypertension and Renal Diseases (I10, I12)",Male,Not Stated/Unknown,16,NA,NA
 2016,Alzheimer's Disease (G30),Female,Not Stated/Unknown,9,NA,NA
 2016,Influenza (Flu) and Pneumonia (J09-J18),Male,Non-Hispanic Black,258,30.00806031,34.46182956
-2016,"Mental and Behavioral Disorders due to Accidental Poisoning and Other Psychoactive Substance Use (F11-F16, F18-F19, X40-X42, X44)",Male,Non-Hispanic Black,258,30.00806031,27.588455539999998
+2016,"Mental and Behavioral Disorders due to Accidental Poisoning and Other Psychoactive Substance Use (F11-F16, F18-F19, X40-X42, X44)",Male,Non-Hispanic Black,258,30.00806031,27.588455540000002
 2016,Diabetes Mellitus (E10-E14),Male,Non-Hispanic Black,313,36.40512742,39.87933242
 2016,Malignant Neoplasms (Cancer: C00-C97),Male,Non-Hispanic Black,1611,187.3759114,199.6463403
 2016,"Diseases of Heart (I00-I09, I11, I13, I20-I51)",Male,Non-Hispanic Black,2106,244.9495155,271.1314782

@@ -15,7 +15,7 @@ library(RColorBrewer)
 ```
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 # Importing dataset
 
 traffic_volume_df = read.csv("clean_data/traffic_clean.csv")
@@ -25,14 +25,14 @@ aed_inventory_df = read.csv("clean_data/aed_clean.csv")
 ```
 
 
-```{r adding location variable, echo=FALSE}
+```{r adding location variable, echo=FALSE, include=FALSE}
 aed_clean = aed_inventory_df |>
   mutate(location = str_replace(location_point,"^POINT\\s*", "")
          )
 ```
 
 
-```{r, setup of NYC Boroughs, echo=FALSE}
+```{r, setup of NYC Boroughs, echo=FALSE, include=FALSE}
 
 boroughs = counties(state = "NY", cb = TRUE) |>
   filter(NAME %in% c("Bronx", "Kings", "New York", "Queens", "Richmond")) |>
@@ -54,7 +54,7 @@ boro_pal <- colorFactor(
 ```
 
 
-```{r, AED and borough mapping}
+```{r, AED and borough mapping, echo=FALSE}
 
 aed_map_icon <- makeIcon(
   iconUrl = "icons/map_logo.png",

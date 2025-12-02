@@ -336,6 +336,27 @@ div.tocify {
     <li>
       <a href="exploratory-datasets.html">Exploratory overview</a>
     </li>
+    <li>
+      <a href="analysis.html">Inferential analyses</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Maps
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="AED_Visual.html">AED Distribution</a>
+    </li>
+    <li>
+      <a href="traffic_visual.html">Traffic Volume</a>
+    </li>
+    <li>
+      <a href="sync_maps.html">Alternative</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -368,7 +389,15 @@ Analyses</h1>
 aed_inventory_df =
   read_csv(&quot;clean_data/aed_clean.csv&quot;)</code></pre>
 <pre><code>## Rows: 7639 Columns: 17
-## ── Column specification ──────────────────────────────────────────────────────────
+<<<<<<< HEAD
+<<<<<<< HEAD
+## ── Column specification ────────────────────────────────────────────────
+=======
+## ── Column specification ──────────────────────────────────────────────────
+>>>>>>> acf3ce5388ee7abb67355301cc6cee404af7a049
+=======
+## ── Column specification ───────────────────────────────────
+>>>>>>> 8bac805b5666787f7cfa1e747605e9d5555ca9b9
 ## Delimiter: &quot;,&quot;
 ## chr (8): entity_name, address, floor, borough, state, zip, nta_code, locatio...
 ## dbl (9): aed_num_person_trained, aed_num_aeds, latitude, longitude, communit...
@@ -378,7 +407,15 @@ aed_inventory_df =
 <pre class="r"><code>leading_causes_clean =
   read_csv(&quot;clean_data/leading_causes_clean.csv&quot;)</code></pre>
 <pre><code>## Rows: 2102 Columns: 7
-## ── Column specification ──────────────────────────────────────────────────────────
+<<<<<<< HEAD
+<<<<<<< HEAD
+## ── Column specification ────────────────────────────────────────────────
+=======
+## ── Column specification ──────────────────────────────────────────────────
+>>>>>>> acf3ce5388ee7abb67355301cc6cee404af7a049
+=======
+## ── Column specification ───────────────────────────────────
+>>>>>>> 8bac805b5666787f7cfa1e747605e9d5555ca9b9
 ## Delimiter: &quot;,&quot;
 ## chr (3): leading_cause, sex, race_ethnicity
 ## dbl (4): year, deaths, death_rate, age_adjusted_death_rate
@@ -388,7 +425,15 @@ aed_inventory_df =
 <pre class="r"><code>traffic_volume_df =
   read_csv(&quot;clean_data/traffic_clean.csv&quot;)</code></pre>
 <pre><code>## Rows: 500725 Columns: 14
-## ── Column specification ──────────────────────────────────────────────────────────
+<<<<<<< HEAD
+<<<<<<< HEAD
+## ── Column specification ────────────────────────────────────────────────
+=======
+## ── Column specification ──────────────────────────────────────────────────
+>>>>>>> acf3ce5388ee7abb67355301cc6cee404af7a049
+=======
+## ── Column specification ───────────────────────────────────
+>>>>>>> 8bac805b5666787f7cfa1e747605e9d5555ca9b9
 ## Delimiter: &quot;,&quot;
 ## chr (6): boro, wkt_geom, street, from_st, to_st, direction
 ## dbl (8): request_id, yr, m, d, hh, mm, vol, segment_id
@@ -551,9 +596,9 @@ indicates a strong positive correlation between AED density and traffic
 volume. Boroughs with higher mean traffic volume have more available
 AEDs, as seen by Manhattan having a mean traffic volume of 147.6 and
 6583 AEDs while the Bronx has a mean traffic volume of 86.53 with only
-1030 available AEDs, in comparison. The corresponding p-value for this
-correlation is &gt; 0.05, indicating that the relationship is strong but
-not statistically significant at the 5% level.</p>
+1030 available AEDs, in comparison. However, the corresponding p-value
+for this correlation is &gt; 0.05, indicating that the relationship is
+strong but not statistically significant at the 5% level.</p>
 </div>
 <div id="derived-metric" class="section level3">
 <h3>Derived metric</h3>
@@ -561,12 +606,12 @@ not statistically significant at the 5% level.</p>
   group_by(boro) %&gt;%
   summarize(total_vehicles = sum(vol, na.rm = TRUE))
 
-aed_summary = aed_inventory_df %&gt;%
+aed_density = aed_inventory_df %&gt;%
   group_by(borough) %&gt;%
   summarize(total_aeds = sum(aed_num_aeds, na.rm = TRUE))
 
 tbr_df = traffic_summary %&gt;%
-  full_join(aed_summary, by = c(&quot;boro&quot; = &quot;borough&quot;))
+  full_join(aed_density, by = c(&quot;boro&quot; = &quot;borough&quot;))
 
 tbr_df = tbr_df %&gt;%
   mutate(TBR = total_vehicles / total_aeds) %&gt;%

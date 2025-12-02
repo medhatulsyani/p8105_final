@@ -27,7 +27,11 @@ library(plotly)
 ##Import datasets
 zip_path = "./raw_data/Automated_Traffic_Volume_Counts.zip"
 csv_filename_in_zip = "Automated_Traffic_Volume_Counts.csv"
-traffic_volume_df = read_csv(unz(description = zip_path, filename = csv_filename_in_zip))
+traffic_volume_df = read_csv(
+  unz(description = "./raw_data/Automated_Traffic_Volume_Counts.zip",
+      filename = csv_filename_in_zip)
+)
+
 
 aed_inventory_df = read_csv("./raw_data/NYC_Automated_External_Defibrillator_(AED)_Inventory.csv")
 leading_causes_df = read_csv("./raw_data/NYC_Leading_Causes_of_Death.csv")

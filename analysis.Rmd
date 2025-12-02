@@ -103,7 +103,7 @@ cor_result =
 print(cor_result)
 ```
 
-The resulting Pearson correlation coefficient is 0.826. This indicates a strong positive correlation between AED density and traffic volume. Boroughs with higher mean traffic volume have more available AEDs, as seen by Manhattan having a mean traffic volume of 147.6 and 6583 AEDs while the Bronx has a mean traffic volume of 86.53 with only 1030 available AEDs, in comparison. The corresponding p-value for this correlation is > 0.05, indicating that the relationship is strong but not statistically significant at the 5% level.
+The resulting Pearson correlation coefficient is 0.826. This indicates a strong positive correlation between AED density and traffic volume. Boroughs with higher mean traffic volume have more available AEDs, as seen by Manhattan having a mean traffic volume of 147.6 and 6583 AEDs while the Bronx has a mean traffic volume of 86.53 with only 1030 available AEDs, in comparison. However, the corresponding p-value for this correlation is > 0.05, indicating that the relationship is strong but not statistically significant at the 5% level.
 
 ### Derived metric
 ```{r}
@@ -111,12 +111,12 @@ traffic_summary = traffic_volume_df %>%
   group_by(boro) %>%
   summarize(total_vehicles = sum(vol, na.rm = TRUE))
 
-aed_summary = aed_inventory_df %>%
+aed_density = aed_inventory_df %>%
   group_by(borough) %>%
   summarize(total_aeds = sum(aed_num_aeds, na.rm = TRUE))
 
 tbr_df = traffic_summary %>%
-  full_join(aed_summary, by = c("boro" = "borough"))
+  full_join(aed_density, by = c("boro" = "borough"))
 
 tbr_df = tbr_df %>%
   mutate(TBR = total_vehicles / total_aeds) %>%
