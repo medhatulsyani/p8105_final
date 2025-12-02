@@ -351,6 +351,9 @@ div.tocify {
     <li>
       <a href="traffic_visual.html">Traffic Volume</a>
     </li>
+    <li>
+      <a href="sync_maps.html">Alternative</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -576,12 +579,12 @@ strong but not statistically significant at the 5% level.</p>
   group_by(boro) %&gt;%
   summarize(total_vehicles = sum(vol, na.rm = TRUE))
 
-aed_summary = aed_inventory_df %&gt;%
+aed_density = aed_inventory_df %&gt;%
   group_by(borough) %&gt;%
   summarize(total_aeds = sum(aed_num_aeds, na.rm = TRUE))
 
 tbr_df = traffic_summary %&gt;%
-  full_join(aed_summary, by = c(&quot;boro&quot; = &quot;borough&quot;))
+  full_join(aed_density, by = c(&quot;boro&quot; = &quot;borough&quot;))
 
 tbr_df = tbr_df %&gt;%
   mutate(TBR = total_vehicles / total_aeds) %&gt;%
