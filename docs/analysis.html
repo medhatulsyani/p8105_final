@@ -331,16 +331,16 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Data exploratory &amp; analysis
+    Exploratory Data Analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="exploratory-datasets.html">Exploratory overview</a>
+      <a href="exploratory-datasets.html">Overview and Descriptive Statistic</a>
     </li>
     <li>
-      <a href="analysis.html">Inferential analyses</a>
+      <a href="analysis.html">Statistical Analyses</a>
     </li>
   </ul>
 </li>
@@ -393,7 +393,7 @@ div.tocify {
 </div>
 
 
-<p>This page includes the statistical analyses performed into infer the
+<p>This page includes the statistical analyses performed to infer the
 relationship between AED density and traffic volume. The analyses
 performed were:</p>
 <ol style="list-style-type: decimal">
@@ -404,32 +404,6 @@ performed were:</p>
 <p>Additionally, a derived metric was created for the Traffic Burden
 Ratio to highlight the boroughs with the highest traffic congestion and
 lowest AED coverage.</p>
-<div id="anova-for-mean-traffic-volume-across-boroughs"
-class="section level3">
-<h3>ANOVA for mean traffic volume across boroughs</h3>
-<pre class="r"><code>traffic_anova_model = aov(vol ~ boro, data = traffic_volume_df)
-summary(traffic_anova_model)</code></pre>
-<pre><code>##                 Df    Sum Sq  Mean Sq F value Pr(&gt;F)    
-## boro             4 1.443e+08 36078376    1094 &lt;2e-16 ***
-## Residuals   500720 1.651e+10    32977                   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>At least one borough’s mean traffic volume differs from the others.
-This is significant and there is extremely strong evidence since the F
-value is 1,094.</p>
-</div>
-<div id="anova-for-mean-aed-across-boroughs" class="section level3">
-<h3>ANOVA for mean AED across boroughs</h3>
-<pre class="r"><code>aed_anova_model = aov(aed_num_aeds ~ borough, data = aed_inventory_df)
-summary(aed_anova_model)</code></pre>
-<pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)    
-## borough        4    775  193.65   24.09 &lt;2e-16 ***
-## Residuals   7634  61365    8.04                   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>At least one borough’s mean AED differs from the others. This is
-significant with an F value of 24.09.</p>
-</div>
 <div
 id="linear-model-for-mean-traffic-volume-across-boroughs-set-manhattan-as-reference"
 class="section level3">

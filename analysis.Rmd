@@ -6,7 +6,7 @@ output:
     code_folding: hide 
 ---
 
-This page includes the statistical analyses performed into infer the relationship between AED density and traffic volume. The analyses performed were:
+This page includes the statistical analyses performed to infer the relationship between AED density and traffic volume. The analyses performed were:
 
 (1) Linear regression for mean traffic across boroughs,
 (2) Linear regression for mean AEDs across boroughs,
@@ -35,23 +35,6 @@ traffic_volume_df =
   read_csv("clean_data/traffic_clean.csv")
 ```
 
-
-
-### ANOVA for mean traffic volume across boroughs
-```{r}
-traffic_anova_model = aov(vol ~ boro, data = traffic_volume_df)
-summary(traffic_anova_model)
-```
-
-At least one borough's mean traffic volume differs from the others. This is significant and there is extremely strong evidence since the F value is 1,094.
-
-### ANOVA for mean AED across boroughs
-```{r}
-aed_anova_model = aov(aed_num_aeds ~ borough, data = aed_inventory_df)
-summary(aed_anova_model)
-```
-
-At least one borough's mean AED differs from the others. This is significant with an F value of 24.09.
 
 ### Linear model for mean traffic volume across boroughs, set Manhattan as reference
 ```{r}
