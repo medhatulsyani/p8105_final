@@ -1,7 +1,5 @@
 ---
 title: "Traffic Volume"
-author: "Juhi Mattekatt"
-date: "2025-11-30"
 output: html_document
 ---
 
