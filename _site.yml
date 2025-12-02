@@ -13,10 +13,10 @@ navbar:
           href: exploratory-datasets.html
         - text: "Statistical Analyses"
           href: analysis.html
-    - text: "Maps"
+    - text: "Dashboard"
       menu:
-        - text: "AED Distribution"
-          href: AED_Visual.html
+        - text: "Interactive Map for AED and Traffic Distribution"
+          href: AED_Traffic_For_Shiny.html
         - text: "Traffic Volume"
           href: traffic_visual.html
         - text: "Alternative"
