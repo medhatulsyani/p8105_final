@@ -1,0 +1,59 @@
+---
+title: "traffic_visual"
+author: "Juhi Mattekatt"
+date: "2025-11-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(sf)
+
+library(leaflet)
+library(tigris)
+library(sf)
+library(RColorBrewer)
+```
+
+```{r import_prepare, echo=FALSE}
+# import and prepare traffic data
+traffic_summary = read.csv("./clean_data/traffic_clean.csv") %>% 
+  group_by(segment_id) %>%
+  summarize(total_volume = sum(vol, na.rm = TRUE), avg_volume = mean(vol, na.rm = TRUE), .groups = "drop") #summary volume for intersections
+
+traffic_points = read.csv("./clean_data/traffic_clean.csv") %>%
+  st_as_sf(wkt = "wkt_geom", crs = 2263) %>%  #convert wkt_geom to longitude and latitude system for mapping
+  st_transform(4326)
+
+traffic = traffic_points %>%
+  left_join(traffic_summary, by = "segment_id") %>% 
+  select(-request_id, -yr, -m, -d, -hh, -mm, -vol) %>% 
+  group_by(segment_id) %>% #use instead of distinct becasue distinct takes too long
+  slice(1) %>%
+  ungroup()
+ 
+  
+```
+
+
+```{r, mapping}
+leaflet(traffic) %>%
+  addProviderTiles("CartoDB.Positron") %>% #simple background 
+  addCircleMarkers(
+    radius = 3,
+    color = ~colorNumeric("RdYlBu", avg_volume)(avg_volume),  #average volume scale by color
+    fillOpacity = 0.7,
+    popup = ~paste0(
+      "<b>Street: ", street, "</b><br>",
+      from_st, " → ", to_st, "<br>",
+      "Segment ID: ", segment_id, "<br>",
+      "Direction: ", direction, "<br>",
+      "Total Volume: ", total_volume, "<br>",
+      "Average Volume: ", avg_volume, "<br>")) %>%
+  addLegend(
+    position = "bottomright",
+    pal = colorNumeric("RdYlBu", traffic$avg_volume),
+    values = traffic$avg_volume,
+    title = "Average Volume")
+```
