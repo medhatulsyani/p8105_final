@@ -3,9 +3,6 @@ title: "AED Accessibility and Traffic Congestion in NYC"
 output: html_document
 ---
 
-
-
-
 ### **Overview**
 <img src="icons/youtube_logo.png" width="40" style="vertical-align:-10px;"> screencast[insert link] Take a tour of our website!!
 
@@ -45,7 +42,7 @@ Our project explores how the placement of **Automated External Defibrillators (A
   NYC AED Coverage & Traffic Flow Insights
 </span>
 
-The maps below display AED locations (left-hand side) and average traffic volumes (right-hand side) captured between years 2019 to 2024 across NYC boroughs. Click on the AED icons to explore:
+The maps below display AED locations (top map) and average traffic volumes (bottom map) captured between years 2019 to 2024 across NYC boroughs. Click on the AED icons to explore:
 
 * AED locations
 * AED counts
@@ -59,13 +56,10 @@ Interact with the traffic circles to explore:
 
 
 ```{r, include=FALSE}
-aed_map <- readRDS("aed_map.rds")
-traffic_map <- readRDS("traffic_map.rds")
+aed_map = readRDS("aed_map.rds")
+traffic_map = readRDS("traffic_map.rds")
 ```
 
-<div style = "display:flex; gap:20px;">
-
-<div style = "flex:1;">
 ```{r, echo=FALSE}
 aed_map
 ```
