@@ -40,8 +40,8 @@ traffic_volume_df =
 ```{r}
 traffic_volume_df$boro = as.factor(traffic_volume_df$boro)
 traffic_volume_df$boro = relevel(traffic_volume_df$boro, ref = "Manhattan")
-traffic_anova_model = lm(vol ~ boro, data = traffic_volume_df)
-summary(traffic_anova_model)
+traffic_linear_model = lm(vol ~ boro, data = traffic_volume_df)
+summary(traffic_linear_model)
 ```
 
 On average, every borough has less traffic volume when compared to that of Manhattan.
@@ -55,8 +55,8 @@ The mean traffic volume in Staten Island is 38.6 cars less than that of Manhatta
 ```{r}
 aed_inventory_df$borough = as.factor(aed_inventory_df$borough)
 aed_inventory_df$borough = relevel(aed_inventory_df$borough, ref = "Manhattan")
-aed_anova_model = lm(aed_num_aeds ~ borough, data = aed_inventory_df)
-summary(aed_anova_model)
+aed_linear_model = lm(aed_num_aeds ~ borough, data = aed_inventory_df)
+summary(aed_linear_model)
 ```
 
 On average, every borough has less AED density when compared to that of Manhattan.
