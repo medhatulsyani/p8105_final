@@ -9,37 +9,27 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Meet the team!
 
-### Member Name
-Department:
+### Nichcha Subdee
+Program: 2nd year MPH in Epidemiology
+
+Certificate: Advanced Epidemiology
+
+### Medha Tulsyani
+Program: 2nd-year MPH in Epidemiology
+
+Certificate: Applied Biostatistics and Public Health Data Science
+
+### Mukta Patwari
+Program: 2nd-year MPH in Epidemiology
+
+Certificate: Applied Biostatistics and Public Health Science
+
+### Juhi Mattekatt
+Program:
 
 Certificate:
 
-Contact:
-
-### Member Name
-Department:
+### Maliha Safdar
+Program:
 
 Certificate:
-
-Contact:
-
-### Member Name
-Department:
-
-Certificate:
-
-Contact:
-
-### Member Name
-Department:
-
-Certificate:
-
-Contact:
-
-### Member Name
-Department:
-
-Certificate:
-
-Contact:
