@@ -42,7 +42,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      # Borough Select Input
+      #Borough Select Input
       checkboxGroupInput(
         "borough_choice", 
         label = h3("Select Borough(s)"),
@@ -50,7 +50,7 @@ ui <- fluidPage(
         selected = "Manhattan"
       ),
       
-      # Traffic Volume Slider Input
+      #Traffic Volume Slider Input
       sliderInput(
         "volume_range", 
         label = h3("Choose Traffic Volume Range"), 
@@ -59,7 +59,7 @@ ui <- fluidPage(
         value = c(100, 400)
       ),
       
-      # Year check box
+      #Year check box
       checkboxGroupInput(
         "year_choice",
         label = h3("Select Year(s)"),
@@ -69,15 +69,15 @@ ui <- fluidPage(
     ),
     
     mainPanel(
-      leafletOutput("map")  # This will display the map
+      leafletOutput("map")
     )
   )
 )
 
-# Define server logic
+#server logic
 server <- function(input, output, session) {
   
-  # Reactive expression to filter traffic data based on user inputs
+  #to filter traffic and aed data based on user inputs
   filtered_traffic <- reactive({
     traffic %>%
       filter(
@@ -94,7 +94,7 @@ server <- function(input, output, session) {
   })
   
   output$map <- renderLeaflet({
-    # Get filtered traffic data
+    #filtered traffic and aed data setup for map
     filtered_traffic_data = filtered_traffic()
     filtered_aed_data = filtered_aed()
     
@@ -134,5 +134,5 @@ server <- function(input, output, session) {
   })
 }
 
-# Run the Shiny app
+# run shiny
 shinyApp(ui = ui, server = server)
