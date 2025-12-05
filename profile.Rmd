@@ -22,7 +22,7 @@ Certificate: Applied Biostatistics and Public Health Data Science
 ### Mukta Patwari
 Program: 2nd-year MPH in Epidemiology
 
-Certificate: Applied Biostatistics and Public Health Science
+Certificate: Applied Biostatistics and Public Health Data Science
 
 ### Juhi Mattekatt
 Program:
