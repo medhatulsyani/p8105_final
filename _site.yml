@@ -10,7 +10,7 @@ navbar:
     - text: "Exploratory Data Analysis"
       menu:
         - text: "Overview and Descriptive Statistics"
-          href: exploratory-datasets.html
+          href: exploratory_datasets.html
         - text: "Statistical Analyses"
           href: analysis.html
     - text: "Dashboard"
