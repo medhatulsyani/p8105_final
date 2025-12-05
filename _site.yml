@@ -22,6 +22,8 @@ navbar:
         - text: "Alternative"
           href: sync_maps.html
   right:
+    - text: "Team Profile"
+      href: profile.html
     - text: "Report"
       href: report.html
     - text: "GitHub"

@@ -9,11 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Medha Tulsyani and Mukta Patwari" />
 
-<meta name="date" content="2025-11-29" />
 
-<title>Inferential Analyses</title>
+<title>Team Profile</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -334,11 +332,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-<<<<<<< HEAD
-      <a href="exploratory-datasets.html">Overview and Descriptive Statistic</a>
-=======
       <a href="exploratory-datasets.html">Overview and Descriptive Statistics</a>
->>>>>>> 34e7e82d6b45857f23b1aa6f89c645dba66b56f3
     </li>
     <li>
       <a href="analysis.html">Statistical Analyses</a>
@@ -380,141 +374,43 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Inferential Analyses</h1>
-<h4 class="author">Medha Tulsyani and Mukta Patwari</h4>
-<h4 class="date">2025-11-29</h4>
+<h1 class="title toc-ignore">Team Profile</h1>
 
 </div>
 
 
-<p>Load Libraries</p>
-<pre class="r"><code>library(tidyverse)
-library(dplyr)</code></pre>
-<p>Import Data</p>
-<pre class="r"><code>traffic_volume_df = read.csv(&quot;clean_data/traffic_clean.csv&quot;)
-
-aed_inventory_df = read.csv(&quot;clean_data/aed_clean.csv&quot;)</code></pre>
-<div id="anova-for-mean-traffic-volume-across-boroughs"
-class="section level3">
-<h3>ANOVA for mean traffic volume across boroughs</h3>
-<pre class="r"><code>traffic_anova_model = aov(vol ~ boro, data = traffic_volume_df)
-summary(traffic_anova_model)</code></pre>
-<pre><code>##                 Df    Sum Sq  Mean Sq F value Pr(&gt;F)    
-## boro             4 1.443e+08 36078376    1094 &lt;2e-16 ***
-## Residuals   500720 1.651e+10    32977                   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>At least one borough’s mean traffic volume differs from the others.
-This is significant and there is extremely strong evidence since the F
-value is 1,094.</p>
+<div id="meet-the-team" class="section level1">
+<h1>Meet the team!</h1>
+<div id="member-name" class="section level3">
+<h3>Member Name</h3>
+<p>Department:</p>
+<p>Certificate:</p>
+<p>Contact:</p>
 </div>
-<div id="anova-for-mean-aed-across-boroughs" class="section level3">
-<h3>ANOVA for mean AED across boroughs</h3>
-<pre class="r"><code>aed_anova_model = aov(aed_num_aeds ~ borough, data = aed_inventory_df)
-summary(aed_anova_model)</code></pre>
-<pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)    
-## borough        4    775  193.65   24.09 &lt;2e-16 ***
-## Residuals   7634  61365    8.04                   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>At least one borough’s mean AED differs from the others. This is
-significant with an F value of 24.09.</p>
+<div id="member-name-1" class="section level3">
+<h3>Member Name</h3>
+<p>Department:</p>
+<p>Certificate:</p>
+<p>Contact:</p>
 </div>
-<div
-id="linear-model-for-mean-traffic-volume-across-boroughs-set-manhattan-as-reference"
-class="section level3">
-<h3>Linear model for mean traffic volume across boroughs, set Manhattan
-as reference</h3>
-<pre class="r"><code>traffic_volume_df$boro = as.factor(traffic_volume_df$boro)
-traffic_volume_df$boro = relevel(traffic_volume_df$boro, ref = &quot;Manhattan&quot;)
-traffic_anova_model = lm(vol ~ boro, data = traffic_volume_df)
-summary(traffic_anova_model)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = vol ~ boro, data = traffic_volume_df)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -147.60  -94.75  -54.67   21.25 2069.25 
-## 
-## Coefficients:
-##                   Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)       147.5972     0.6121  241.12   &lt;2e-16 ***
-## boroBronx         -61.0661     0.9409  -64.90   &lt;2e-16 ***
-## boroBrooklyn      -24.9223     0.7615  -32.73   &lt;2e-16 ***
-## boroQueens        -29.8485     0.7596  -39.29   &lt;2e-16 ***
-## boroStaten Island -38.6350     1.3119  -29.45   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 181.6 on 500720 degrees of freedom
-## Multiple R-squared:  0.008664,   Adjusted R-squared:  0.008656 
-## F-statistic:  1094 on 4 and 500720 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>On average, every borough has less traffic volume when compared to
-that of Manhattan.</p>
+<div id="member-name-2" class="section level3">
+<h3>Member Name</h3>
+<p>Department:</p>
+<p>Certificate:</p>
+<p>Contact:</p>
 </div>
-<div
-id="linear-model-for-mean-aed-across-boroughs-set-manhattan-as-reference"
-class="section level3">
-<h3>Linear model for mean AED across boroughs, set Manhattan as
-reference</h3>
-<pre class="r"><code>aed_inventory_df$borough = as.factor(aed_inventory_df$borough)
-aed_inventory_df$borough = relevel(aed_inventory_df$borough, ref = &quot;Manhattan&quot;)
-aed_anova_model = lm(aed_num_aeds ~ borough, data = aed_inventory_df)
-summary(aed_anova_model)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = aed_num_aeds ~ borough, data = aed_inventory_df)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -1.795 -0.795 -0.478 -0.103 61.205 
-## 
-## Coefficients:
-##                      Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)           1.79520    0.04682  38.343  &lt; 2e-16 ***
-## boroughBronx         -0.75269    0.10163  -7.406 1.44e-13 ***
-## boroughBrooklyn      -0.69244    0.08882  -7.796 7.24e-15 ***
-## boroughQueens        -0.31719    0.09348  -3.393 0.000694 ***
-## boroughStaten Island -0.56621    0.15966  -3.546 0.000393 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 2.835 on 7634 degrees of freedom
-## Multiple R-squared:  0.01247,    Adjusted R-squared:  0.01195 
-## F-statistic: 24.09 on 4 and 7634 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>On average, every borough has less AED density when compared to that
-of Manhattan.</p>
+<div id="member-name-3" class="section level3">
+<h3>Member Name</h3>
+<p>Department:</p>
+<p>Certificate:</p>
+<p>Contact:</p>
 </div>
-<div id="derived-metric" class="section level3">
-<h3>Derived metric</h3>
-<pre class="r"><code>traffic_summary = traffic_volume_df %&gt;%
-  group_by(boro) %&gt;%
-  summarize(total_vehicles = sum(vol, na.rm = TRUE))
-
-aed_summary = aed_inventory_df %&gt;%
-  group_by(borough) %&gt;%
-  summarize(total_aeds = sum(aed_num_aeds, na.rm = TRUE))
-
-tbr_df = traffic_summary %&gt;%
-  full_join(aed_summary, by = c(&quot;boro&quot; = &quot;borough&quot;))
-
-tbr_df = tbr_df %&gt;%
-  mutate(TBR = total_vehicles / total_aeds) %&gt;%
-  arrange(desc(TBR))
-
-tbr_df</code></pre>
-<pre><code>## # A tibble: 5 × 4
-##   boro          total_vehicles total_aeds    TBR
-##   &lt;fct&gt;                  &lt;int&gt;      &lt;int&gt;  &lt;dbl&gt;
-## 1 Brooklyn            19709072       1556 12666.
-## 2 Queens              19191509       1815 10574.
-## 3 Staten Island        2668922        424  6295.
-## 4 Bronx                5587491       1030  5425.
-## 5 Manhattan           12990181       6583  1973.</code></pre>
-<p>The Traffic Burden Ratio seems to be highest in Brooklyn and lowest
-in Manhattan. Although traffic is high in Manhattan, there is increased
-AED availability which mitigates the potential for a high TBR.</p>
+<div id="member-name-4" class="section level3">
+<h3>Member Name</h3>
+<p>Department:</p>
+<p>Certificate:</p>
+<p>Contact:</p>
+</div>
 </div>
 
 

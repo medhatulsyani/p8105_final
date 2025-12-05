@@ -1,0 +1,45 @@
+---
+title: "Team Profile"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Meet the team!
+
+### Member Name
+Department:
+
+Certificate:
+
+Contact:
+
+### Member Name
+Department:
+
+Certificate:
+
+Contact:
+
+### Member Name
+Department:
+
+Certificate:
+
+Contact:
+
+### Member Name
+Department:
+
+Certificate:
+
+Contact:
+
+### Member Name
+Department:
+
+Certificate:
+
+Contact:
