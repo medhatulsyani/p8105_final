@@ -9,25 +9,25 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Meet the team!
 
-### Nichcha Subdee
+### Nichcha Subdee (UNI: ns3923)
 Program: MPH in Epidemiology
 
 Certificate: Advanced Epidemiology
 
-### Medha Tulsyani
+### Medha Tulsyani (UNI: mt3866)
 Program: MPH in Epidemiology
 
 Certificate: Applied Biostatistics and Public Health Data Science
 
-### Mukta Patwari
+### Mukta Patwari (UNI: msp2210)
 Program: MPH in Epidemiology
 
 Certificate: Applied Biostatistics and Public Health Data Science
 
-### Juhi Mattekatt
+### Juhi Mattekatt (UNI: jm5916)
 Program: MPH in Epidemiology
 
 Certificate: Applied Biostatistics and Public Health Data Science
 
-### Maliha Safdar
+### Maliha Safdar (UNI: ms7354)
 Program: MS in Epidemiology
