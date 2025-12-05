@@ -1,8 +1,10 @@
 ---
 title: "Maps_For_Shiny"
-author: "Maliha Safdar"
-date: "2025-12-02"
-output: html_document
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
 ---
 
 ```{r, include = FALSE} 
@@ -13,186 +15,145 @@ library(tigris)
 options(tigris_use_cache = TRUE)
 library(sf)
 library(RColorBrewer)
-```
+library(flexdashboard)
+library(shiny)
 
+#import data
+traffic_shiny = read.csv("clean_data/traffic_clean.csv") %>% 
+  group_by(segment_id, yr) %>% 
+  summarize(total_volume = sum(vol, na.rm = TRUE), avg_volume = mean(vol, na.rm = TRUE), .groups = "drop") 
 
-```{r}
-# Importing dataset
+#summary volume for intersections
 
-traffic_volume_df = read.csv("clean_data/traffic_clean.csv")
+traffic_points = read.csv("./clean_data/traffic_clean.csv") %>%
+  st_as_sf(wkt = "wkt_geom", crs = 2263) %>%  #convert wkt_geom to longitude and latitude system for mapping
+  st_transform(4326)
+
+traffic = traffic_points %>%
+  left_join(traffic_shiny, by = "segment_id", relationship = "many-to-many") %>% 
+  select(-request_id, -m, -d, -hh, -mm, -vol) %>% 
+  group_by(segment_id) %>% #use instead of distinct becasue distinct takes too long
+  slice(1) %>%
+  ungroup() %>% 
+  rename("borough" = boro) %>% 
+  mutate(
+    lon = st_coordinates(wkt_geom)[,1],
+    lat = st_coordinates(wkt_geom)[,2]
+  )
 
 aed_inventory_df = read.csv("clean_data/aed_clean.csv")
 
-```
-
-
-```{r, adding location variable}
-aed_clean = aed_inventory_df |>
+aed_clean = aed_inventory_df %>%
   mutate(location = str_replace(location_point,"^POINT\\s*", "")
          )
 ```
 
+Column {.sidebar}
+-----------------------------------------------------------------------
 
-```{r, setup of NYC Boroughs}
+### Select Map Details
 
-boroughs = counties(state = "NY", cb = TRUE) |>
-  filter(NAME %in% c("Bronx", "Kings", "New York", "Queens", "Richmond")) |>
-  st_transform(4326) |>
-  mutate(
-    borough = case_when(
-      NAME == "Bronx" ~ "Bronx",
-      NAME == "Kings" ~ "Brooklyn",
-      NAME == "New York" ~ "Manhattan",
-      NAME == "Queens" ~ "Queens",
-      NAME == "Richmond" ~ "Staten Island"
-    )
-  )
+```{r}
+boroughs = traffic %>% distinct(borough) %>%  pull()
 
-boro_pal <- colorFactor(
-  palette = "Set1",
-  domain = boroughs$borough
-)
+selectInput(
+  "borough_choice", 
+  label = h3("Select borough"),
+  choices = boroughs, selected = "Manhattan")
+
+max_vol = traffic %>% distinct(avg_volume) %>% max()
+min_vol = traffic %>% distinct(avg_volume) %>% min()
+  
+# sliderInput widget for traffic volume
+sliderInput(
+  "volume_range", 
+  label = h3("Choose traffic volume range"), 
+  min = min_vol, max = max_vol, value = c(100, 400))
+
+#year widget radiobutton
+years = traffic %>%  distinct(yr.y) %>% pull()
+
+radioButtons(
+  "year_choice", 
+  label = h3("Select year(s)"),
+  choices = years, selected = "2019")
 ```
 
 
-```{r, AED and borough mapping}
+Column {data-width=650}
+-----------------------------------------------------------------------
 
-aed_map_icon <- makeIcon(
-  iconUrl = "icons/map_logo.png",
-  iconWidth = 15,             
-  iconHeight = 15
-)
+### Interactive AED and Traffic Map
 
-aed_map = aed_clean |>
-  leaflet() |>
-  addProviderTiles(providers$CartoDB.Positron) |>
-   addPolygons(
-    data = boroughs,
-    fillColor = ~boro_pal(borough),
-    fillOpacity = 0.3,
-    weight = 2,
-    color = ~boro_pal(borough),
-    popup = ~borough,
-    group = "Boroughs"
-  ) |>
-   addLegend(
-  "bottomright",
-  pal = boro_pal,
-  values = boroughs$borough,
-  title = "Borough"
-) |>
-  addMarkers(
+```{r}
+icons = awesomeIcons(
+  icon = 'heart',
+  library = 'fa',
+  markerColor = "pink",
+  iconColor = 'white'
+)  
+
+renderLeaflet({
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addAwesomeMarkers(
     data = aed_clean,
     lng = ~longitude,
     lat = ~latitude,
-    icon = aed_map_icon,
+    icon = icons,
     popup = ~paste0(
       "<b>Location Name: </b>", entity_name, "<br>",
       "<b>Number of AEDs: </b>", aed_num_aeds, "<br>",
       "<b>Location: </b>", location, "<br>",
       "<b>Borough: </b>", borough, "<br>",
-      "<b>Trained Personnel: </b>", aed_num_person_trained
-    ),
-    group = "AED Locations"
-  ) |>
-
-  addLayersControl(
-    overlayGroups = c("Boroughs"),
-    options = layersControlOptions(collapsed = FALSE)
-  )
-
-aed_map
-```
-
-
-```{r, traffic intersections on a borough level}
-
-# Converting wkt to sf point geometry (NYC uses EPSG 2263)
-traffic_sf = traffic_volume_df |>
-  mutate(
-    geometry = st_as_sfc(wkt_geom, crs = 2263)
-    ) |>
-  st_as_sf() |>
-  st_transform(4326) |>
-  mutate(
-    lon = st_coordinates(geometry)[,1],
-                         lat = st_coordinates(geometry)[,2]
-    ) # Converting to lat/long for leaflet
-
-#Aggregating traffic volumes
-
-traffic_summary = traffic_sf |>
-  group_by(segment_id,street,from_st,to_st,boro) |>
-  summarise(
-    mean_vol = mean(vol, na.rm = TRUE),
-    max_vol = max(vol, na.rm = TRUE),
-    n_obs = n(),
-    lon = first(lon),
-    lat = first(lat),
-    .groups = "drop"
-  )
-
-traffic_summary = st_as_sf(traffic_summary,
-                           coords = c("lon", "lat"),
-                           crs = 4326)
-
-#mapping overall traffic volume in the dataset
-
-traffic_map = traffic_summary |>
-  leaflet() |>
-  addProviderTiles(providers$OpenStreetMap) |>
-   addPolygons(
-    data = boroughs,
-    fillColor = ~boro_pal(borough),
-    fillOpacity = 0.3,
-    weight = 2,
-    color = ~boro_pal(borough),
-    popup = ~borough,
-    group = "Boroughs"
-  ) |>
-   addLegend(
-  "topleft",
-  pal = boro_pal,
-  values = boroughs$borough,
-  title = "Borough"
-) |>
-  addProviderTiles(providers$OpenStreetMap) |>
+      "<b>Trained Personnel: </b>", aed_num_person_trained),
+    clusterOptions = markerClusterOptions(),
+    group = "AED_locations") %>% 
   addCircleMarkers(
+    data = traffic,
     lng = ~lon,
     lat = ~lat,
-    radius = ~ scales::rescale(mean_vol, to = c(3,15)),
-    color= ~ case_when(
-      mean_vol < 200 ~ "lightgreen",
-      mean_vol < 400 ~ "orange",
-      TRUE ~ "red"
-    ),
-    stroke = FALSE,
+    radius = 3,
+    color = ~colorNumeric("RdYlBu", avg_volume)(avg_volume),  #average volume scale by color
     fillOpacity = 0.7,
     popup = ~paste0(
-      "<b>Street: </b>", street, "<br>",
-      "<b>From: </b>", from_st, "<br>",
-      "<b>To: </b>", to_st, "<br>",
-      "<b>Avg Volume: </b>", round(mean_vol), "<br>",
-      "<b>Observations: </br>", n_obs
-    ),
-    group = "Traffic Volume"
-  ) |>
+      "<b>Street: ", street, "</b><br>",
+      "Total Volume: ", total_volume, "<br>",
+      "Average Volume: ", avg_volume, "<br>"), 
+    group = "traffic_volume") %>%
   addLayersControl(
-    overlayGroups = c("Boroughs", "Traffic Volume"),
-    options = layersControlOptions(collapsed = FALSE)
-  ) |>
-  addLegend(
-    position = "bottomright",
-    colors = c("lightgreen", "orange", "red"),
-    labels = c("Low", "Medium", "High"),
-    title = "Mean Traffic Volume"
-  )
-
-traffic_map
+    overlayGroups = c("AED_locations" , "traffic_volume"),
+    options = layersControlOptions(collapsed = FALSE))
+  })
 ```
 
-
-```{r}
-saveRDS(aed_map, "aed_map.rds")
-saveRDS(traffic_map, "traffic_map.rds")
+  leaflet() %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addAwesomeMarkers(
+    data = aed_clean,
+    lng = ~longitude,
+    lat = ~latitude,
+    icon = icons,
+    popup = ~paste0(
+      "<b>Location Name: </b>", entity_name, "<br>",
+      "<b>Number of AEDs: </b>", aed_num_aeds, "<br>",
+      "<b>Location: </b>", location, "<br>",
+      "<b>Borough: </b>", borough, "<br>",
+      "<b>Trained Personnel: </b>", aed_num_person_trained),
+    clusterOptions = markerClusterOptions(),
+    group = "AED_locations") %>% 
+  addCircleMarkers(
+    data = traffic,
+    lng = ~lon,
+    lat = ~lat,
+    radius = 3,
+    color = ~colorNumeric("RdYlBu", avg_volume)(avg_volume),  #average volume scale by color
+    fillOpacity = 0.7,
+    popup = ~paste0(
+      "<b>Street: ", street, "</b><br>",
+      "Total Volume: ", total_volume, "<br>",
+      "Average Volume: ", avg_volume, "<br>"), 
+    group = "traffic_volume") %>%
+  addLayersControl(
+    overlayGroups = c("AED_locations" , "traffic_volume"),
+    options = layersControlOptions(collapsed = FALSE))  
 ```
