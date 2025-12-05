@@ -332,7 +332,11 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+<<<<<<< HEAD
       <a href="exploratory-datasets.html">Overview and Descriptive Statistic</a>
+=======
+      <a href="exploratory-datasets.html">Overview and Descriptive Statistics</a>
+>>>>>>> 34e7e82d6b45857f23b1aa6f89c645dba66b56f3
     </li>
     <li>
       <a href="analysis.html">Statistical Analyses</a>
@@ -341,13 +345,13 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Maps
+    Dashboard
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="AED_Visual.html">AED Distribution</a>
+      <a href="AED_Traffic_For_Shiny.html">Interactive Map for AED and Traffic Distribution</a>
     </li>
     <li>
       <a href="traffic_visual.html">Traffic Volume</a>
@@ -379,33 +383,28 @@ div.tocify {
 </div>
 
 
-<p>The written report produced by your team is central to this project.
-This will detail how you completed your project, and should cover data
-collection and cleaning, exploratory analyses, alternative strategies,
-descriptions of approaches, and a discussion of results. We anticipate
-that your project will change somewhat over time; these changes and the
-reasons for them should be documented! You will write one report
-document per group, and be sure to include all group member names in the
-document.</p>
-<p>Your report should include the following topics. Depending on your
-project type the amount of discussion you devote to each of them will
-vary:</p>
+<div id="group-member-names-medha-juhi-maliha-mukta-nichcha"
+class="section level4">
+<h4>Group member names: Medha, Juhi, Maliha, Mukta &amp; Nichcha</h4>
+</div>
 <div id="motivation" class="section level3">
 <h3>Motivation</h3>
 <p>Our project focuses on understanding AED accessibility and traffic
-congestion in New York City. Sudden cardiac arrest is one of the leading
-causes of death in the United States, accounting for approximately
-250,000 deaths each year. Survival can increase by 29% through bystander
-CPR and use of an AED, before emergency medical services (EMS) arrive at
-the scene. In comparison, survival with CPR alone is about 9%, while CPR
-combined with AED use and shock delivery increases survival to 38%.
-Because NYC is a dense and highly populated city with heavy traffic,
-delays in emergency response are a real concern. Quick access to an AED
-can make a major difference during a sudden cardiac arrest, especially
-when ambulances may be slowed down by congestion. By exploring AED
-locations, traffic patterns, and leading causes of death, we wanted to
-see whether AEDs are placed in areas where fast response is especially
-important.</p>
+congestion in New York City. We were inspired by an interest in
+cardiovascular health, and decided to narrow in on AED accessibility
+after seeing the datasets that were available to us through NYC Open
+Data. Sudden cardiac arrest is one of the leading causes of death in the
+United States, accounting for approximately 250,000 deaths each year.
+Survival can increase by 29% through bystander CPR and use of an AED,
+before emergency medical services (EMS) arrive at the scene. In
+comparison, survival with CPR alone is about 9%, while CPR combined with
+AED use and shock delivery increases survival to 38%. Because NYC is a
+dense and highly populated city with heavy traffic, delays in emergency
+response are a real concern. Quick access to an AED can make a major
+difference during a sudden cardiac arrest, especially when ambulances
+may be slowed down by congestion. By exploring AED locations, traffic
+patterns, and leading causes of death, we wanted to see whether AEDs are
+placed in areas where fast response is especially important.</p>
 </div>
 <div id="inspired-source" class="section level3">
 <h3>Inspired source</h3>
@@ -415,10 +414,10 @@ outcomes across the city. We were also aware of the strong public health
 emphasis that exists regarding CPR and AED training, and we wanted our
 final project to be focused on bettering health outcomes. AEDs are
 devices that community members can learn to use, and early CPR and
-defibrillation are known to greatly improve survival during cardiac
-emergencies. These ideas encouraged us to look at whether AEDs are
-placed in areas where people may need fast access, especially in a busy
-and high-traffic city like New York City.</p>
+defibrillation have been proven to greatly improve survival rates during
+cardiac emergencies. These ideas encouraged us to look at whether AEDs
+are placed in areas where people may need fast access, especially in a
+busy and high-traffic city like New York City.</p>
 </div>
 <div
 id="initial-questions-what-questions-are-you-trying-to-answer-how-did-these-questions-evolve-over-the-course-of-the-project-what-new-questions-did-you-consider-in-the-course-of-your-analysis"
@@ -473,25 +472,82 @@ sites than Manhattan. Staten Island had low traffic and also low AED
 coverage. These patterns suggest that AED availability does not always
 increase in the same way as traffic burden. This motivated the next
 phase of our project, where we plan to study AED density, traffic
-burden, and their relationship using ANOVA, correlation, and a Traffic
-Burden Ratio.</p>
+burden, and their relationship using linear models, correlation, and a
+Traffic Burden Ratio.</p>
 </div>
 <div
 id="additional-analysis-if-you-undertake-formal-statistical-analyses-describe-these-in-detail"
 class="section level3">
 <h3>Additional analysis: If you undertake formal statistical analyses,
 describe these in detail</h3>
+<p>For our project, the formal statistical analyses we conducted
+included a linear regression model for both mean traffic volume across
+boroughs and mean AEDs across boroughs separately, a correlation between
+AED density and mean traffic volume, and lastly, a derived metric
+detailing the ratio of traffic burden.</p>
+<p>We decided to compute linear regression models to be able to identify
+which boroughs had the greatest/least traffic volume. We used Manhattan
+as the comparison group because we hypothesized they had the largest
+amount of traffic volume, due to its reputation of being a highly
+populated tourist area. After computing this, we computed a linear
+regression model to be able to compare AED density across boroughs, and
+again, we used Manhattan as a reference group to ensure consistency for
+our report.</p>
+<p>Next, we computed the derived metric. We decided to compute this
+because we thought seeing the data relative to each other was important.
+This way, we were able to compare traffic volume to AED density directly
+in each borough to identify which boroughs may be in need of more AED
+access points to make the greatest impact in prevention of Sudden
+Cardiac Arrest.</p>
 </div>
 <div
 id="discussion-what-were-your-findings-are-they-what-you-expect-what-insights-into-the-data-can-you-make"
 class="section level3">
 <h3>Discussion: What were your findings? Are they what you expect? What
 insights into the data can you make?</h3>
-<p>As this will be your only chance to describe your project in detail,
-make sure that your report is a standalone document that fully describes
-your process and results. We also expect you to write high-quality code
-that is understandable to an outside reader. Coding collaboratively and
-actively reviewing code within the team will help with this!</p>
+<p>Through our linear regression model for mean traffic volume across
+boroughs, we found that every borough had a mean traffic volume that was
+less than Manhattans. Specifically, the mean traffic volume in The Bronx
+was 61.1 cars less than that of Manhattan per intersection, Brooklyn was
+24.9 cars less than that of Manhattan per intersection, Queens was 29.8
+cars less than that of Manhattan per intersection, and lastly Staten
+Island was 38.6 cars less than that of Manhattan per intersection. On
+average, Manhattan had 147.6 cars worth of traffic volume at a given
+intersection. Since we hypothesized that the mean traffic volume was
+highest in Manhattan and chose Manhattan as our reference for that
+reason, this was what we generally expected. We were surprised to see
+that all other boroughs had similar numerical values of average traffic
+volume per intersection, except for The Bronx which had a lot less.</p>
+<p>When computing our linear regression model for AED density across
+boroughs, we found that Manhattan also had the greatest AED density of
+all boroughs with a mean AED density of 1.795 AED access points per
+location. In comparison, The Bronx had .75 less AED access points per
+location, Brooklyn had .69 less AED access points per location, Queens
+had .32 less AED access points per location, and lastly Staten Island
+had .57 less AED access points per location. We were surprised to see
+that Manhattan had the greatest average number of AED access points per
+location. When we decided to conduct this analysis, we assumed Manhattan
+would have a lot of traffic and low access to AED, which would have
+detrimental impacts to the survival rates of Sudden Cardiac Arrest. To
+get a better comparison of AED density relative to traffic volume, we
+did our next analysis of a traffic burden ratio.</p>
+<p>For our traffic burden ratio, Manhattan had the highest traffic
+volume and also the highest AED density, so the traffic burden ratio was
+the smallest out of all boroughs at 1,973. In comparison, the traffic
+burden ratio for Bronx was 5,425, for Staten Island was 6,295, for
+Queens was 10,574, and for Brooklyn was 12,666. After doing the linear
+regression models to observe AED density and traffic volume separately,
+we expected Manhattan to have the smallest traffic burden ratio since
+the large number of AED access points mitigated the burden of high
+traffic volume. We were surprised to see that Brooklyn had an extremely
+large traffic burden ratio, almost 12 times higher than that of
+Manhattan, and that Queens had the second highest ratio. With this
+information, we can confidently say that measures should be taken to
+improve AED access in Brooklyn and Queens. As future public health
+workers, we have a goal of increasing health equity. In order to do so,
+it is important for us to ensure the traffic burden ratio in each
+borough of New York is small and similar to each other, as the ratio is
+a good indicator of AED accessibility relative to traffic volume.</p>
 </div>
 
 

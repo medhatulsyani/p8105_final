@@ -1,14 +1,20 @@
 ---
 title: "AED Accessibility and Traffic Congestion in NYC"
-output: html_document
+output: 
+  html_document:
+    code_folding: hide
 ---
-
-
-
 
 ### **Overview**
 <img src="icons/youtube_logo.png" width="40" style="vertical-align:-10px;"> screencast[insert link] Take a tour of our website!!
 
+### **About**
+
+
+<img src="icons/welcome_page.gif" width="600" style="display:block; margin:auto;">
+<div style="text-align:center; font-size:12px; color:gray;">
+*Source: RadianQBio (2018). “First Aid Training and AED Animation” YouTube.*</em>
+</div>
 <style>
 @keyframes heartbeat {
   0%   { transform: scale(1); }
@@ -32,20 +38,191 @@ output: html_document
 Did You Know Cardiac Arrest Survival Increases by 38% when AED use and CPR are combined?
 </span>
 
-
-<img src="icons/welcome_page.gif" width="400" style="display:block; margin:auto;">
-<div style="text-align:center; font-size:12px; color:gray;">
-*Source: RadianQBio (2018). “First Aid Training and AED Animation” YouTube.*</em>
-</div>
-
 Our project explores how the placement of **Automated External Defibrillators (AEDs)** aligns with the traffic trends of one of the world’s busiest cities.Through a combination of data on AED locations, traffic volume, and cardiovascular disease, we will identify potential gaps in AED coverage in high-risk and high-traffic areas.
 
-<span style="font-size: 25px; font-weight: bold;">
-  <img src="icons/map_logo.png" width="65" style="vertical-align:-1px;">
-  The Heartbeat of NYC: Mapping AED Locations
-</span>
+### **Maps of NYC AED Coverage & Traffic Flow Insights**
 
-On the map below, you'll see 
+The maps below display AED locations (top map) and average traffic volumes (bottom map) captured between years 2019 to 2024 across NYC boroughs. 
+You ca can interact with the AED icons and traffic circles to explore:
+
+* AED locations
+* AED counts
+* AED trained personnel
+* traffic intensity
+* average traffic volume.
+
+```{r, setup, warning=FALSE,message=FALSE}
+
+#libraries 
+library(tidyverse)
+library(stringr)
+library(leaflet)
+library(tigris)
+options(tigris_use_cache = TRUE)
+library(sf)
+library(RColorBrewer)
+
+# Importing dataset
+
+traffic_volume_df = read.csv("clean_data/traffic_clean.csv")
+
+aed_inventory_df = read.csv("clean_data/aed_clean.csv")
+```
+
+```{r, aed map}
+# NYC borough setup 
+boroughs = counties(state = "NY", cb = TRUE) |>
+  filter(NAME %in% c("Bronx", "Kings", "New York", "Queens", "Richmond")) |>
+  st_transform(4326) |>
+  mutate(
+    borough = case_when(
+      NAME == "Bronx" ~ "Bronx",
+      NAME == "Kings" ~ "Brooklyn",
+      NAME == "New York" ~ "Manhattan",
+      NAME == "Queens" ~ "Queens",
+      NAME == "Richmond" ~ "Staten Island"
+    )
+  )
+
+boro_pal <- colorFactor(
+  palette = "Set1",
+  domain = boroughs$borough
+)
+# map setup
+aed_clean = aed_inventory_df |>
+  mutate(location = str_replace(location_point,"^POINT\\s*", "")
+         )
+
+aed_map_icon <- makeIcon(
+  iconUrl = "icons/map_logo.png",
+  iconWidth = 15,             
+  iconHeight = 15
+)
+
+aed_map = aed_clean |>
+  leaflet() |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+   addPolygons(
+    data = boroughs,
+    fillColor = ~boro_pal(borough),
+    fillOpacity = 0.3,
+    weight = 2,
+    color = ~boro_pal(borough),
+    popup = ~borough,
+    group = "Boroughs"
+  ) |>
+   addLegend(
+  "bottomright",
+  pal = boro_pal,
+  values = boroughs$borough,
+  title = "Borough"
+) |>
+  addMarkers(
+    data = aed_clean,
+    lng = ~longitude,
+    lat = ~latitude,
+    icon = aed_map_icon,
+    popup = ~paste0(
+      "<b>Location Name: </b>", entity_name, "<br>",
+      "<b>Number of AEDs: </b>", aed_num_aeds, "<br>",
+      "<b>Location: </b>", location, "<br>",
+      "<b>Borough: </b>", borough, "<br>",
+      "<b>Trained Personnel: </b>", aed_num_person_trained
+    ),
+    group = "AED Locations"
+  ) |>
+
+  addLayersControl(
+    overlayGroups = c("Boroughs"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+
+aed_map
+```
+
+
+```{r, traffic intersections on a borough level}
+
+# Converting wkt to sf point geometry (NYC uses EPSG 2263)
+traffic_sf = traffic_volume_df |>
+  mutate(
+    geometry = st_as_sfc(wkt_geom, crs = 2263)
+    ) |>
+  st_as_sf() |>
+  st_transform(4326) |>
+  mutate(
+    lon = st_coordinates(geometry)[,1],
+                         lat = st_coordinates(geometry)[,2]
+    ) # Converting to lat/long for leaflet
+
+#Aggregating traffic volumes
+
+traffic_summary = traffic_sf |>
+  group_by(segment_id,street,from_st,to_st,boro) |>
+  summarise(
+    mean_vol = mean(vol, na.rm = TRUE),
+    max_vol = max(vol, na.rm = TRUE),
+    n_obs = n(),
+    lon = first(lon),
+    lat = first(lat),
+    .groups = "drop"
+  )
+
+traffic_summary = st_as_sf(traffic_summary,
+                           coords = c("lon", "lat"),
+                           crs = 4326)
+
+#mapping overall traffic volume in the dataset
+
+traffic_map = traffic_summary |>
+  leaflet() |>
+  addProviderTiles(providers$OpenStreetMap) |>
+   addPolygons(
+    data = boroughs,
+    fillColor = ~boro_pal(borough),
+    fillOpacity = 0.3,
+    weight = 2,
+    color = ~boro_pal(borough),
+    popup = ~borough,
+    group = "Boroughs"
+  ) |>
+   addLegend(
+  "topleft",
+  pal = boro_pal,
+  values = boroughs$borough,
+  title = "Borough"
+) |>
+  addProviderTiles(providers$OpenStreetMap) |>
+  addCircleMarkers(
+    lng = ~lon,
+    lat = ~lat,
+    radius = ~ scales::rescale(mean_vol, to = c(3,15)),
+    color= ~ case_when(
+      mean_vol < 200 ~ "lightgreen",
+      mean_vol < 400 ~ "orange",
+      TRUE ~ "red"
+    ),
+    stroke = FALSE,
+    fillOpacity = 0.7,
+    popup = ~paste0(
+      "<b>Street: </b>", street, "<br>",
+      "<b>Avg Volume: </b>", round(mean_vol), "<br>"
+    ),
+    group = "Traffic Volume"
+  ) |>
+  addLayersControl(
+    overlayGroups = c("Boroughs", "Traffic Volume"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) |>
+  addLegend(
+    position = "bottomright",
+    colors = c("lightgreen", "orange", "red"),
+    labels = c("Low", "Medium", "High"),
+    title = "Mean Traffic Volume"
+  )
+
+traffic_map
+```
 
 
 ### **Data Source** 
