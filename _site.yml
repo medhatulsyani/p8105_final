@@ -9,7 +9,7 @@ navbar:
       href: project_proposal.html   
     - text: "Exploratory Data Analysis"
       menu:
-        - text: "Overview and Descriptive Statistic"
+        - text: "Overview and Descriptive Statistics"
           href: exploratory-datasets.html
         - text: "Statistical Analyses"
           href: analysis.html
