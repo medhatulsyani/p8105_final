@@ -242,15 +242,6 @@ Annual cause-specific mortality data aggregated citywide.
 Source: NYC Open Data (DOHMH)  
 https://data.cityofnewyork.us/Health/New-York-City-Leading-Causes-of-Death/jb7j-dtam/about_data
 
-### **Contributors and UNIs** 
-
-1. Nichcha Subdee (ns3923)  
-2. Mukta Patwari (msp2210)  
-3. Medha Tulsyani (mt3866)  
-4. Juhi Mattekatt (jm5916)  
-5. Maliha Safdar (ms7354)
-
-
 
 
 
