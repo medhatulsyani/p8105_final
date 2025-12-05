@@ -468,14 +468,47 @@ sites than Manhattan. Staten Island had low traffic and also low AED
 coverage. These patterns suggest that AED availability does not always
 increase in the same way as traffic burden. This motivated the next
 phase of our project, where we plan to study AED density, traffic
-burden, and their relationship using ANOVA, correlation, and a Traffic
-Burden Ratio.</p>
+burden, and their relationship using linear models, correlation, and a
+Traffic Burden Ratio.</p>
 </div>
 <div
 id="additional-analysis-if-you-undertake-formal-statistical-analyses-describe-these-in-detail"
 class="section level3">
 <h3>Additional analysis: If you undertake formal statistical analyses,
 describe these in detail</h3>
+<p>For our project, we decided to undertake formal statistical analyses.
+Specifically, we calculated a linear regression model for both mean
+traffic volume across boroughs and mean AEDs across boroughs
+independently, a correlation between AED density and mean traffic
+volume, and lastly a derived metric detailing the ratio of traffic
+burden.</p>
+<p>We decided to compute linear regression models to be able to identify
+which boroughs had the greatest/least traffic volume. We used Manhattan
+as the comparison group because we hypothesized they had the largest
+amount of traffic volume, due to its reputation of being a highly
+populated tourist area. Every borough had a mean traffic volume that was
+less than Manhattans. Specifically, the mean traffic volume in The Bronx
+was 61.1 cars less than that of Manhattan, Brooklyn was 24.9 cars less
+than that of Manhattan, Queens was 29.8 cars less than that of
+Manhattan, and lastly Staten Island was 38.6 cars less than that of
+Manhattan. On average, Manhattan had 147.6 cars worth of traffic volume
+at a given intersection.</p>
+<p>Next, we computed a linear regression model to be able to compare AED
+density across boroughs. Again, we used Manhattan as a reference group
+to ensure consistency for our report. We found that Manhattan also had
+the greatest AED density of all boroughs, with a mean AED density of
+1.795 AED access points per location. In comparison, The Bronx had .75
+less AED access points per location, Brooklyn had .69 less AED access
+points per location, Queens had .32 less AED access points per location,
+and lastly Staten Island had .57 less AED access points per
+location.</p>
+<p>After computing both linear regression models, we computed the
+derived metric. The metric described the traffic burden ratio in this
+dataset, comparing traffic volume to AED density directly. Since
+Manhattan had the highest traffic volume but also highest AED density,
+the traffic burden ratio was the smallest: 1,973. In comparison, the
+traffic burden ratio for Bronx was 5,425, for Staten Island was 6,295,
+for Queens was 10,574, and for Brooklyn was 12,666.</p>
 </div>
 <div
 id="discussion-what-were-your-findings-are-they-what-you-expect-what-insights-into-the-data-can-you-make"
