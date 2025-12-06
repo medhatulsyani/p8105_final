@@ -6,8 +6,6 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-<img src="icons/launching.png" width="40" style="vertical-align:-10px;">
-
 ## **Project Title**
 AED Accessibility and Traffic Congestion in New York City
 
