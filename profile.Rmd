@@ -7,8 +7,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Meet the team!
-
 ### Nichcha Subdee (UNI: ns3923)
 Program: MPH in Epidemiology
 
