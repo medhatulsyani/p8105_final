@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Meet the team!
+# <img src="icons/meeting.png" width="40" style="vertical-align:-10px;"> Meet the team!
 
 ### Nichcha Subdee (UNI: ns3923)
 Program: MPH in Epidemiology

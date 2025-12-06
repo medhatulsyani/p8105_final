@@ -1,5 +1,5 @@
 ---
-title: "Project Proposal"
+title: "**Project Proposal**"
 output: html_document
 ---
 
@@ -7,7 +7,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Project Title
+<img src="icons/launching.png" width="40" style="vertical-align:-10px;"> 
+
+# Project Title
 AED Accessibility and Traffic Congestion in New York City
 
 ## Motivation for the project
