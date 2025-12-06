@@ -1,8 +1,17 @@
 ---
 title: "Traffic Volume"
-output: html_document
+output: 
+  html_document: 
+    code_folding: hide 
 ---
-This map shows the average number of vehicles (aggregated by count of vehicles) that go through bridge crossings and roadways in NYC
+
+This map shows the average number of vehicles (aggregated by count of vehicles) that go through bridge crossings and roadways in NYC. Clicking on a point will let you see:
+
+* Street name and flow of traffic
+* Direction
+* Total volume of cars by count
+* Average volume of cars by count
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -10,7 +19,7 @@ library(sf)
 library(leaflet)
 ```
 
-```{r import_prepare, echo=FALSE}
+```{r import_prepare}
 # import and prepare traffic data
 traffic_summary = read.csv("./clean_data/traffic_clean.csv") %>% 
   group_by(segment_id) %>%
@@ -31,7 +40,7 @@ traffic = traffic_points %>%
 ```
 
 
-```{r, mapping, echo = FALSE}
+```{r, mapping}
 leaflet(traffic) %>%
   addProviderTiles("CartoDB.Positron") %>% #simple background 
   addCircleMarkers(
@@ -51,3 +60,5 @@ leaflet(traffic) %>%
     values = traffic$avg_volume,
     title = "Average Volume")
 ```
+
+Data Source: NYC Open Data (DOT)

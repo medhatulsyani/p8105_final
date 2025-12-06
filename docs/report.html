@@ -325,7 +325,7 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Exploratory Data Analysis
+    Data Analysis
      
     <span class="caret"></span>
   </a>
@@ -358,10 +358,7 @@ div.tocify {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="profile.html">Team Profile</a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Communications
      
@@ -375,6 +372,9 @@ div.tocify {
       <a href="project_proposal.html">Proposal</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="profile.html">Team Profile</a>
 </li>
 <li>
   <a href="https://github.com/medhatulsyani/p8105_final">
@@ -485,6 +485,26 @@ increase in the same way as traffic burden. This motivated the next
 phase of our project, where we plan to study AED density, traffic
 burden, and their relationship using linear models, correlation, and a
 Traffic Burden Ratio.</p>
+<p>We also created interactive maps for traffic volumes and AED
+locations to visually aid our project. In the NYC traffic volume map we
+utilized leaflet and aggregated both mean and total traffic volume over
+street name. We found that the most streets tend to have average volume
+of traffic in NYC between 0 to 200 across all boroughs. Higher traffic
+volumes sparsely lie in Brooklyn and Queens, especially on bridges. For
+the AED location map we used leaflet and the coordinates provided in the
+dataset to project our data onto the NYC map, we also added boroughs as
+a layer. Additional information such as name of the location, number of
+AEDs at the location and number of trained personnel were provided as
+labels for each AED icon on the map. We observed that several AED
+locations had been incorrectly coded onto the wrong boroughs. Since
+there were very few of them (meaning these miscodes would not
+significantly impact our analysis) we decided not to modify the
+locations. Overall NYC has a high AED density. There are larger pockets
+in Brooklyn and Queens compared to Bronx and Staten Island that show
+absence of AED locations. We also created a map using Shiny and leaflet
+to overlay traffic volume and AED distribution. Users can see how
+average traffic volume in NYC changes by year and borough, they can look
+at AED distribution by borough as well.</p>
 </div>
 <div id="formal-statistical-analysis" class="section level3">
 <h3>Formal statistical analysis</h3>
