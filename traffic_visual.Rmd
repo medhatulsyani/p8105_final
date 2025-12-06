@@ -2,7 +2,7 @@
 title: "Traffic Volume"
 output: html_document
 ---
-This map shows the average number of vehicles that go through bridge crossings and roadways in NYC
+This map shows the average number of vehicles (aggregated by count of vehicles) that go through bridge crossings and roadways in NYC
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)

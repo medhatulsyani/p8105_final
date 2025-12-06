@@ -29,18 +29,24 @@ traffic_shiny = read.csv("traffic_clean.csv") %>%
 #to run in rstudio, use read.csv(here("shiny_app", "aed_clean.csv")), to deploy use read.csv("aed_clean.csv")
 aed_inventory_df <- read.csv("aed_clean.csv")
 
-aed_clean = aed_inventory_df %>%
-  mutate(location = str_replace(location_point,"^POINT\\s*", "")
-  )
+aed_clean <- aed_inventory_df %>%
+  mutate(coords = gsub("POINT \\(|\\)", "", location_point)) %>% #removed point and brackets coordinates
+  separate(coords, into = c("lon", "lat"), sep = " ") %>% #separate into longitude and latitude
+  mutate(
+    lon = as.numeric(lon), #numeric for mapping
+    lat = as.numeric(lat))
+
+#user interface
 ui <- fluidPage(
   titlePanel("AED and Traffic Volume Map"),
   
   sidebarLayout(
     sidebarPanel(
+      p("A year and borough must be chosen"),
       #borough Select Input
       checkboxGroupInput(
         "borough_choice", 
-        label = h3("Select Borough(s)"),
+        label = h4("Select Borough(s)"),
         choices = traffic_shiny %>% distinct(borough) %>% pull(),
         selected = "Manhattan"
       ),
@@ -48,7 +54,7 @@ ui <- fluidPage(
       #traffic Volume Slider Input
       sliderInput(
         "volume_range", 
-        label = h3("Choose Traffic Volume Range"), 
+        label = h4("Choose Traffic Volume Range"), 
         min = min(traffic_shiny$avg_volume), 
         max = max(traffic_shiny$avg_volume), 
         value = c(100, 400)
@@ -57,14 +63,16 @@ ui <- fluidPage(
       #year check box
       checkboxGroupInput(
         "year_choice",
-        label = h3("Select Year(s)"),
+        label = h4("Select Year(s)"),
         choices = traffic_shiny %>% distinct(yr) %>% pull(),
         selected = "2019"
-      )
-    ),
+      ),
+      p("Disclaimer: Some AEDs are coded into the wrong borough in the dataset"),
+      width = 4),
     
     mainPanel(
-      leafletOutput("map")
+      leafletOutput("map", height = "95vh"),
+      width = 8
     )
   )
 )
@@ -97,13 +105,12 @@ server <- function(input, output, session) {
       addProviderTiles(providers$CartoDB.Positron) %>%
       addAwesomeMarkers(
         data = filtered_aed_data, 
-        lng = ~longitude, 
-        lat = ~latitude, 
-        icon = ~icons,
+        lng = ~lon, 
+        lat = ~lat,
         popup = ~paste0(
           "<b>Location Name: </b>", entity_name, "<br>",
           "<b>Number of AEDs: </b>", aed_num_aeds, "<br>",
-          "<b>Location: </b>", location, "<br>",
+          "<b>Location: </b>", address, "<br>",
           "<b>Borough: </b>", borough, "<br>",
           "<b>Trained Personnel: </b>", aed_num_person_trained),
         clusterOptions = markerClusterOptions(),
@@ -123,7 +130,7 @@ server <- function(input, output, session) {
         group = "traffic_volume"
       ) %>%
       addLayersControl(
-        overlayGroups = c("AED_locations", "traffic_volume"),
+        overlayGroups = c("AED Locations", "Traffic Volume"),
         options = layersControlOptions(collapsed = FALSE)
       )
   })

@@ -5,11 +5,9 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "Proposal"
-      href: project_proposal.html   
     - text: "Exploratory Data Analysis"
       menu:
-        - text: "Overview and Descriptive Statistics"
+        - text: "Data Exploration"
           href: exploratory_datasets.html
         - text: "Statistical Analyses"
           href: analysis.html
@@ -25,9 +23,13 @@ navbar:
   right:
     - text: "Team Profile"
       href: profile.html
-    - text: "Report"
-      href: report.html
-    - text: "GitHub"
+    - text: "Communications"
+      menu: 
+      - text: "Report"
+        href: report.html
+      - text: "Proposal"
+        href: project_proposal.html  
+    - icon: fa-github fa-lg
       href: "https://github.com/medhatulsyani/p8105_final"
       
 output:

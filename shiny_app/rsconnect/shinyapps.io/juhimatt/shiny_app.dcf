@@ -5,7 +5,7 @@ account: juhimatt
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 16256324
-bundleId: 11284694
+bundleId: 11284953
 url: https://juhimatt.shinyapps.io/shiny_app/
 version: 1
 asMultiple: FALSE
