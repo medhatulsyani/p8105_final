@@ -422,8 +422,9 @@ lowest AED coverage.</p>
 <div
 id="linear-model-for-mean-traffic-volume-across-boroughs-set-manhattan-as-reference"
 class="section level3">
-<h3>Linear model for mean traffic volume across boroughs, set Manhattan
-as reference</h3>
+<h3><img src="icons/warning.png" width="40" style="vertical-align:-10px;">
+<strong>Linear model for mean traffic volume across boroughs, set
+Manhattan as reference</strong></h3>
 <pre class="r"><code>traffic_volume_df$boro = as.factor(traffic_volume_df$boro)
 traffic_volume_df$boro = relevel(traffic_volume_df$boro, ref = &quot;Manhattan&quot;)
 traffic_linear_model = lm(vol ~ boro, data = traffic_volume_df)
@@ -462,8 +463,9 @@ intersection.</p>
 <div
 id="linear-model-for-mean-aed-across-boroughs-set-manhattan-as-reference"
 class="section level3">
-<h3>Linear model for mean AED across boroughs, set Manhattan as
-reference</h3>
+<h3><img src="icons/aed.png" width="40" style="vertical-align:-10px;">
+<strong>Linear model for mean AED across boroughs, set Manhattan as
+reference</strong></h3>
 <pre class="r"><code>aed_inventory_df$borough = as.factor(aed_inventory_df$borough)
 aed_inventory_df$borough = relevel(aed_inventory_df$borough, ref = &quot;Manhattan&quot;)
 aed_linear_model = lm(aed_num_aeds ~ borough, data = aed_inventory_df)
@@ -502,7 +504,9 @@ location compared to that of Manhattan.</p>
 <div
 id="pearson-correlation-between-aed-density-and-mean-traffic-volume"
 class="section level3">
-<h3>Pearson correlation between AED density and mean traffic volume</h3>
+<h3><img src="icons/browser.png" width="40" style="vertical-align:-10px;">
+<strong>Pearson correlation between AED density and mean traffic
+volume</strong></h3>
 <pre class="r"><code>mean_traffic =
   traffic_volume_df %&gt;% 
   group_by(boro) %&gt;% 
@@ -536,7 +540,8 @@ volume, but the p-value is greater than 0.05, indicating it is
 non-significant.</p>
 </div>
 <div id="derived-metric" class="section level3">
-<h3>Derived metric</h3>
+<h3><img src="icons/traffic-cone.png" width="40" style="vertical-align:-10px;">
+<strong>Derived metric</strong></h3>
 <pre class="r"><code>traffic_summary = traffic_volume_df %&gt;%
   group_by(boro) %&gt;%
   summarize(total_vehicles = sum(vol, na.rm = TRUE))

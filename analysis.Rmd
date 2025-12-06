@@ -35,7 +35,7 @@ traffic_volume_df =
 ```
 
 
-### Linear model for mean traffic volume across boroughs, set Manhattan as reference
+### <img src="icons/warning.png" width="40" style="vertical-align:-10px;"> **Linear model for mean traffic volume across boroughs, set Manhattan as reference**
 ```{r}
 traffic_volume_df$boro = as.factor(traffic_volume_df$boro)
 traffic_volume_df$boro = relevel(traffic_volume_df$boro, ref = "Manhattan")
@@ -50,7 +50,7 @@ The mean traffic volume in Brooklyn is 24.9 cars less than that of Manhattan at 
 The mean traffic volume in Queens is 29.8 cars less than that of Manhattan at a given intersection.
 The mean traffic volume in Staten Island is 38.6 cars less than that of Manhattan at a given intersection.
 
-### Linear model for mean AED across boroughs, set Manhattan as reference
+### <img src="icons/aed.png" width="40" style="vertical-align:-10px;"> **Linear model for mean AED across boroughs, set Manhattan as reference**
 ```{r}
 aed_inventory_df$borough = as.factor(aed_inventory_df$borough)
 aed_inventory_df$borough = relevel(aed_inventory_df$borough, ref = "Manhattan")
@@ -65,7 +65,7 @@ The mean AED density in Brooklyn is .69 less AED access points per location comp
 The mean AED density in Queens is .32 less AED access points per location compared to that of Manhattan.
 The mean AED density in Staten Island is .57 less AED access points per location compared to that of Manhattan.
 
-### Pearson correlation between AED density and mean traffic volume
+### <img src="icons/browser.png" width="40" style="vertical-align:-10px;"> **Pearson correlation between AED density and mean traffic volume**
 
 ```{r}
 mean_traffic =
@@ -88,7 +88,7 @@ print(cor_result)
 
 The resulting Pearson correlation coefficient is 0.826. This indicates a strong positive correlation between AED density and traffic volume, but the p-value is greater than 0.05, indicating it is non-significant. 
 
-### Derived metric
+### <img src="icons/traffic-cone.png" width="40" style="vertical-align:-10px;"> **Derived metric**
 ```{r}
 traffic_summary = traffic_volume_df %>%
   group_by(boro) %>%
