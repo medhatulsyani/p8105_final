@@ -41,7 +41,7 @@ For our project, the formal statistical analyses we conducted included a linear 
 
 We decided to compute linear regression models to be able to identify which boroughs had the greatest/least traffic volume. We used Manhattan as the comparison group because we hypothesized they had the largest amount of traffic volume, due to its reputation of being a highly populated tourist area. After computing this, we computed a linear regression model to be able to compare AED density across boroughs, and again, we used Manhattan as a reference group to ensure consistency for our report. 
 
-We conducted a Pearson correlation to assess the relationship between AED density and mean traffic volume, primarily to see if there was a trend and to understand whether boroughs with higher traffic congestion tend to have higher.
+We conducted a Pearson correlation to assess the relationship between AED density and mean traffic volume, primarily to see if there was a trend. We hypothesized that boroughs with higher traffic volume would have lower AED density, which would indicate that AED distribution was not consistent with traffic volume.
 
 Next, we computed the derived metric. We decided to compute this because we thought seeing the data relative to each other was important. This way, we were able to compare traffic volume to AED density directly in each borough to identify which boroughs may be in need of more AED access points to make the greatest impact in prevention of Sudden Cardiac Arrest.
 

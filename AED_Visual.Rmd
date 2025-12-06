@@ -52,7 +52,7 @@ boro_pal <- colorFactor(
 ```
 
 
-The map below display AED locations  across NYC boroughs. 
+The map below displays AED locations across the boroughs. 
 You can interact with the AED icons to explore:
 
 * AED locations
@@ -107,6 +107,6 @@ leaflet() |>
   )
 ```
 
-**Disclaimer**: when mapping the AED locations, it was discovered that several locations had incorrect coordinates resulting in wrong locations. The list can be found here.[insert link]
+**Disclaimer**: when mapping the AED locations, it was discovered that several locations had been coded incorrectly into the wrong borough.
 
 

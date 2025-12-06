@@ -6,7 +6,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## **Project Title**
+
+## Project Title
 AED Accessibility and Traffic Congestion in New York City
 
 ## Motivation for the project
