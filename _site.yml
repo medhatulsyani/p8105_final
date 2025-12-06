@@ -16,7 +16,7 @@ navbar:
     - text: "Dashboard and Maps"
       menu:
         - text: "Interactive Map for AED and Traffic Distribution"
-          href: http://127.0.0.1:7208
+          href: https://juhimatt.shinyapps.io/shiny_app/
         - text: "AED Locations in NYC"
           href: AED_Visual.html
         - text: "Traffic Volume"
