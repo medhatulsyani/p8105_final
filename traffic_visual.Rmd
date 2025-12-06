@@ -4,14 +4,12 @@ output:
   html_document: 
     code_folding: hide 
 ---
-
 This map shows the average number of vehicles (aggregated by count of vehicles) that go through bridge crossings and roadways in NYC. Clicking on a point will let you see:
 
 * Street name and flow of traffic
 * Direction
 * Total volume of cars by count
 * Average volume of cars by count
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
