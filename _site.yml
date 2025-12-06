@@ -13,7 +13,7 @@ navbar:
           href: exploratory_datasets.html
         - text: "Statistical Analyses"
           href: analysis.html
-    - text: "Dashboard"
+    - text: "Dashboard and Maps"
       menu:
         - text: "Interactive Map for AED and Traffic Distribution"
           href: http://127.0.0.1:7208
