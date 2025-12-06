@@ -1,7 +1,5 @@
 ---
-title: "AED_Visual"
-author: "Maliha Safdar"
-date: "2025-11-29"
+title: "AED Location Map of NYC"
 output: html_document
 ---
 
@@ -54,11 +52,20 @@ boro_pal <- colorFactor(
 ```
 
 
+The map below display AED locations  across NYC boroughs. 
+You can interact with the AED icons to explore:
+
+* AED locations
+* AED counts
+* AED trained personnel.
+
+
+
 ```{r, AED and borough mapping, echo=FALSE}
 
 aed_map_icon <- makeIcon(
   iconUrl = "icons/map_logo.png",
-  iconWidth = 15,             
+  iconWidth = 10,             
   iconHeight = 15
 )
 
@@ -99,5 +106,7 @@ leaflet() |>
     options = layersControlOptions(collapsed = FALSE)
   )
 ```
+
+**Disclaimer**: when mapping the AED locations, it was discovered that several locations had incorrect coordinates resulting in wrong locations. The list can be found here.[insert link]
 
 
