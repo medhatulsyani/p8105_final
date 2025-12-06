@@ -1,6 +1,5 @@
 ---
 title: "**Statistical Analyses**"
-author: "Medha Tulsyani and Mukta Patwari"
 output: 
   html_document: 
     code_folding: hide 

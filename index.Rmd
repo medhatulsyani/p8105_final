@@ -43,7 +43,7 @@ Our project explores how the placement of **Automated External Defibrillators (A
 ### **Maps of NYC AED Coverage & Traffic Flow Insights**
 
 The maps below display AED locations (top map) and average traffic volumes (bottom map) captured between years 2019 to 2024 across NYC boroughs. 
-You ca can interact with the AED icons and traffic circles to explore:
+You can interact with the AED icons and traffic circles to explore:
 
 * AED locations
 * AED counts
@@ -51,7 +51,7 @@ You ca can interact with the AED icons and traffic circles to explore:
 * traffic intensity
 * average traffic volume.
 
-```{r, setup, warning=FALSE,message=FALSE}
+```{r, setup, warning=FALSE,message=FALSE, include = FALSE}
 
 #libraries 
 library(tidyverse)
@@ -69,7 +69,7 @@ traffic_volume_df = read.csv("clean_data/traffic_clean.csv")
 aed_inventory_df = read.csv("clean_data/aed_clean.csv")
 ```
 
-```{r, aed map}
+```{r, aed map, message=FALSE}
 # NYC borough setup 
 boroughs = counties(state = "NY", cb = TRUE) |>
   filter(NAME %in% c("Bronx", "Kings", "New York", "Queens", "Richmond")) |>
