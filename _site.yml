@@ -16,7 +16,7 @@ navbar:
     - text: "Dashboard"
       menu:
         - text: "Interactive Map for AED and Traffic Distribution"
-          href: AED_Traffic_For_Shiny.html
+          href: http://127.0.0.1:7208
         - text: "Traffic Volume"
           href: traffic_visual.html
         - text: "Alternative"
