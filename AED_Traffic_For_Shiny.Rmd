@@ -6,7 +6,7 @@ output:
     vertical_layout: fill
 runtime: shiny
 ---
-
+This page won't be included in the website and was an initial attempt at a shiny 
 ```{r, include = FALSE} 
 library(tidyverse)
 library(stringr)
