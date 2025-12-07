@@ -63,7 +63,7 @@ You can interact with the AED icons to explore:
 
 
 
-```{r, AED and borough mapping, echo=FALSE, fig.width=10, fig.height=7}
+```{r, AED and borough mapping}
 
 aed_map_icon <- makeIcon(
   iconUrl = "icons/map_logo.png",
@@ -71,7 +71,7 @@ aed_map_icon <- makeIcon(
   iconHeight = 15
 )
 
-leaflet() |>
+leaflet(width = "100%", height = "600px") |>
   addProviderTiles(providers$CartoDB.Positron) |>
    addPolygons(
     data = boroughs,

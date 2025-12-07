@@ -34,18 +34,7 @@ output:
 Did You Know Cardiac Arrest Survival Increases by 38% when AED use and CPR are combined?
 </span>
 
-Our project explores how the placement of **Automated External Defibrillators (AEDs)** aligns with the traffic trends of one of the world’s busiest cities.Through a combination of data on AED locations, traffic volume, and cardiovascular disease, we will identify potential gaps in AED coverage in high-risk and high-traffic areas.
-
-### **Dashboard and Maps**
-
-Check out Dashboard and Maps above for AED Coverage & Traffic Volume Maps. The maps display AED locations and average traffic volumes captured between 2019 to 2024 across NYC boroughs. 
-You can play around with the AED and traffic data in our interactive map to explore:
-
-* AED locations
-* AED counts
-* AED trained personnel
-* total traffic count
-* average traffic volume
+Our project explores how the placement of **Automated External Defibrillators (AEDs)** aligns with the traffic trends of one of the world’s busiest cities. Through a combination of data on AED locations, traffic volume, and cardiovascular disease, we will identify potential gaps in AED coverage in high-risk and high-traffic areas.
 
 ### **Data Sources** 
 
