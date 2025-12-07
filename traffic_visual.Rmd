@@ -39,7 +39,7 @@ traffic = traffic_points %>%
 
 
 ```{r, mapping}
-leaflet(traffic) %>%
+leaflet(traffic, width = "100%", height = "600px") %>%
   addProviderTiles("CartoDB.Positron") %>% #simple background 
   addCircleMarkers(
     radius = 3,

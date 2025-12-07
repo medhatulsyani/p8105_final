@@ -504,7 +504,11 @@ in Brooklyn and Queens compared to Bronx and Staten Island that show
 absence of AED locations. We also created a map using Shiny and leaflet
 to overlay traffic volume and AED distribution. Users can see how
 average traffic volume in NYC changes by year and borough, they can look
-at AED distribution by borough as well.</p>
+at AED distribution by borough as well. We were initially going to
+create a flexdashboard with all our plots and maps but we had quite a
+few graphs and ended up mapping traffic along with AED density so we
+instead created a Shiny App for our maps, and put all our graphs on the
+same page under Data Exploration.</p>
 </div>
 <div id="formal-statistical-analysis" class="section level3">
 <h3>Formal statistical analysis</h3>
@@ -512,7 +516,11 @@ at AED distribution by borough as well.</p>
 included a linear regression model for both mean traffic volume across
 boroughs and mean AEDs across boroughs separately, a correlation between
 AED density and mean traffic volume, and lastly, a derived metric
-detailing the ratio of traffic burden.</p>
+detailing the ratio of traffic burden. In our project proposal, we were
+going to do an ANOVA to compare mean AED density and mean traffic volume
+across boroughs but the help of a TA, we decided that that a linear
+regression would be a better way to compare the relationship between
+traffic and AED density between boroughs</p>
 <p>We decided to compute linear regression models to be able to identify
 which boroughs had the greatest/least traffic volume. We used Manhattan
 as the comparison group because we hypothesized they had the largest
