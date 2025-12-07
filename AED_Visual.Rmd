@@ -63,7 +63,7 @@ You can interact with the AED icons to explore:
 
 
 
-```{r, AED and borough mapping}
+```{r, AED and borough mapping, echo=FALSE, fig.width=10, fig.height=7}
 
 aed_map_icon <- makeIcon(
   iconUrl = "icons/map_logo.png",
