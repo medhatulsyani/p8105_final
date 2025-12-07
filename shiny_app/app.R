@@ -38,7 +38,7 @@ aed_clean <- aed_inventory_df %>%
 
 #user interface
 ui <- fluidPage(
-  titlePanel("AED and Traffic Volume Map"),
+  titlePanel("AED and Average Traffic Volume Map"),
   
   sidebarLayout(
     sidebarPanel(
@@ -100,7 +100,7 @@ server <- function(input, output, session) {
     #filtered traffic and aed data setup for map
     filtered_traffic_data = filtered_traffic()
     filtered_aed_data = filtered_aed()
-    
+    traffic_col = colorNumeric("RdYlBu", filtered_traffic_data$avg_volume)
     leaflet() %>% 
       addProviderTiles(providers$CartoDB.Positron) %>%
       addAwesomeMarkers(
@@ -114,24 +114,30 @@ server <- function(input, output, session) {
           "<b>Borough: </b>", borough, "<br>",
           "<b>Trained Personnel: </b>", aed_num_person_trained),
         clusterOptions = markerClusterOptions(),
-        group = "AED_locations"
+        group = "AED Locations"
       ) %>% 
       addCircleMarkers(
         data = filtered_traffic_data,
         lng = ~lon,
         lat = ~lat,
         radius = 3,
-        color = ~colorNumeric("RdYlBu", avg_volume)(avg_volume),
+        color = ~traffic_col(avg_volume),
         fillOpacity = 0.7,
         popup = ~paste0(
           "<b>Street: </b>", street, "<br>",
           "<b>Total Volume: </b>", total_volume, "<br>",
           "<b>Average Volume: </b>", avg_volume, "<br>"), 
-        group = "traffic_volume"
+        group = "Traffic Volume"
       ) %>%
       addLayersControl(
         overlayGroups = c("AED Locations", "Traffic Volume"),
         options = layersControlOptions(collapsed = FALSE)
+      ) %>% 
+      addLegend(
+        position = "bottomright",
+        pal = traffic_col,
+        values = filtered_traffic_data$avg_volume,
+        title = "Traffic Volume"
       )
   })
 }
